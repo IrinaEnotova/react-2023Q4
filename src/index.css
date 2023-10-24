@@ -1,3 +1,13 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
+  background-image: url('./bg.jpg');
+  background-size: cover;
+  --block-color: #fefefe;
+  --accent-color: #7cb342;
+  --content-color: #04040495;
+  --font-std: 400 16px 'Space Grotesk', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
 }
