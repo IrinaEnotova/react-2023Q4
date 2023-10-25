@@ -11,8 +11,12 @@ class App extends Component {
     items: [],
   };
 
-  async componentDidMount(): Promise<void> {
-    const { searchQuery } = this.state;
+  componentDidMount(): void {
+    // const { searchQuery } = this.state;
+    const searchQuery = localStorage.getItem('query') ? localStorage.getItem('query')! : '';
+    if (searchQuery) {
+      this.setState({ searchQuery: searchQuery });
+    }
     this.fetchData(searchQuery);
   }
 
@@ -28,6 +32,7 @@ class App extends Component {
 
   getSearch = () => {
     const { searchQuery } = this.state;
+    localStorage.setItem('query', searchQuery);
     this.fetchData(searchQuery);
   };
 

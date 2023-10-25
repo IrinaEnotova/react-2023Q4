@@ -10,6 +10,7 @@
 
 .item:hover {
   box-shadow: 12px 11px 36px 0px rgba(211, 209, 216, 0.25);
+  cursor: pointer;
 }
 
 .heading-wrapper {

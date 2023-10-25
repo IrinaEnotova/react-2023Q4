@@ -3,7 +3,7 @@
   background-image: url('./bg.jpg');
   background-size: cover;
   --block-color: #fefefe;
-  --accent-color: #7cb342;
+  --accent-color: #3f51b5;
   --content-color: #04040495;
   --font-std: 400 16px 'Space Grotesk', sans-serif;
 }
