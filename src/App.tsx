@@ -1,5 +1,5 @@
 import { Component, ReactNode } from 'react';
-import Header from './components/Header/Header';
+import Header from './components/Search/Search';
 import Content from './components/Content/Content';
 import { BASE_PATH, SEARCH_PATH } from './API/constants';
 import { AppState } from './interfaces/interfaces';
