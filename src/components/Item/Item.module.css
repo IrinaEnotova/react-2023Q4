@@ -1,0 +1,39 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  max-width: 300px;
+  background-color: var(--block-color);
+  border-radius: 5px;
+  border: none;
+}
+
+.item:hover {
+  box-shadow: 12px 11px 36px 0px rgba(211, 209, 216, 0.25);
+}
+
+.heading-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  transition: all 0.3s;
+}
+
+.item:hover .icon {
+  fill: var(--accent-color);
+}
+
+.heading {
+  margin: 0;
+  transition: all 0.3s;
+}
+
+.item:hover .heading {
+  color: var(--accent-color);
+}
