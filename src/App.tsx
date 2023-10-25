@@ -4,15 +4,16 @@ import Content from './components/Content/Content';
 import { BASE_PATH, SEARCH_PATH } from './API/constants';
 import { AppState } from './interfaces/interfaces';
 import './App.css';
+import Loader from './components/Loader/Loader';
 
 class App extends Component {
   state: AppState = {
     searchQuery: '',
     items: [],
+    isLoading: false,
   };
 
   componentDidMount(): void {
-    // const { searchQuery } = this.state;
     const searchQuery = localStorage.getItem('query') ? localStorage.getItem('query')! : '';
     if (searchQuery) {
       this.setState({ searchQuery: searchQuery });
@@ -21,9 +22,10 @@ class App extends Component {
   }
 
   fetchData = async (searchQuery: string) => {
+    this.setState({ isLoading: true });
     const res = await fetch(`${BASE_PATH}?${SEARCH_PATH}=${searchQuery}`);
     const data = await res.json();
-    this.setState({ items: data.results });
+    this.setState({ items: data.results, isLoading: false });
   };
 
   handleSearchQuery = (query: string) => {
@@ -40,7 +42,7 @@ class App extends Component {
     return (
       <div className="wrapper">
         <Header searchQuery={this.state.searchQuery} handleChange={this.handleSearchQuery} getSearch={this.getSearch} />
-        <Content items={this.state.items} />
+        {this.state.isLoading ? <Loader /> : <Content items={this.state.items} />}
       </div>
     );
   }

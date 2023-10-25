@@ -20,6 +20,7 @@ interface ApiItem {
 export interface AppState {
   searchQuery: string;
   items: ApiItem[];
+  isLoading: boolean;
 }
 
 export default ApiItem;
