@@ -17,4 +17,9 @@ interface ApiItem {
   url: string;
 }
 
+export interface AppState {
+  searchQuery: string;
+  items: ApiItem[];
+}
+
 export default ApiItem;
