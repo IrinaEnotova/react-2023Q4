@@ -5,6 +5,7 @@ import { BASE_PATH, SEARCH_PATH } from './API/constants';
 import { AppState } from './interfaces/interfaces';
 import './App.css';
 import Loader from './components/Loader/Loader';
+import ItemsNotFound from './components/ItemsNotFound/ItemsNotFound';
 
 class App extends Component {
   state: AppState = {
@@ -42,7 +43,13 @@ class App extends Component {
     return (
       <div className="wrapper">
         <Header searchQuery={this.state.searchQuery} handleChange={this.handleSearchQuery} getSearch={this.getSearch} />
-        {this.state.isLoading ? <Loader /> : <Content items={this.state.items} />}
+        {this.state.isLoading ? (
+          <Loader />
+        ) : this.state.items.length > 0 ? (
+          <Content items={this.state.items} />
+        ) : (
+          <ItemsNotFound />
+        )}
       </div>
     );
   }
