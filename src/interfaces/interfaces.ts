@@ -17,7 +17,7 @@ interface ApiItem {
   url: string;
 }
 
-export interface AppState {
+export interface CharacterPageState {
   searchQuery: string;
   items: ApiItem[];
   isLoading: boolean;
