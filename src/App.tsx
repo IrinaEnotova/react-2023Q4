@@ -1,6 +1,6 @@
 import { Component, ReactNode } from 'react';
 import Header from './components/Search/Search';
-import Content from './components/Content/Content';
+import ItemList from './components/ItemList/ItemList';
 import { BASE_PATH, SEARCH_PATH } from './API/constants';
 import { AppState } from './interfaces/interfaces';
 import './App.css';
@@ -46,7 +46,7 @@ class App extends Component {
         {this.state.isLoading ? (
           <Loader />
         ) : this.state.items.length > 0 ? (
-          <Content items={this.state.items} />
+          <ItemList items={this.state.items} />
         ) : (
           <ItemsNotFound />
         )}

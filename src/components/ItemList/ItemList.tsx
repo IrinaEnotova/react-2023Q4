@@ -1,8 +1,8 @@
-import styles from './Content.module.css';
+import styles from './ItemList.module.css';
 import Item from '../Item/Item';
-import ContentProps from './Content.props';
+import ContentProps from './ItemList.props';
 
-const Content = ({ items }: ContentProps) => {
+const ItemList = ({ items }: ContentProps) => {
   return (
     <div className={styles['wrapper']}>
       {items.map((item) => (
@@ -19,4 +19,4 @@ const Content = ({ items }: ContentProps) => {
   );
 };
 
-export default Content;
+export default ItemList;
