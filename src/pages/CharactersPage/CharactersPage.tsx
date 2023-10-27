@@ -1,10 +1,11 @@
 import { Component, ReactNode } from 'react';
-import Header from '../../components/Search/Search';
+import Search from '../../components/Search/Search';
 import ItemList from '../../components/ItemList/ItemList';
 import { BASE_PATH, SEARCH_PATH } from '../../API/constants';
 import { CharacterPageState } from '../../interfaces/interfaces';
 import Loader from '../../components/Loader/Loader';
 import ItemsNotFound from '../../components/ItemsNotFound/ItemsNotFound';
+import Button from '../../components/Button/Button';
 import styles from './CharacterPage.module.css';
 
 class CharactersPage extends Component {
@@ -12,6 +13,7 @@ class CharactersPage extends Component {
     searchQuery: '',
     items: [],
     isLoading: false,
+    isErrorBoundary: false,
   };
 
   componentDidMount(): void {
@@ -39,10 +41,18 @@ class CharactersPage extends Component {
     this.fetchData(searchQuery);
   };
 
+  throwErrorBoundary = () => {
+    this.setState({ isErrorBoundary: true });
+  };
+
   render(): ReactNode {
+    if (this.state.isErrorBoundary) {
+      throw new Error('ErrorBoundary worked!');
+    }
     return (
       <div className={styles['wrapper']}>
-        <Header searchQuery={this.state.searchQuery} handleChange={this.handleSearchQuery} getSearch={this.getSearch} />
+        <Search searchQuery={this.state.searchQuery} handleChange={this.handleSearchQuery} getSearch={this.getSearch} />
+        <Button onClick={this.throwErrorBoundary}>Throw error</Button>
         {this.state.isLoading ? (
           <Loader />
         ) : this.state.items.length > 0 ? (
