@@ -1,8 +1,9 @@
 import { FormEvent } from 'react';
 import HeaderProps from './Search.props';
 import styles from './Search.module.css';
+import Button from '../Button/Button';
 
-const Header = ({ searchQuery, handleChange, getSearch }: HeaderProps) => {
+const Search = ({ searchQuery, handleChange, getSearch }: HeaderProps) => {
   const submit = (event: FormEvent) => {
     event.preventDefault();
     getSearch();
@@ -18,9 +19,9 @@ const Header = ({ searchQuery, handleChange, getSearch }: HeaderProps) => {
           handleChange(event.target.value);
         }}
       />
-      <button className={styles['button']}>Search</button>
+      <Button>Search</Button>
     </form>
   );
 };
 
-export default Header;
+export default Search;
