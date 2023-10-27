@@ -1,22 +1,29 @@
-import styles from './ItemList.module.css';
+import { Component, ReactNode } from 'react';
 import Item from '../Item/Item';
-import ContentProps from './ItemList.props';
+import ItemListProps from './ItemList.props';
+import styles from './ItemList.module.css';
 
-const ItemList = ({ items }: ContentProps) => {
-  return (
-    <div className={styles['wrapper']}>
-      {items.map((item) => (
-        <Item
-          key={item.created}
-          name={item.name}
-          gender={item.gender}
-          height={item.height}
-          mass={item.mass}
-          birthYear={item.birth_year}
-        />
-      ))}
-    </div>
-  );
-};
+class ItemList extends Component<ItemListProps> {
+  constructor(props: ItemListProps) {
+    super(props);
+  }
+
+  render(): ReactNode {
+    return (
+      <div className={styles['wrapper']}>
+        {this.props.items.map((item) => (
+          <Item
+            key={item.created}
+            name={item.name}
+            gender={item.gender}
+            height={item.height}
+            mass={item.mass}
+            birthYear={item.birth_year}
+          />
+        ))}
+      </div>
+    );
+  }
+}
 
 export default ItemList;

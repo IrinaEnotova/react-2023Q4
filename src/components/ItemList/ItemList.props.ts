@@ -1,7 +1,7 @@
 import ApiItem from '../../interfaces/interfaces';
 
-interface ContentProps {
+interface ItemListProps {
   items: ApiItem[];
 }
 
-export default ContentProps;
+export default ItemListProps;

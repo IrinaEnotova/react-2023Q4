@@ -1,27 +1,34 @@
+import { Component, ReactNode } from 'react';
 import { FormEvent } from 'react';
-import HeaderProps from './Search.props';
-import styles from './Search.module.css';
+import SearchProps from './Search.props';
 import Button from '../Button/Button';
+import styles from './Search.module.css';
 
-const Search = ({ searchQuery, handleChange, getSearch }: HeaderProps) => {
-  const submit = (event: FormEvent) => {
+class Search extends Component<SearchProps> {
+  constructor(props: SearchProps) {
+    super(props);
+  }
+
+  submit = (event: FormEvent) => {
     event.preventDefault();
-    getSearch();
+    this.props.getSearch();
   };
 
-  return (
-    <form className={styles['wrapper']} onSubmit={submit}>
-      <input
-        className={styles['input']}
-        type="text"
-        value={searchQuery}
-        onChange={(event) => {
-          handleChange(event.target.value);
-        }}
-      />
-      <Button>Search</Button>
-    </form>
-  );
-};
+  render(): ReactNode {
+    return (
+      <form className={styles['wrapper']} onSubmit={this.submit}>
+        <input
+          className={styles['input']}
+          type="text"
+          value={this.props.searchQuery}
+          onChange={(event) => {
+            this.props.handleChange(event.target.value);
+          }}
+        />
+        <Button>Search</Button>
+      </form>
+    );
+  }
+}
 
 export default Search;

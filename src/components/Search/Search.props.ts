@@ -1,7 +1,7 @@
-interface HeaderProps {
+interface SearchProps {
   searchQuery: string;
   handleChange: (query: string) => void;
   getSearch: () => void;
 }
 
-export default HeaderProps;
+export default SearchProps;
