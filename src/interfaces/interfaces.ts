@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 interface ApiItem {
   name: string;
   height: string;
@@ -21,6 +23,16 @@ export interface CharacterPageState {
   searchQuery: string;
   items: ApiItem[];
   isLoading: boolean;
+  isErrorBoundary: boolean;
+}
+
+export interface ErrorBoundaryProps {
+  children: ReactNode;
+}
+
+export interface ErrorBoundaryState {
+  hasError: boolean;
+  error: undefined | string;
 }
 
 export default ApiItem;
