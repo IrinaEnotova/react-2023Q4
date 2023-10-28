@@ -1,68 +1,58 @@
-import { Component, ReactNode } from 'react';
 import Search from '../../components/Search/Search';
 import ItemList from '../../components/ItemList/ItemList';
 import { BASE_PATH, SEARCH_PATH } from '../../API/constants';
-import { CharacterPageState } from '../../interfaces/interfaces';
+// import { CharacterPageState } from '../../interfaces/interfaces';
 import Loader from '../../components/Loader/Loader';
 import ItemsNotFound from '../../components/ItemsNotFound/ItemsNotFound';
 import Button from '../../components/Button/Button';
 import styles from './CharacterPage.module.css';
+import { useEffect, useState } from 'react';
 
-class CharactersPage extends Component {
-  state: CharacterPageState = {
-    searchQuery: '',
-    items: [],
-    isLoading: false,
-    isErrorBoundary: false,
-  };
+const CharactersPage = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isErrorBoundary, setIsErrorBoundary] = useState(false);
 
-  componentDidMount(): void {
-    const searchQuery = localStorage.getItem('query') ? localStorage.getItem('query')! : '';
-    if (searchQuery) {
-      this.setState({ searchQuery: searchQuery });
+  useEffect(() => {
+    const searchStr = localStorage.getItem('query') ? localStorage.getItem('query')! : '';
+    if (searchStr) {
+      setSearchQuery(searchStr);
     }
-    this.fetchData(searchQuery);
-  }
+    fetchData(searchStr);
+  }, []);
 
-  fetchData = async (searchQuery: string) => {
-    this.setState({ isLoading: true });
-    const res = await fetch(`${BASE_PATH}?${SEARCH_PATH}=${searchQuery}`);
+  const fetchData = async (searchStr: string) => {
+    setIsLoading(true);
+    const res = await fetch(`${BASE_PATH}?${SEARCH_PATH}=${searchStr}`);
     const data = await res.json();
-    this.setState({ items: data.results, isLoading: false });
+    setItems(data.results);
+    setIsLoading(false);
   };
 
-  handleSearchQuery = (query: string) => {
-    this.setState({ searchQuery: query });
+  const handleSearchQuery = (query: string) => {
+    setSearchQuery(query);
   };
 
-  getSearch = () => {
-    const { searchQuery } = this.state;
+  const getSearch = () => {
     localStorage.setItem('query', searchQuery);
-    this.fetchData(searchQuery);
+    fetchData(searchQuery);
   };
 
-  throwErrorBoundary = () => {
-    this.setState({ isErrorBoundary: true });
+  const throwErrorBoundary = () => {
+    setIsErrorBoundary(true);
   };
 
-  render(): ReactNode {
-    if (this.state.isErrorBoundary) {
-      throw new Error('ErrorBoundary worked!');
-    }
-    return (
-      <div className={styles['wrapper']}>
-        <Search searchQuery={this.state.searchQuery} handleChange={this.handleSearchQuery} getSearch={this.getSearch} />
-        <Button onClick={this.throwErrorBoundary}>Throw error</Button>
-        {this.state.isLoading ? (
-          <Loader />
-        ) : this.state.items.length > 0 ? (
-          <ItemList items={this.state.items} />
-        ) : (
-          <ItemsNotFound />
-        )}
-      </div>
-    );
+  if (isErrorBoundary) {
+    throw new Error('ErrorBoundary worked!');
   }
-}
+  return (
+    <div className={styles['wrapper']}>
+      <Search searchQuery={searchQuery} handleChange={handleSearchQuery} getSearch={getSearch} />
+      <Button onClick={throwErrorBoundary}>Throw error</Button>
+      {isLoading ? <Loader /> : items.length > 0 ? <ItemList items={items} /> : <ItemsNotFound />}
+    </div>
+  );
+};
 
 export default CharactersPage;
