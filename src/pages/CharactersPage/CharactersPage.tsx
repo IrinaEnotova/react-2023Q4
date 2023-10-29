@@ -1,7 +1,6 @@
 import Search from '../../components/Search/Search';
 import ItemList from '../../components/ItemList/ItemList';
 import { BASE_PATH, SEARCH_PATH } from '../../API/constants';
-// import { CharacterPageState } from '../../interfaces/interfaces';
 import Loader from '../../components/Loader/Loader';
 import ItemsNotFound from '../../components/ItemsNotFound/ItemsNotFound';
 import Button from '../../components/Button/Button';
@@ -46,6 +45,7 @@ const CharactersPage = () => {
   if (isErrorBoundary) {
     throw new Error('ErrorBoundary worked!');
   }
+
   return (
     <div className={styles['wrapper']}>
       <Search searchQuery={searchQuery} handleChange={handleSearchQuery} getSearch={getSearch} />

@@ -19,13 +19,6 @@ interface ApiItem {
   url: string;
 }
 
-export interface CharacterPageState {
-  searchQuery: string;
-  items: ApiItem[];
-  isLoading: boolean;
-  isErrorBoundary: boolean;
-}
-
 export interface ErrorBoundaryProps {
   children: ReactNode;
 }
