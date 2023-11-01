@@ -1,13 +1,12 @@
 .wrapper {
   max-width: 1005px;
-  width: 80%;
+  width: 100%;
   height: fit-content;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   gap: 20px;
-  background-color: var(--content-color);
   padding: 20px;
   border-radius: 5px;
 }

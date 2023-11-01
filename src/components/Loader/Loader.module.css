@@ -2,7 +2,7 @@
   position: relative;
   width: 5vw;
   height: 5vw;
-  background: var(--content-color);
+  background: transparent;
   transition: background 0.35s;
   display: flex;
   flex-flow: column wrap;
@@ -25,7 +25,7 @@
   position: absolute;
   width: 4px;
   height: 100%;
-  background: var(--accent-color);
+  background: var(--item-hover);
   content: '';
 }
 .loader span:before {

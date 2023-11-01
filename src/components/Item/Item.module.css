@@ -1,6 +1,7 @@
 .item {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   padding: 10px;
   width: 300px;
   background-color: var(--block-color);
@@ -21,20 +22,32 @@
 }
 
 .icon {
-  width: 40px;
-  height: 40px;
+  max-width: 30px;
+  height: 30px;
   transition: all 0.3s;
 }
 
 .item:hover .icon {
-  fill: var(--accent-color);
+  fill: var(--item-hover);
 }
 
 .heading {
+  max-width: 150px;
   margin: 0;
+  text-align: center;
   transition: all 0.3s;
 }
 
 .item:hover .heading {
-  color: var(--accent-color);
+  color: var(--item-hover);
+}
+
+.link {
+  color: var(--item-hover);
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.link:hover {
+  color: var(--link-hover);
 }

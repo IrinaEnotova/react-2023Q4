@@ -6,14 +6,7 @@ const ItemList = ({ items }: ItemListProps) => {
   return (
     <div className={styles['wrapper']}>
       {items.map((item) => (
-        <Item
-          key={item.created}
-          name={item.name}
-          gender={item.gender}
-          height={item.height}
-          mass={item.mass}
-          birthYear={item.birth_year}
-        />
+        <Item key={item._id} item={item} />
       ))}
     </div>
   );

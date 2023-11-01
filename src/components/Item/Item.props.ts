@@ -1,9 +1,7 @@
+import ApiItem from '../../interfaces/interfaces';
+
 interface ItemProps {
-  name: string;
-  gender: string;
-  height: string;
-  mass: string;
-  birthYear: string;
+  item: ApiItem;
 }
 
 export default ItemProps;
