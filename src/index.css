@@ -1,6 +1,8 @@
 :root {
   font-family: 'Montserrat', sans-serif;
-  background: url('./bg.jpg');
+  background:
+    url('/bg.jpg') no-repeat,
+    var(--background-color);
   height: 100vh;
   background-size: cover;
   --block-color: #fefefe;
@@ -10,6 +12,7 @@
   --link-hover: #da990e;
   --content-color: #04040495;
   --dark-color: #040404;
+  --background-color: #171b1c;
   --font-std: 400 16px 'Montserrat', sans-serif;
 }
 
