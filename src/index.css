@@ -1,15 +1,25 @@
 :root {
-  font-family: 'Space Grotesk', sans-serif;
-  background-image: url('./bg.jpg');
+  font-family: 'Montserrat', sans-serif;
+  background: url('./bg.jpg');
+  height: 100vh;
   background-size: cover;
   --block-color: #fefefe;
-  --accent-color: #3f51b5;
+  --accent-color: #38454b;
+  --accent-color-hover: #bcc2ef;
+  --item-hover: #f7d68d;
   --content-color: #04040495;
-  --font-std: 400 16px 'Space Grotesk', sans-serif;
+  --dark-color: #040404;
+  --background-filter: #ffffff57;
+  --font-std: 400 16px 'Montserrat', sans-serif;
 }
 
 * {
   box-sizing: border-box;
+}
+
+body {
+  height: 100%;
+  margin: 0;
 }
 
 #root {
