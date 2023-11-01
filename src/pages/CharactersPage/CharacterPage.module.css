@@ -3,6 +3,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 5px;
+  padding: 20px;
+}
+
+.items-filters {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
   gap: 30px;
   padding: 20px;
 }
