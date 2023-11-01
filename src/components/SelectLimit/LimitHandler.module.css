@@ -1,0 +1,26 @@
+.form {
+  display: flex;
+  gap: 20px;
+}
+
+.input {
+  padding: 10px 25px;
+  border-radius: 5px;
+  border: none;
+  font: var(--font-std);
+}
+
+.input:focus {
+  outline: 2px solid var(--link-hover);
+}
+
+.input[type='number']::-webkit-inner-spin-button,
+.input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
