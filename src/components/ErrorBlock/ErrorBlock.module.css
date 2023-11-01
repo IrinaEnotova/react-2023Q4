@@ -1,5 +1,5 @@
 .error-block {
-  height: 90vh;
+  height: 98vh;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -8,4 +8,8 @@
   padding: 20px;
   text-align: center;
   color: var(--block-color);
+}
+
+.img {
+  width: 200px;
 }
