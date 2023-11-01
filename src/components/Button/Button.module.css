@@ -12,6 +12,6 @@
 
 .button:hover {
   color: var(--block-color);
-  background-color: var(--accent-color);
+  background-color: var(--link-hover);
   box-shadow: 20px 11px 36px 0px rgba(211, 209, 216, 0.25);
 }
