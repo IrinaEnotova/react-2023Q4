@@ -1,0 +1,25 @@
+.pages {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+}
+
+.page {
+  color: var(--block-color);
+  padding: 3px 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.action {
+  padding: 5px 10px;
+}
+
+.action:hover {
+  background: var(--link-hover);
+}
+
+.action:disabled {
+  pointer-events: none;
+}
