@@ -15,6 +15,7 @@ const Search = ({ searchQuery, handleChange, getSearch }: SearchProps) => {
         className={styles['input']}
         type="text"
         value={searchQuery}
+        placeholder="Search by name"
         onChange={(event) => {
           handleChange(event.target.value);
         }}

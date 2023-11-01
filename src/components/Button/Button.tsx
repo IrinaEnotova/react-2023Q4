@@ -1,9 +1,10 @@
 import { ButtonProps } from './Button.props';
 import styles from './Button.module.css';
+import classNames from 'classnames';
 
-const Button = ({ children, ...props }: ButtonProps) => {
+const Button = ({ children, className, ...props }: ButtonProps) => {
   return (
-    <button {...props} className={styles['button']}>
+    <button {...props} className={classNames(styles['button'], className)}>
       {children}
     </button>
   );
