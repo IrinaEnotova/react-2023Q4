@@ -5,7 +5,6 @@
   justify-content: center;
   gap: 20px;
   padding: 20px;
-  background-color: var(--content-color);
   color: var(--block-color);
   border-radius: 5px;
 }
