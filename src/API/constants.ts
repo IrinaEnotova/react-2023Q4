@@ -1,2 +1,5 @@
-export const BASE_PATH = 'https://swapi.dev/api/people/';
-export const SEARCH_PATH = 'search';
+export const ACCESS_KEY = 'Y_NbE4mEPuopcu02IlaF';
+export const BASE_PATH = 'https://the-one-api.dev/v2/character';
+export const SEARCH_PATH = 'name';
+export const PAGINATION = 'page';
+export const ITEMS_PER_PAGE = 10;
