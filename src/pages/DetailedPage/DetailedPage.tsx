@@ -5,11 +5,14 @@ import ApiItem from '../../interfaces/interfaces';
 import styles from './DetailedPage.module.css';
 import Button from '../../components/Button/Button';
 import Loader from '../../components/Loader/Loader';
+import NotFound from '../../components/NotFound/NotFound';
 
 const DetailedPage = () => {
   const [item, setItem] = useState<ApiItem | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
   const itemId = searchParams.get('character');
 
   const isBirth = !!item?.birth && item.birth !== 'NaN';
@@ -24,10 +27,12 @@ const DetailedPage = () => {
     async function fetchData() {
       setIsLoading(true);
       const itemData = await fetchItemById(itemId!);
-      if (itemData) {
+      if (itemData && itemData.docs) {
+        setIsError(false);
         setItem(itemData.docs[0]);
+      } else {
+        setIsError(true);
       }
-      console.log(itemData);
       setIsLoading(false);
     }
     fetchData();
@@ -39,12 +44,14 @@ const DetailedPage = () => {
         <div className={styles['detail-wrapper']}>
           <Loader />
         </div>
+      ) : isError ? (
+        <NotFound>Character was not found!</NotFound>
       ) : (
         <div className={styles['detail-wrapper']}>
           <div className={styles['close-btn']}></div>
           {item ? (
             <>
-              <h2>{item.name}</h2>
+              <h2 className={styles['heading']}>{item.name}</h2>
               <ul className={styles['description-list']}>
                 {isBirth && <li className={styles['description-item']}>Birth - {item.birth}</li>}
                 {isGender && <li className={styles['description-item']}>Gender - {item.gender}</li>}
