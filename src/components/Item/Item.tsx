@@ -1,7 +1,8 @@
 import ItemProps from './Item.props';
 import styles from './Item.module.css';
+import Button from '../Button/Button';
 
-const Item = ({ item }: ItemProps) => {
+const Item = ({ item, changeSearchParams }: ItemProps) => {
   return (
     <div className={styles['item']}>
       <div className={styles['heading-wrapper']}>
@@ -17,23 +18,13 @@ const Item = ({ item }: ItemProps) => {
         </svg>
         <h2 className={styles['heading']}>{item.name}</h2>
       </div>
-      <ul className={styles['description-list']}>
-        {!!item.gender && item.gender !== 'NaN' && (
-          <li className={styles['description-item']}>Gender - {item.gender}</li>
-        )}
-        {!!item.height && item.height !== 'NaN' && (
-          <li className={styles['description-item']}>Height - {item.height}</li>
-        )}
-        {!!item.race && item.race !== 'NaN' && <li className={styles['description-item']}>Race - {item.race}</li>}
-        {!!item.realm && item.realm !== 'NaN' && <li className={styles['description-item']}>Realm - {item.realm}</li>}
-        {!!item.wikiUrl && item.wikiUrl !== 'NaN' && (
-          <li className={styles['description-item']}>
-            <a className={styles['link']} href={item.wikiUrl} target="_blank" rel="noreferrer">
-              See in Wiki
-            </a>
-          </li>
-        )}
-      </ul>
+      <Button
+        onClick={() => {
+          changeSearchParams(`${item._id}`);
+        }}
+      >
+        Show details
+      </Button>
     </div>
   );
 };

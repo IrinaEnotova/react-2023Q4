@@ -1,9 +1,10 @@
 .item {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
+  gap: 10px;
   padding: 10px;
-  width: 300px;
+  width: 200px;
   background-color: var(--block-color);
   border-radius: 5px;
   border: none;
@@ -11,7 +12,6 @@
 
 .item:hover {
   box-shadow: 12px 11px 36px 0px rgba(211, 209, 216, 0.25);
-  cursor: pointer;
 }
 
 .heading-wrapper {
@@ -40,14 +40,4 @@
 
 .item:hover .heading {
   color: var(--item-hover);
-}
-
-.link {
-  color: var(--item-hover);
-  font-weight: 600;
-  transition: all 0.3s;
-}
-
-.link:hover {
-  color: var(--link-hover);
 }
