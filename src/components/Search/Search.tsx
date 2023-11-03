@@ -1,8 +1,8 @@
 import { FormEvent, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import SearchProps from './Search.props';
 import Button from '../Button/Button';
 import styles from './Search.module.css';
-import { useSearchParams } from 'react-router-dom';
 
 const Search = ({ searchQuery, handleChange, getSearch }: SearchProps) => {
   const [isErrorBoundary, setIsErrorBoundary] = useState(false);

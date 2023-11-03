@@ -1,11 +1,11 @@
 import { useSearchParams } from 'react-router-dom';
-import fetchItemById from '../../API/fetchItemById';
 import { useEffect, useState } from 'react';
+import fetchItemById from '../../API/fetchItemById';
 import ApiItem from '../../interfaces/interfaces';
-import styles from './DetailedPage.module.css';
 import Button from '../../components/Button/Button';
 import Loader from '../../components/Loader/Loader';
 import NotFound from '../../components/NotFound/NotFound';
+import styles from './DetailedPage.module.css';
 
 const DetailedPage = () => {
   const [item, setItem] = useState<ApiItem | null>(null);

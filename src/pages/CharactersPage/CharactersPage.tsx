@@ -1,11 +1,11 @@
+import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Search from '../../components/Search/Search';
 import ItemList from '../../components/ItemList/ItemList';
 import Loader from '../../components/Loader/Loader';
-import { useCallback, useEffect, useRef, useState } from 'react';
 import Pagination from '../../components/Pagination/Pagination';
 import { getPageCount } from '../../utils/pages';
 import fetchItems from '../../API/fetchItems';
-import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import LimitHandler from '../../components/SelectLimit/LimitHandler';
 import NotFound from '../../components/NotFound/NotFound';
 import styles from './CharacterPage.module.css';

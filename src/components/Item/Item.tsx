@@ -1,6 +1,6 @@
 import ItemProps from './Item.props';
-import styles from './Item.module.css';
 import Button from '../Button/Button';
+import styles from './Item.module.css';
 
 const Item = ({ item, changeSearchParams }: ItemProps) => {
   return (

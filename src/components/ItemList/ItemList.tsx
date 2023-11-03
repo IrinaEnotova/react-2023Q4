@@ -1,8 +1,8 @@
+import { useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Item from '../Item/Item';
 import ItemListProps from './ItemList.props';
 import styles from './ItemList.module.css';
-import { useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 const ItemList = ({ items, changeSearchParams }: ItemListProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);

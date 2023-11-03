@@ -1,7 +1,6 @@
 :root {
   font-family: 'Montserrat', sans-serif;
   background: url('/bg.jpg');
-  /* var(--background-color); */
   height: 100vh;
   background-size: cover;
   --block-color: #fefefe;

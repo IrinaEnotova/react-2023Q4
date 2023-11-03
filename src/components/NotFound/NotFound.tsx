@@ -1,5 +1,5 @@
-import styles from './NotFound.module.css';
 import { NotFoundProps } from './NotFound.props';
+import styles from './NotFound.module.css';
 
 const NotFound = ({ children }: NotFoundProps) => {
   return (

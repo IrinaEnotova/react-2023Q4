@@ -1,6 +1,6 @@
+import classNames from 'classnames';
 import { ButtonProps } from './Button.props';
 import styles from './Button.module.css';
-import classNames from 'classnames';
 
 const Button = ({ children, className, ...props }: ButtonProps) => {
   return (
