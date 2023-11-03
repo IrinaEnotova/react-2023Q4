@@ -12,7 +12,7 @@ const LimitHandler = ({ changeLimit }: LimitHandlerProps) => {
     if (inputRef.current && inputRef.current.value) {
       changeLimit(Number(inputRef.current.value));
     } else {
-      changeLimit(9);
+      changeLimit(12);
     }
   };
 
@@ -23,7 +23,7 @@ const LimitHandler = ({ changeLimit }: LimitHandlerProps) => {
         ref={inputRef}
         type="number"
         min={0}
-        placeholder="Standart limit = 9"
+        placeholder="Standart limit = 12"
         value={value}
         onChange={(event) => setValue(event.target.value)}
       />
