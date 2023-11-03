@@ -1,10 +1,14 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import SearchProps from './Search.props';
 import Button from '../Button/Button';
 import styles from './Search.module.css';
+import { useSearchParams } from 'react-router-dom';
 
 const Search = ({ searchQuery, handleChange, getSearch }: SearchProps) => {
   const [isErrorBoundary, setIsErrorBoundary] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const submit = (event: FormEvent) => {
     event.preventDefault();
     getSearch();
@@ -19,7 +23,15 @@ const Search = ({ searchQuery, handleChange, getSearch }: SearchProps) => {
   }
 
   return (
-    <div className={styles['wrapper']}>
+    <div
+      ref={wrapperRef}
+      className={styles['wrapper']}
+      onClick={(event) => {
+        if (searchParams.has('character') && event.target === wrapperRef.current) {
+          setSearchParams({});
+        }
+      }}
+    >
       <form className={styles['form']} onSubmit={submit}>
         <input
           className={styles['input']}

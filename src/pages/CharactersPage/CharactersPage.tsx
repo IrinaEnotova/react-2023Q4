@@ -1,7 +1,7 @@
 import Search from '../../components/Search/Search';
 import ItemList from '../../components/ItemList/ItemList';
 import Loader from '../../components/Loader/Loader';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Pagination from '../../components/Pagination/Pagination';
 import { getPageCount } from '../../utils/pages';
 import fetchItems from '../../API/fetchItems';
@@ -18,6 +18,7 @@ const CharactersPage = () => {
   const [isError, setIsError] = useState(false);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(12);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -85,7 +86,15 @@ const CharactersPage = () => {
       {isNaN(page) ? (
         <NotFound>Page was not found</NotFound>
       ) : (
-        <div className={styles['wrapper']}>
+        <div
+          ref={wrapperRef}
+          className={styles['wrapper']}
+          onClick={(event) => {
+            if (searchParams.has('character') && event.target === wrapperRef.current) {
+              setSearchParams({});
+            }
+          }}
+        >
           <div className={styles['items-filters']}>
             <LimitHandler changeLimit={changeLimit} />
             <Search searchQuery={searchQuery} handleChange={handleSearchQuery} getSearch={getSearch} />
