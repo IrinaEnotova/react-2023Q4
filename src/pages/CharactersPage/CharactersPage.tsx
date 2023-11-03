@@ -15,6 +15,7 @@ const CharactersPage = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [totalPage, setTotalPage] = useState(1);
+  const [isError, setIsError] = useState(false);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(12);
 
@@ -25,10 +26,14 @@ const CharactersPage = () => {
   const handleItems = useCallback(
     async (searchStr: string, page: number) => {
       setIsLoading(true);
-      const data = await fetchItems(searchStr, page, limit);
-      const pageCount = getPageCount(data.total, limit);
-      setItems(data.docs);
-      setTotalPage(pageCount);
+      try {
+        const data = await fetchItems(searchStr, page, limit);
+        const pageCount = getPageCount(data.total, limit);
+        setItems(data.docs);
+        setTotalPage(pageCount);
+      } catch (error) {
+        setIsError(true);
+      }
       setIsLoading(false);
     },
     [limit]
@@ -71,24 +76,30 @@ const CharactersPage = () => {
     setSearchParams({ character: characterId });
   };
 
+  if (isError) {
+    throw new Error('Fetch error catched! Try later!');
+  }
+
   return (
     <>
-      <div className={styles['wrapper']}>
-        <div className={styles['items-filters']}>
-          <LimitHandler changeLimit={changeLimit} />
-          <Search searchQuery={searchQuery} handleChange={handleSearchQuery} getSearch={getSearch} />
+      {isNaN(page) ? (
+        <NotFound>Page was not found</NotFound>
+      ) : (
+        <div className={styles['wrapper']}>
+          <div className={styles['items-filters']}>
+            <LimitHandler changeLimit={changeLimit} />
+            <Search searchQuery={searchQuery} handleChange={handleSearchQuery} getSearch={getSearch} />
+          </div>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              <ItemList items={items} changeSearchParams={changeSearchParams} />
+              {totalPage > 1 ? <Pagination page={page} totalPage={totalPage} changePage={changePage} /> : ''}
+            </>
+          )}
         </div>
-        {isLoading ? (
-          <Loader />
-        ) : items.length > 0 ? (
-          <>
-            <ItemList items={items} changeSearchParams={changeSearchParams} />
-            {totalPage > 1 ? <Pagination page={page} totalPage={totalPage} changePage={changePage} /> : ''}
-          </>
-        ) : (
-          <NotFound>Characters were not found!</NotFound>
-        )}
-      </div>
+      )}
       {searchParams.has('character') && <Outlet />}
     </>
   );
