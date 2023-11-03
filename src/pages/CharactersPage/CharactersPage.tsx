@@ -1,13 +1,13 @@
 import Search from '../../components/Search/Search';
 import ItemList from '../../components/ItemList/ItemList';
 import Loader from '../../components/Loader/Loader';
-import ItemsNotFound from '../../components/ItemsNotFound/ItemsNotFound';
 import { useCallback, useEffect, useState } from 'react';
 import Pagination from '../../components/Pagination/Pagination';
 import { getPageCount } from '../../utils/pages';
 import fetchItems from '../../API/fetchItems';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import LimitHandler from '../../components/SelectLimit/LimitHandler';
+import NotFound from '../../components/NotFound/NotFound';
 import styles from './CharacterPage.module.css';
 
 const CharactersPage = () => {
@@ -16,13 +16,14 @@ const CharactersPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [totalPage, setTotalPage] = useState(1);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(9);
+  const [limit, setLimit] = useState(12);
 
   const params = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const handleItems = useCallback(
-    async (searchStr: string) => {
+    async (searchStr: string, page: number) => {
       setIsLoading(true);
       const data = await fetchItems(searchStr, page, limit);
       const pageCount = getPageCount(data.total, limit);
@@ -30,19 +31,21 @@ const CharactersPage = () => {
       setTotalPage(pageCount);
       setIsLoading(false);
     },
-    [page, limit]
+    [limit]
   );
 
   useEffect(() => {
-    if (params.id) {
-      setPage(Number(params.id));
+    if (params.id && +params.id !== page) {
+      setPage(() => {
+        return Number(params.id);
+      });
     }
     const searchStr = localStorage.getItem('query') ? localStorage.getItem('query')! : '';
     if (searchStr) {
       setSearchQuery(searchStr);
     }
-    handleItems(searchStr);
-  }, [handleItems, params]);
+    handleItems(searchStr, page);
+  }, [page, params.id, handleItems]);
 
   const handleSearchQuery = (query: string) => {
     setSearchQuery(query);
@@ -51,7 +54,7 @@ const CharactersPage = () => {
   const getSearch = () => {
     localStorage.setItem('query', searchQuery);
     navigate(`/page/1`);
-    handleItems(searchQuery);
+    handleItems(searchQuery, page);
   };
 
   const changePage = (page: number) => {
@@ -64,23 +67,30 @@ const CharactersPage = () => {
     setLimit(limitValue);
   };
 
+  const changeSearchParams = (characterId: string) => {
+    setSearchParams({ character: characterId });
+  };
+
   return (
-    <div className={styles['wrapper']}>
-      <div className={styles['items-filters']}>
-        <LimitHandler changeLimit={changeLimit} />
-        <Search searchQuery={searchQuery} handleChange={handleSearchQuery} getSearch={getSearch} />
+    <>
+      <div className={styles['wrapper']}>
+        <div className={styles['items-filters']}>
+          <LimitHandler changeLimit={changeLimit} />
+          <Search searchQuery={searchQuery} handleChange={handleSearchQuery} getSearch={getSearch} />
+        </div>
+        {isLoading ? (
+          <Loader />
+        ) : items.length > 0 ? (
+          <>
+            <ItemList items={items} changeSearchParams={changeSearchParams} />
+            {totalPage > 1 ? <Pagination page={page} totalPage={totalPage} changePage={changePage} /> : ''}
+          </>
+        ) : (
+          <NotFound>Characters were not found!</NotFound>
+        )}
       </div>
-      {isLoading ? (
-        <Loader />
-      ) : items.length > 0 ? (
-        <>
-          <ItemList items={items} />
-          {totalPage > 1 ? <Pagination page={page} totalPage={totalPage} changePage={changePage} /> : ''}
-        </>
-      ) : (
-        <ItemsNotFound />
-      )}
-    </div>
+      {searchParams.has('character') && <Outlet />}
+    </>
   );
 };
 
