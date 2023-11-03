@@ -1,27 +1,27 @@
-# React + TypeScript + Vite
+# 🧙‍♂️ RSS React Course
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Done modules:
 
-Currently, two official plugins are available:
+- Module 1 - [React Components](https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module01)
+- Module 2 - [React Routing](https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module02)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Getting Started
 
-## Expanding the ESLint configuration
+Clone the `react-2023Q4` repository using git:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```
+git clone https://github.com/IrinaEnotova/react-2023Q4.git
+cd react-2023Q4
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Install dependencies with this command:
+
+```
+npm install
+```
+
+Run the application with this command:
+
+```
+npm run dev
+```
