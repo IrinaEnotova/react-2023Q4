@@ -13,7 +13,8 @@
   --content-color: #04040495;
   --dark-color: #040404;
   --background-color: #171b1c;
-  --font-std: 400 16px 'Montserrat', sans-serif;
+  --background-filter: #ffffff81;
+  --font-std: 400 12px 'Montserrat', sans-serif;
 }
 
 * {
@@ -30,4 +31,7 @@ body {
   margin: 0 auto;
   padding: 0;
   margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
