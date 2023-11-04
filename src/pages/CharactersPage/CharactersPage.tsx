@@ -83,7 +83,7 @@ const CharactersPage = () => {
 
   return (
     <>
-      {isNaN(page) ? (
+      {isNaN(page) || page > totalPage ? (
         <NotFound>Page was not found</NotFound>
       ) : (
         <div
