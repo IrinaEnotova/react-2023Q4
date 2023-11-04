@@ -41,16 +41,18 @@ const CharactersPage = () => {
   );
 
   useEffect(() => {
-    if (params.id && +params.id !== page) {
-      setPage(() => {
-        return Number(params.id);
-      });
-    }
     const searchStr = localStorage.getItem('query') ? localStorage.getItem('query')! : '';
     if (searchStr) {
       setSearchQuery(searchStr);
     }
-    handleItems(searchStr, page);
+    if (params.id && +params.id !== page) {
+      setPage(() => {
+        return Number(params.id);
+      });
+      handleItems(searchStr, Number(params.id));
+    } else {
+      handleItems(searchStr, page);
+    }
   }, [page, params.id, handleItems]);
 
   const handleSearchQuery = (query: string) => {
