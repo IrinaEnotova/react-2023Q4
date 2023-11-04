@@ -58,6 +58,8 @@ const CharactersPage = () => {
   };
 
   const getSearch = () => {
+    console.log(page);
+    console.log(totalPage);
     localStorage.setItem('query', searchQuery);
     navigate(`/page/1`);
     handleItems(searchQuery, page);
@@ -83,7 +85,7 @@ const CharactersPage = () => {
 
   return (
     <>
-      {isNaN(page) || page > totalPage ? (
+      {isNaN(page) ? (
         <NotFound>Page was not found</NotFound>
       ) : (
         <div
@@ -104,7 +106,11 @@ const CharactersPage = () => {
           ) : (
             <>
               <ItemList items={items} changeSearchParams={changeSearchParams} />
-              {totalPage > 1 ? <Pagination page={page} totalPage={totalPage} changePage={changePage} /> : ''}
+              {totalPage > 1 && page <= totalPage ? (
+                <Pagination page={page} totalPage={totalPage} changePage={changePage} />
+              ) : (
+                ''
+              )}
             </>
           )}
         </div>

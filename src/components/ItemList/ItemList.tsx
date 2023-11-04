@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import Item from '../Item/Item';
 import ItemListProps from './ItemList.props';
 import styles from './ItemList.module.css';
+import NotFound from '../NotFound/NotFound';
 
 const ItemList = ({ items, changeSearchParams }: ItemListProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -18,9 +19,11 @@ const ItemList = ({ items, changeSearchParams }: ItemListProps) => {
         }
       }}
     >
-      {items.map((item) => (
-        <Item key={item._id} item={item} changeSearchParams={changeSearchParams} />
-      ))}
+      {items.length > 0 ? (
+        items.map((item) => <Item key={item._id} item={item} changeSearchParams={changeSearchParams} />)
+      ) : (
+        <NotFound>Characters were not found</NotFound>
+      )}
     </div>
   );
 };
