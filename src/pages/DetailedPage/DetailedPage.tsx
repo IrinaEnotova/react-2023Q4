@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, JSX } from 'react';
 import fetchItemById from '../../API/fetchItemById';
 import ApiItem from '../../interfaces/interfaces';
 import Button from '../../components/Button/Button';
@@ -7,7 +7,7 @@ import Loader from '../../components/Loader/Loader';
 import NotFound from '../../components/NotFound/NotFound';
 import styles from './DetailedPage.module.css';
 
-const DetailedPage = () => {
+const DetailedPage = (): JSX.Element => {
   const [item, setItem] = useState<ApiItem | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
@@ -24,10 +24,10 @@ const DetailedPage = () => {
   const isWikiUrl = !!item?.wikiUrl && item.wikiUrl !== 'NaN';
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData(): Promise<void> {
       setIsLoading(true);
       const itemData = await fetchItemById(itemId!);
-      if (itemData && itemData.docs) {
+      if (itemData && 'docs' in itemData) {
         setIsError(false);
         setItem(itemData.docs[0]);
       } else {
@@ -72,7 +72,7 @@ const DetailedPage = () => {
             <h2>Item was not found!</h2>
           )}
           <Button
-            onClick={() => {
+            onClick={(): void => {
               setSearchParams({});
             }}
           >

@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom';
+import { JSX } from 'react';
 import Button from '../Button/Button';
 import styles from './ErrorBlock.module.css';
 
-const ErrorBlock = () => {
+const ErrorBlock = (): JSX.Element => {
   const navigate = useNavigate();
 
   return (
@@ -13,7 +14,7 @@ const ErrorBlock = () => {
         ErrorBoundary worked!
       </h1>
       <Button
-        onClick={() => {
+        onClick={(): void => {
           navigate('/page/1');
         }}
       >

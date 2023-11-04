@@ -1,15 +1,16 @@
+import { JSX } from 'react';
 import Button from '../Button/Button';
 import { PaginationProps } from './Pagination.props';
 import styles from './Pagination.module.css';
 
-const Pagination = ({ page, totalPage, changePage }: PaginationProps) => {
-  const handlePrevPage = () => {
+const Pagination = ({ page, totalPage, changePage }: PaginationProps): JSX.Element => {
+  const handlePrevPage = (): void => {
     if (page > 1) {
       changePage(page - 1);
     }
   };
 
-  const handleNextPage = () => {
+  const handleNextPage = (): void => {
     if (page < totalPage) {
       changePage(page + 1);
     }

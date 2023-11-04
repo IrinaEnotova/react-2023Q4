@@ -1,8 +1,9 @@
+import { JSX } from 'react';
 import ItemProps from './Item.props';
 import Button from '../Button/Button';
 import styles from './Item.module.css';
 
-const Item = ({ item, changeSearchParams }: ItemProps) => {
+const Item = ({ item, changeSearchParams }: ItemProps): JSX.Element => {
   return (
     <div className={styles['item']}>
       <div className={styles['heading-wrapper']}>
@@ -19,7 +20,7 @@ const Item = ({ item, changeSearchParams }: ItemProps) => {
         <h2 className={styles['heading']}>{item.name}</h2>
       </div>
       <Button
-        onClick={() => {
+        onClick={(): void => {
           changeSearchParams(`${item._id}`);
         }}
       >

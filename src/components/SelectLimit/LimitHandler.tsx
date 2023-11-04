@@ -1,13 +1,13 @@
-import { FormEvent, useRef, useState } from 'react';
+import { FormEvent, useRef, useState, JSX } from 'react';
 import styles from './LimitHandler.module.css';
 import { LimitHandlerProps } from './LimitHandlerProps';
 import Button from '../Button/Button';
 
-const LimitHandler = ({ changeLimit }: LimitHandlerProps) => {
+const LimitHandler = ({ changeLimit }: LimitHandlerProps): JSX.Element => {
   const [value, setValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const submit = (event: FormEvent) => {
+  const submit = (event: FormEvent): void => {
     event.preventDefault();
     if (inputRef.current && inputRef.current.value) {
       changeLimit(Number(inputRef.current.value));
@@ -25,7 +25,7 @@ const LimitHandler = ({ changeLimit }: LimitHandlerProps) => {
         min={0}
         placeholder="Standart limit = 12"
         value={value}
-        onChange={(event) => setValue(event.target.value)}
+        onChange={(event): void => setValue(event.target.value)}
       />
       <Button>Change limit</Button>
     </form>

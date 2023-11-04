@@ -14,6 +14,14 @@ interface ApiItem {
   _id: string;
 }
 
+export interface ItemsResponse {
+  docs: ApiItem[];
+  limit: number;
+  page: number;
+  pages: number;
+  total: number;
+}
+
 export interface ErrorBoundaryProps {
   children: ReactNode;
 }

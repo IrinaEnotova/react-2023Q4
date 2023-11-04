@@ -1,7 +1,8 @@
+import { JSX } from 'react';
 import { NotFoundProps } from './NotFound.props';
 import styles from './NotFound.module.css';
 
-const NotFound = ({ children }: NotFoundProps) => {
+const NotFound = ({ children }: NotFoundProps): JSX.Element => {
   return (
     <div className={styles['wrapper']}>
       <img src="/item-icon.svg" alt="Items not found" />

@@ -1,4 +1,4 @@
-import { Component, ErrorInfo } from 'react';
+import { Component, ErrorInfo, ReactNode, JSX } from 'react';
 import ErrorBlock from '../ErrorBlock/ErrorBlock';
 import { ErrorBoundaryProps, ErrorBoundaryState } from '../../interfaces/interfaces';
 
@@ -11,20 +11,20 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     };
   }
 
-  static getDerivedStateFromError(error: Error) {
+  static getDerivedStateFromError(error: Error): { hasError: boolean; error: Error } {
     return {
       hasError: true,
       error: error,
     };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     console.log('ErrorBoundary caught error!');
     console.error(error);
     console.error(errorInfo);
   }
 
-  render() {
+  render(): JSX.Element | ReactNode {
     if (this.state.hasError) {
       return <ErrorBlock />;
     } else {

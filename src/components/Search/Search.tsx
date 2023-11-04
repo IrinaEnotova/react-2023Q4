@@ -1,20 +1,20 @@
-import { FormEvent, useRef, useState } from 'react';
+import { FormEvent, useRef, useState, JSX } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SearchProps from './Search.props';
 import Button from '../Button/Button';
 import styles from './Search.module.css';
 
-const Search = ({ searchQuery, handleChange, getSearch }: SearchProps) => {
+const Search = ({ searchQuery, handleChange, getSearch }: SearchProps): JSX.Element => {
   const [isErrorBoundary, setIsErrorBoundary] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const submit = (event: FormEvent) => {
+  const submit = (event: FormEvent): void => {
     event.preventDefault();
     getSearch();
   };
 
-  const throwErrorBoundary = () => {
+  const throwErrorBoundary = (): void => {
     setIsErrorBoundary(true);
   };
 
@@ -26,7 +26,7 @@ const Search = ({ searchQuery, handleChange, getSearch }: SearchProps) => {
     <div
       ref={wrapperRef}
       className={styles['wrapper']}
-      onClick={(event) => {
+      onClick={(event): void => {
         if (searchParams.has('character') && event.target === wrapperRef.current) {
           setSearchParams({});
         }
@@ -38,7 +38,7 @@ const Search = ({ searchQuery, handleChange, getSearch }: SearchProps) => {
           type="text"
           value={searchQuery}
           placeholder="Search by name"
-          onChange={(event) => {
+          onChange={(event): void => {
             handleChange(event.target.value);
           }}
         />
