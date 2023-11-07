@@ -4,7 +4,7 @@ import { LimitHandlerProps } from './LimitHandlerProps';
 import Button from '../Button/Button';
 
 const LimitHandler = ({ changeLimit }: LimitHandlerProps): JSX.Element => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState('12');
   const inputRef = useRef<HTMLInputElement>(null);
 
   const submit = (event: FormEvent): void => {

@@ -1,24 +1,12 @@
-import { useRef, JSX } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { JSX } from 'react';
 import Item from '../Item/Item';
 import ItemListProps from './ItemList.props';
-import styles from './ItemList.module.css';
 import NotFound from '../NotFound/NotFound';
+import styles from './ItemList.module.css';
 
 const ItemList = ({ items, changeSearchParams }: ItemListProps): JSX.Element => {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const [searchParams, setSearchParams] = useSearchParams();
-
   return (
-    <div
-      ref={wrapperRef}
-      className={styles['wrapper']}
-      onClick={(event): void => {
-        if (searchParams.has('character') && event.target === wrapperRef.current) {
-          setSearchParams({});
-        }
-      }}
-    >
+    <div className={styles['wrapper']}>
       {items.length > 0 ? (
         items.map((item) => <Item key={item._id} item={item} changeSearchParams={changeSearchParams} />)
       ) : (

@@ -18,11 +18,11 @@ const Pagination = ({ page, totalPage, changePage }: PaginationProps): JSX.Eleme
 
   return (
     <div className={styles['pages']}>
-      <Button className={styles.action} onClick={handlePrevPage} disabled={page <= 1 ? true : false}>
+      <Button className={styles.action} onClick={handlePrevPage} disabled={page <= 1}>
         Prev
       </Button>
       <span className={styles['page']}>{page}</span>
-      <Button className={styles.action} onClick={handleNextPage} disabled={page >= totalPage ? true : false}>
+      <Button className={styles.action} onClick={handleNextPage} disabled={page >= totalPage}>
         Next
       </Button>
     </div>

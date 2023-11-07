@@ -1,5 +1,5 @@
 import { Outlet, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { useCallback, useEffect, useRef, useState, JSX, MouseEvent } from 'react';
+import { useCallback, useEffect, useState, JSX } from 'react';
 import Search from '../../components/Search/Search';
 import ItemList from '../../components/ItemList/ItemList';
 import Loader from '../../components/Loader/Loader';
@@ -19,7 +19,6 @@ const CharactersPage = (): JSX.Element => {
   const [isError, setIsError] = useState(false);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(12);
-  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -49,14 +48,12 @@ const CharactersPage = (): JSX.Element => {
   }, [location, navigate]);
 
   useEffect(() => {
-    const searchStr = localStorage.getItem('query') ? localStorage.getItem('query')! : '';
+    const searchStr = localStorage.getItem('query') || '';
     if (searchStr) {
       setSearchQuery(searchStr);
     }
     if (params.id && +params.id !== page) {
-      setPage(() => {
-        return Number(params.id);
-      });
+      setPage(Number(params.id));
       handleItems(searchStr, Number(params.id));
     } else {
       handleItems(searchStr, page);
@@ -87,40 +84,32 @@ const CharactersPage = (): JSX.Element => {
     setSearchParams({ character: characterId });
   };
 
-  const closeDetails = (event: MouseEvent): void => {
-    if (searchParams.has('character') && event.target === wrapperRef.current) {
-      setSearchParams({});
-    }
-  };
-
   if (isError) {
     throw new Error('Fetch error catched! Try later!');
   }
 
+  if (isNaN(page)) {
+    return <NotFound>Page was not found</NotFound>;
+  }
+
   return (
     <>
-      {isNaN(page) ? (
-        <NotFound>Page was not found</NotFound>
-      ) : (
-        <div ref={wrapperRef} className={styles['wrapper']} onClick={closeDetails}>
-          <div className={styles['items-filters']}>
-            <LimitHandler changeLimit={changeLimit} />
-            <Search searchQuery={searchQuery} handleChange={handleSearchQuery} getSearch={getSearch} />
-          </div>
-          {isLoading ? (
-            <Loader />
-          ) : (
-            <>
-              <ItemList items={items} changeSearchParams={changeSearchParams} />
-              {totalPage > 1 && page <= totalPage ? (
-                <Pagination page={page} totalPage={totalPage} changePage={changePage} />
-              ) : (
-                ''
-              )}
-            </>
-          )}
+      <div className={styles['wrapper']}>
+        <div className={styles['items-filters']}>
+          <LimitHandler changeLimit={changeLimit} />
+          <Search searchQuery={searchQuery} handleChange={handleSearchQuery} getSearch={getSearch} />
         </div>
-      )}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <>
+            <ItemList items={items} changeSearchParams={changeSearchParams} />
+            {totalPage > 1 && page <= totalPage && (
+              <Pagination page={page} totalPage={totalPage} changePage={changePage} />
+            )}
+          </>
+        )}
+      </div>
       {searchParams.has('character') && <Outlet />}
     </>
   );

@@ -6,6 +6,7 @@ import Button from '../../components/Button/Button';
 import Loader from '../../components/Loader/Loader';
 import NotFound from '../../components/NotFound/NotFound';
 import styles from './DetailedPage.module.css';
+import isItemFieldExist from '../../utils/isItemFieldExist';
 
 const DetailedPage = (): JSX.Element => {
   const [item, setItem] = useState<ApiItem | null>(null);
@@ -14,14 +15,6 @@ const DetailedPage = (): JSX.Element => {
   const [isError, setIsError] = useState(false);
 
   const itemId = searchParams.get('character');
-
-  const isBirth = !!item?.birth && item.birth !== 'NaN';
-  const isGender = !!item?.gender && item.gender !== 'NaN';
-  const isHair = !!item?.hair && item.hair !== 'NaN';
-  const isHeight = !!item?.height && item.height !== 'NaN';
-  const isRace = !!item?.race && item.race !== 'NaN';
-  const isRealm = !!item?.realm && item.realm !== 'NaN';
-  const isWikiUrl = !!item?.wikiUrl && item.wikiUrl !== 'NaN';
 
   useEffect(() => {
     async function fetchData(): Promise<void> {
@@ -38,49 +31,42 @@ const DetailedPage = (): JSX.Element => {
     fetchData();
   }, [itemId]);
 
+  if (isLoading) {
+    return (
+      <div className={styles['detail-wrapper']}>
+        <Loader />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <NotFound>Character was not found!</NotFound>;
+  }
+
+  if (!item) {
+    return <h2>Character was not found!</h2>;
+  }
+
   return (
-    <>
-      {isLoading ? (
-        <div className={styles['detail-wrapper']}>
-          <Loader />
-        </div>
-      ) : isError ? (
-        <NotFound>Character was not found!</NotFound>
-      ) : (
-        <div className={styles['detail-wrapper']}>
-          <div className={styles['close-btn']}></div>
-          {item ? (
-            <>
-              <h2 className={styles['heading']}>{item.name}</h2>
-              <ul className={styles['description-list']}>
-                {isBirth && <li className={styles['description-item']}>Birth - {item.birth}</li>}
-                {isGender && <li className={styles['description-item']}>Gender - {item.gender}</li>}
-                {isHair && <li className={styles['description-item']}>Hair - {item.hair}</li>}
-                {isHeight && <li className={styles['description-item']}>Height - {item.height}</li>}
-                {isRace && <li className={styles['description-item']}>Race - {item.race}</li>}
-                {isRealm && <li className={styles['description-item']}>Realm - {item.realm}</li>}
-                {isWikiUrl && (
-                  <li className={styles['description-item']}>
-                    <a className={styles['link']} href={item.wikiUrl} target="_blank" rel="noreferrer">
-                      See in Wiki
-                    </a>
-                  </li>
-                )}
-              </ul>
-            </>
-          ) : (
-            <h2>Item was not found!</h2>
-          )}
-          <Button
-            onClick={(): void => {
-              setSearchParams({});
-            }}
-          >
-            Close details
-          </Button>
-        </div>
-      )}
-    </>
+    <div className={styles['detail-wrapper']}>
+      <h2 className={styles['heading']}>{item.name}</h2>
+      <ul className={styles['description-list']}>
+        {Object.entries(item).map(([key, value]) =>
+          isItemFieldExist(value) && key !== '_id' ? (
+            <li key={key} className={styles['description-item']}>
+              {key.charAt(0).toUpperCase() + key.slice(1)} - {value}
+            </li>
+          ) : null
+        )}
+      </ul>
+      <Button
+        onClick={(): void => {
+          setSearchParams({});
+        }}
+      >
+        Close details
+      </Button>
+    </div>
   );
 };
 
