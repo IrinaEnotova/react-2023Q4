@@ -1,35 +1,15 @@
 import { useSearchParams } from 'react-router-dom';
-import { useEffect, useState, JSX } from 'react';
-import fetchItemById from '../../API/fetchItemById';
-import ApiItem from '../../interfaces/interfaces';
+import { JSX } from 'react';
 import Button from '../../components/Button/Button';
 import Loader from '../../components/Loader/Loader';
 import NotFound from '../../components/NotFound/NotFound';
 import styles from './DetailedPage.module.css';
 import isItemFieldExist from '../../utils/isItemFieldExist';
+import useFetchItem from '../../hooks/useFetchItem';
 
 const DetailedPage = (): JSX.Element => {
-  const [item, setItem] = useState<ApiItem | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-
-  const itemId = searchParams.get('character');
-
-  useEffect(() => {
-    async function fetchData(): Promise<void> {
-      setIsLoading(true);
-      const itemData = await fetchItemById(itemId!);
-      if (itemData && 'docs' in itemData) {
-        setIsError(false);
-        setItem(itemData.docs[0]);
-      } else {
-        setIsError(true);
-      }
-      setIsLoading(false);
-    }
-    fetchData();
-  }, [itemId]);
+  const [item, isLoading, isError] = useFetchItem(searchParams);
 
   if (isLoading) {
     return (

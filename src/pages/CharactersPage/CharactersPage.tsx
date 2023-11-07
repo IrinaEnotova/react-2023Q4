@@ -1,64 +1,43 @@
-import { Outlet, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { useCallback, useEffect, useState, JSX } from 'react';
+import { Outlet, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useEffect, useState, JSX, useCallback } from 'react';
 import Search from '../../components/Search/Search';
 import ItemList from '../../components/ItemList/ItemList';
 import Loader from '../../components/Loader/Loader';
 import Pagination from '../../components/Pagination/Pagination';
-import { getPageCount } from '../../utils/pages';
-import fetchItems from '../../API/fetchItems';
 import LimitHandler from '../../components/SelectLimit/LimitHandler';
 import NotFound from '../../components/NotFound/NotFound';
-import ApiItem from '../../interfaces/interfaces';
 import styles from './CharacterPage.module.css';
+import useFetchData from '../../hooks/useFetchData';
 
 const CharactersPage = (): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [items, setItems] = useState<ApiItem[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [totalPage, setTotalPage] = useState(1);
-  const [isError, setIsError] = useState(false);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(12);
 
-  const params = useParams();
+  const changeSearchQuery = useCallback((newQuery: string): void => {
+    setSearchQuery(newQuery);
+  }, []);
+
+  const changePageNumber = useCallback((page: number): void => {
+    setPage(page);
+  }, []);
+
+  const [items, isLoading, totalPage, isError, handleItems] = useFetchData(
+    limit,
+    page,
+    changeSearchQuery,
+    changePageNumber
+  );
+
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
-
-  const handleItems = useCallback(
-    async (searchStr: string, page: number) => {
-      setIsLoading(true);
-      try {
-        const data = await fetchItems(searchStr, page, limit);
-        const pageCount = getPageCount(data.total, limit);
-        setItems(data.docs);
-        setTotalPage(pageCount);
-      } catch (error) {
-        setIsError(true);
-      }
-      setIsLoading(false);
-    },
-    [limit]
-  );
 
   useEffect(() => {
     if (location.pathname === '/') {
       navigate('/page/1');
     }
   }, [location, navigate]);
-
-  useEffect(() => {
-    const searchStr = localStorage.getItem('query') || '';
-    if (searchStr) {
-      setSearchQuery(searchStr);
-    }
-    if (params.id && +params.id !== page) {
-      setPage(Number(params.id));
-      handleItems(searchStr, Number(params.id));
-    } else {
-      handleItems(searchStr, page);
-    }
-  }, [page, params.id, handleItems]);
 
   const handleSearchQuery = (query: string): void => {
     setSearchQuery(query);
