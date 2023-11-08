@@ -1,5 +1,5 @@
 import { Outlet, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { useEffect, useState, JSX, useCallback } from 'react';
+import { useEffect, useState, JSX, useCallback, useContext } from 'react';
 import Search from '../../components/Search/Search';
 import ItemList from '../../components/ItemList/ItemList';
 import Loader from '../../components/Loader/Loader';
@@ -8,22 +8,22 @@ import LimitHandler from '../../components/SelectLimit/LimitHandler';
 import NotFound from '../../components/NotFound/NotFound';
 import useFetchData from '../../hooks/useFetchData';
 import ApiItem from '../../interfaces/interfaces';
+import { AppContext } from '../../context/AppContext';
 import styles from './CharacterPage.module.css';
 
 const CharactersPage = (): JSX.Element => {
-  const [items, setItems] = useState<ApiItem[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const { currentState, setCurrentState } = useContext(AppContext);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(12);
 
   const changeSearchQuery = useCallback((newQuery: string): void => {
-    setSearchQuery(newQuery);
+    setCurrentState({ ...currentState, searchQuery: newQuery });
   }, []);
   const changePageNumber = useCallback((page: number): void => {
     setPage(page);
   }, []);
   const changeItems = useCallback((items: ApiItem[]): void => {
-    setItems(items);
+    setCurrentState({ ...currentState, items: items });
   }, []);
 
   const [isLoading, totalPage, isError, handleItems] = useFetchData(
@@ -33,7 +33,6 @@ const CharactersPage = (): JSX.Element => {
     changePageNumber,
     changeItems
   );
-
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -43,16 +42,6 @@ const CharactersPage = (): JSX.Element => {
       navigate('/page/1');
     }
   }, [location, navigate]);
-
-  const handleSearchQuery = (query: string): void => {
-    setSearchQuery(query);
-  };
-
-  const getSearch = (): void => {
-    localStorage.setItem('query', searchQuery);
-    navigate(`/page/1`);
-    handleItems(searchQuery, page);
-  };
 
   const changePage = (page: number): void => {
     setPage(page);
@@ -68,26 +57,30 @@ const CharactersPage = (): JSX.Element => {
     setSearchParams({ character: characterId });
   };
 
+  const getSearch = (searchValue: string): void => {
+    localStorage.setItem('query', searchValue);
+    changePage(1);
+    handleItems(searchValue, 1);
+  };
+
   if (isError) {
     throw new Error('Fetch error catched! Try later!');
   }
-
   if (isNaN(page)) {
     return <NotFound>Page was not found</NotFound>;
   }
-
   return (
     <>
       <div className={styles['wrapper']}>
         <div className={styles['items-filters']}>
           <LimitHandler changeLimit={changeLimit} />
-          <Search searchQuery={searchQuery} handleChange={handleSearchQuery} getSearch={getSearch} />
+          <Search getSearch={getSearch} />
         </div>
         {isLoading ? (
           <Loader />
         ) : (
           <>
-            <ItemList items={items} changeSearchParams={changeSearchParams} />
+            <ItemList changeSearchParams={changeSearchParams} />
             {totalPage > 1 && page <= totalPage && (
               <Pagination page={page} totalPage={totalPage} changePage={changePage} />
             )}

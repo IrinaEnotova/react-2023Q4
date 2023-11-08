@@ -28,7 +28,10 @@ export interface AppProviderProps {
 }
 
 export const AppContextProvider = ({ children }: AppProviderProps): JSX.Element => {
-  const [currentState, setCurrentState] = useState<CurrentState>({ items: [], searchQuery: '' });
+  const [currentState, setCurrentState] = useState<CurrentState>({
+    items: [],
+    searchQuery: localStorage.getItem('query') || '',
+  });
 
   return <AppContext.Provider value={{ currentState, setCurrentState }}>{children}</AppContext.Provider>;
 };
