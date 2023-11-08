@@ -6,10 +6,12 @@ import Loader from '../../components/Loader/Loader';
 import Pagination from '../../components/Pagination/Pagination';
 import LimitHandler from '../../components/SelectLimit/LimitHandler';
 import NotFound from '../../components/NotFound/NotFound';
-import styles from './CharacterPage.module.css';
 import useFetchData from '../../hooks/useFetchData';
+import ApiItem from '../../interfaces/interfaces';
+import styles from './CharacterPage.module.css';
 
 const CharactersPage = (): JSX.Element => {
+  const [items, setItems] = useState<ApiItem[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(12);
@@ -17,16 +19,19 @@ const CharactersPage = (): JSX.Element => {
   const changeSearchQuery = useCallback((newQuery: string): void => {
     setSearchQuery(newQuery);
   }, []);
-
   const changePageNumber = useCallback((page: number): void => {
     setPage(page);
   }, []);
+  const changeItems = useCallback((items: ApiItem[]): void => {
+    setItems(items);
+  }, []);
 
-  const [items, isLoading, totalPage, isError, handleItems] = useFetchData(
+  const [isLoading, totalPage, isError, handleItems] = useFetchData(
     limit,
     page,
     changeSearchQuery,
-    changePageNumber
+    changePageNumber,
+    changeItems
   );
 
   const [searchParams, setSearchParams] = useSearchParams();
