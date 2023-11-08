@@ -1,7 +1,5 @@
 interface SearchProps {
-  searchQuery: string;
-  handleChange: (query: string) => void;
-  getSearch: () => void;
+  getSearch: (searchValue: string) => void;
 }
 
 export default SearchProps;
