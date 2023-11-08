@@ -8,15 +8,14 @@ export default function useFetchData(
   limit: number,
   page: number,
   changeSearchQuery: (query: string) => void,
-  changePageNumber: (page: number) => void
+  changePageNumber: (page: number) => void,
+  changeItems: (items: ApiItem[]) => void
 ): [
-  items: ApiItem[],
   isLoading: boolean,
   totalPage: number,
   isError: boolean,
   handleItems: (searchStr: string, page: number) => Promise<void>,
 ] {
-  const [items, setItems] = useState<ApiItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [totalPage, setTotalPage] = useState(1);
   const [isError, setIsError] = useState(false);
@@ -29,7 +28,7 @@ export default function useFetchData(
       try {
         const data = await fetchItems(searchStr, page, limit);
         const pageCount = getPageCount(data.total, limit);
-        setItems(data.docs);
+        changeItems(data.docs);
         setTotalPage(pageCount);
       } catch (error) {
         setIsError(true);
@@ -50,8 +49,7 @@ export default function useFetchData(
     } else {
       handleItems(searchStr, page);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id, handleItems, page]);
 
-  return [items, isLoading, totalPage, isError, handleItems];
+  return [isLoading, totalPage, isError, handleItems];
 }
