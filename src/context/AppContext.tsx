@@ -14,7 +14,7 @@ export interface AppContextInterface {
 const defaultState = {
   currentState: {
     items: [],
-    searchQuery: '',
+    searchQuery: localStorage.getItem('query') || '',
   },
   setCurrentState: (currentState: CurrentState) => {
     return currentState;
@@ -25,13 +25,11 @@ export const AppContext = createContext(defaultState);
 
 export interface AppProviderProps {
   children: ReactNode;
+  value: CurrentState;
 }
 
-export const AppContextProvider = ({ children }: AppProviderProps): JSX.Element => {
-  const [currentState, setCurrentState] = useState<CurrentState>({
-    items: [],
-    searchQuery: localStorage.getItem('query') || '',
-  });
+export const AppContextProvider = ({ children, value }: AppProviderProps): JSX.Element => {
+  const [currentState, setCurrentState] = useState<CurrentState>(value);
 
   return <AppContext.Provider value={{ currentState, setCurrentState }}>{children}</AppContext.Provider>;
 };

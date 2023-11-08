@@ -8,7 +8,12 @@ import { AppContextProvider } from './context/AppContext.tsx';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <AppContextProvider>
+      <AppContextProvider
+        value={{
+          items: [],
+          searchQuery: localStorage.getItem('query') || '',
+        }}
+      >
         <App />
       </AppContextProvider>
     </ErrorBoundary>
