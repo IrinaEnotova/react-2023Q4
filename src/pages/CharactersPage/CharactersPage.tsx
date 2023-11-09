@@ -1,5 +1,5 @@
-import { Outlet, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { useEffect, useState, JSX, useCallback, useContext } from 'react';
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+import { useState, JSX, useCallback, useContext } from 'react';
 import Search from '../../components/Search/Search';
 import ItemList from '../../components/ItemList/ItemList';
 import Loader from '../../components/Loader/Loader';
@@ -35,13 +35,6 @@ const CharactersPage = (): JSX.Element => {
   );
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.pathname === '/') {
-      navigate('/page/1');
-    }
-  }, [location, navigate]);
 
   const changePage = (page: number): void => {
     setPage(page);

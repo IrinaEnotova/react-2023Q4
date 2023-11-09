@@ -11,6 +11,7 @@ const App = (): JSX.Element => {
       path: '/',
       element: <CharactersPage />,
       errorElement: <ErrorBlock />,
+      children: [{ path: '', element: <DetailedPage />, errorElement: <ErrorBlock /> }],
     },
     {
       path: '/page/:id',
