@@ -1,12 +1,12 @@
 import { screen } from '@testing-library/react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ItemList from '../../components/ItemList/ItemList';
-import ApiItem from '../../interfaces/interfaces';
-import { AppContextProvider } from '../../context/AppContext';
+import ItemList from '../components/ItemList/ItemList';
+import ApiItem from '../interfaces/interfaces';
+import { AppContextProvider } from '../context/AppContext';
 
 describe('ItemList component', () => {
-  test('renders the specified number of cards and works correctly with items', () => {
+  test('renders the specified number of cards', () => {
     const items: ApiItem[] = [
       {
         birth: 'First Age',
@@ -55,7 +55,7 @@ describe('ItemList component', () => {
     expect(screen.queryAllByText('Show details').length).toBe(2);
   });
 
-  test('renders the specified number of cards', () => {
+  test('renders one card with specific content', () => {
     const items: ApiItem[] = [
       {
         birth: 'First Age',
@@ -84,10 +84,12 @@ describe('ItemList component', () => {
     );
 
     expect(screen.queryAllByText('Show details').length).toBe(1);
+    expect(screen.getByRole('heading')).toHaveTextContent('Finduilas');
+    expect(screen.getByRole('button')).toHaveTextContent('Show details');
   });
 
   test('renders correctly with empty data', () => {
-    const { queryByText } = render(
+    render(
       <AppContextProvider
         value={{
           items: [],
@@ -97,7 +99,7 @@ describe('ItemList component', () => {
         <ItemList changeSearchParams={(): void => {}} />
       </AppContextProvider>
     );
-    expect(queryByText('Finduilas')).toBeNull();
-    expect(queryByText('Fingon')).toBeNull();
+    expect(screen.queryAllByText('Show details').length).toBe(0);
+    expect(screen.getByRole('heading')).toHaveTextContent('Characters were not found');
   });
 });
