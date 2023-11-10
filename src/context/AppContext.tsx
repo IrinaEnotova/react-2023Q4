@@ -4,6 +4,7 @@ import ApiItem from '../interfaces/interfaces';
 export interface CurrentState {
   items: ApiItem[];
   searchQuery: string;
+  selectedItemId: string;
 }
 
 export interface AppContextInterface {
@@ -15,6 +16,7 @@ const defaultState = {
   currentState: {
     items: [],
     searchQuery: localStorage.getItem('query') || '',
+    selectedItemId: '',
   },
   setCurrentState: (currentState: CurrentState) => {
     return currentState;

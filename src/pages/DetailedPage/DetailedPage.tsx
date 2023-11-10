@@ -1,13 +1,15 @@
 import { useSearchParams } from 'react-router-dom';
-import { JSX } from 'react';
+import { JSX, useContext } from 'react';
 import Button from '../../components/Button/Button';
 import Loader from '../../components/Loader/Loader';
 import NotFound from '../../components/NotFound/NotFound';
 import styles from './DetailedPage.module.css';
 import isItemFieldExist from '../../utils/isItemFieldExist';
 import useFetchItem from '../../hooks/useFetchItem';
+import { AppContext } from '../../context/AppContext';
 
 const DetailedPage = (): JSX.Element => {
+  const { currentState, setCurrentState } = useContext(AppContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const [item, isLoading, isError] = useFetchItem(searchParams);
 
@@ -42,6 +44,7 @@ const DetailedPage = (): JSX.Element => {
       <Button
         onClick={(): void => {
           setSearchParams({});
+          setCurrentState({ ...currentState, selectedItemId: '' });
         }}
       >
         Close details

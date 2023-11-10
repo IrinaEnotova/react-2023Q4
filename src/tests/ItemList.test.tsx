@@ -4,6 +4,7 @@ import '@testing-library/jest-dom';
 import ItemList from '../components/ItemList/ItemList';
 import ApiItem from '../interfaces/interfaces';
 import { AppContextProvider } from '../context/AppContext';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('ItemList component', () => {
   test('renders the specified number of cards', () => {
@@ -41,9 +42,12 @@ describe('ItemList component', () => {
         value={{
           items: items,
           searchQuery: '',
+          selectedItemId: '',
         }}
       >
-        <ItemList changeSearchParams={(): void => {}} />
+        <BrowserRouter>
+          <ItemList />
+        </BrowserRouter>
       </AppContextProvider>
     );
 
@@ -77,9 +81,12 @@ describe('ItemList component', () => {
         value={{
           items: items,
           searchQuery: '',
+          selectedItemId: '',
         }}
       >
-        <ItemList changeSearchParams={(): void => {}} />
+        <BrowserRouter>
+          <ItemList />
+        </BrowserRouter>
       </AppContextProvider>
     );
 
@@ -94,9 +101,12 @@ describe('ItemList component', () => {
         value={{
           items: [],
           searchQuery: '',
+          selectedItemId: '',
         }}
       >
-        <ItemList changeSearchParams={(): void => {}} />
+        <BrowserRouter>
+          <ItemList />
+        </BrowserRouter>
       </AppContextProvider>
     );
     expect(screen.queryAllByText('Show details').length).toBe(0);

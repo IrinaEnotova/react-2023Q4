@@ -14,6 +14,7 @@ describe('Search component', () => {
         value={{
           items: [],
           searchQuery: '',
+          selectedItemId: '',
         }}
       >
         <Search getSearch={getSearch} />
@@ -37,6 +38,7 @@ describe('Search component', () => {
         value={{
           items: [],
           searchQuery: '',
+          selectedItemId: '',
         }}
       >
         <Search

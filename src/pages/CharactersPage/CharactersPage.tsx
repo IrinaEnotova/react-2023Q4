@@ -1,4 +1,4 @@
-import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useState, JSX, useCallback, useContext } from 'react';
 import Search from '../../components/Search/Search';
 import ItemList from '../../components/ItemList/ItemList';
@@ -33,7 +33,7 @@ const CharactersPage = (): JSX.Element => {
     changePageNumber,
     changeItems
   );
-  const [searchParams] = useSearchParams();
+  // const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const changePage = (page: number): void => {
@@ -76,7 +76,8 @@ const CharactersPage = (): JSX.Element => {
           </>
         )}
       </div>
-      {searchParams.has('character') && <Outlet />}
+      {/* {searchParams.has('character') && <Outlet />} */}
+      {!!currentState.selectedItemId && <Outlet />}
     </>
   );
 };

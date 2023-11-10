@@ -12,6 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         value={{
           items: [],
           searchQuery: localStorage.getItem('query') || '',
+          selectedItemId: '',
         }}
       >
         <App />

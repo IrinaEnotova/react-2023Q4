@@ -1,11 +1,13 @@
-import { JSX } from 'react';
+import { JSX, useContext } from 'react';
 import ItemProps from './Item.props';
 import Button from '../Button/Button';
 import styles from './Item.module.css';
 import { useSearchParams } from 'react-router-dom';
+import { AppContext } from '../../context/AppContext';
 
 const Item = ({ item }: ItemProps): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { currentState, setCurrentState } = useContext(AppContext);
 
   return (
     <div className={styles['item']}>
@@ -24,8 +26,9 @@ const Item = ({ item }: ItemProps): JSX.Element => {
       </div>
       <Button
         onClick={(): void => {
-          setSearchParams({ character: `${item._id}` });
+          setSearchParams({ character: item._id });
           console.log(searchParams);
+          setCurrentState({ ...currentState, selectedItemId: item._id });
         }}
       >
         Show details
