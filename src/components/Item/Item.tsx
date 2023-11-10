@@ -2,8 +2,11 @@ import { JSX } from 'react';
 import ItemProps from './Item.props';
 import Button from '../Button/Button';
 import styles from './Item.module.css';
+import { useSearchParams } from 'react-router-dom';
 
-const Item = ({ item, changeSearchParams }: ItemProps): JSX.Element => {
+const Item = ({ item }: ItemProps): JSX.Element => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   return (
     <div className={styles['item']}>
       <div className={styles['heading-wrapper']}>
@@ -21,7 +24,8 @@ const Item = ({ item, changeSearchParams }: ItemProps): JSX.Element => {
       </div>
       <Button
         onClick={(): void => {
-          changeSearchParams(`${item._id}`);
+          setSearchParams({ character: `${item._id}` });
+          console.log(searchParams);
         }}
       >
         Show details

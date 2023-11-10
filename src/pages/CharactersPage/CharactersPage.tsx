@@ -33,7 +33,7 @@ const CharactersPage = (): JSX.Element => {
     changePageNumber,
     changeItems
   );
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const changePage = (page: number): void => {
@@ -44,10 +44,6 @@ const CharactersPage = (): JSX.Element => {
   const changeLimit = (limitValue: number): void => {
     navigate(`/page/1`);
     setLimit(limitValue);
-  };
-
-  const changeSearchParams = (characterId: string): void => {
-    setSearchParams({ character: characterId });
   };
 
   const getSearch = (searchValue: string): void => {
@@ -73,7 +69,7 @@ const CharactersPage = (): JSX.Element => {
           <Loader />
         ) : (
           <>
-            <ItemList changeSearchParams={changeSearchParams} />
+            <ItemList />
             {totalPage > 1 && page <= totalPage && (
               <Pagination page={page} totalPage={totalPage} changePage={changePage} />
             )}
