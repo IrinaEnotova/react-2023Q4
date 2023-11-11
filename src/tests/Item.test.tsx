@@ -231,7 +231,9 @@ describe('Item component', () => {
     );
   });
 
+  const spyFetch = vi.spyOn(global, 'fetch');
   test('clicking triggers an additional API call to fetch detailed information', async () => {
+    expect(spyFetch).toHaveBeenCalledOnce();
     expect((await screen.findAllByText('Show details')).length).toBe(12);
     fireEvent.click((await screen.findAllByText('Show details'))[0]);
     const searchParams = new URLSearchParams(location.search);
