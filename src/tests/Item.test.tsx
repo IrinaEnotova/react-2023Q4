@@ -7,7 +7,6 @@ import ItemList from '../components/ItemList/ItemList';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CharactersPage from '../pages/CharactersPage/CharactersPage';
 import DetailedPage from '../pages/DetailedPage/DetailedPage';
-import ErrorBlock from '../components/ErrorBlock/ErrorBlock';
 
 describe('Item component', () => {
   test('renders the relevant card data', () => {
@@ -221,10 +220,10 @@ describe('Item component', () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<CharactersPage />}>
-              <Route path="" element={<DetailedPage />} errorElement={<ErrorBlock />}></Route>
+              <Route path="" element={<DetailedPage />}></Route>
             </Route>
             <Route path="/page/:id" element={<CharactersPage />}>
-              <Route path="" element={<DetailedPage />} errorElement={<ErrorBlock />}></Route>
+              <Route path="" element={<DetailedPage />}></Route>
             </Route>
           </Routes>
         </BrowserRouter>
