@@ -5,6 +5,7 @@ import ItemList from '../components/ItemList/ItemList';
 import ApiItem from '../interfaces/interfaces';
 import { AppContextProvider } from '../context/AppContext';
 import { BrowserRouter } from 'react-router-dom';
+import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 
 describe('ItemList component', () => {
   test('renders the specified number of cards', () => {
@@ -46,7 +47,9 @@ describe('ItemList component', () => {
         }}
       >
         <BrowserRouter>
-          <ItemList />
+          <ErrorBoundary>
+            <ItemList />
+          </ErrorBoundary>
         </BrowserRouter>
       </AppContextProvider>
     );
