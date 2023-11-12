@@ -57,5 +57,7 @@ describe('DetailedPage component', () => {
     const searchParams = new URLSearchParams(location.search);
     const character = searchParams.get('character');
     expect(character).toBeNull();
+    expect(screen.queryByText(/Race - Hobbit/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Close details/i)).not.toBeInTheDocument();
   });
 });
