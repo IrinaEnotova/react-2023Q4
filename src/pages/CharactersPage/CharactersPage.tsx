@@ -1,58 +1,60 @@
-import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
-import { useState, JSX, useCallback, useContext } from 'react';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { JSX, useEffect } from 'react';
 import Search from '../../components/Search/Search';
 import ItemList from '../../components/ItemList/ItemList';
 import Loader from '../../components/Loader/Loader';
 import Pagination from '../../components/Pagination/Pagination';
 import LimitHandler from '../../components/SelectLimit/LimitHandler';
 import NotFound from '../../components/NotFound/NotFound';
-import useFetchData from '../../hooks/useFetchData';
-import ApiItem from '../../interfaces/interfaces';
-import { AppContext } from '../../context/AppContext';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { itemsSlice } from '../../store/reducers/ItemsSlice';
+import { useGetItemsQuery } from '../../API/itemsService';
+import { getPageCount } from '../../utils/pages';
 import styles from './CharacterPage.module.css';
 
 const CharactersPage = (): JSX.Element => {
-  const { currentState, setCurrentState } = useContext(AppContext);
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(12);
-
-  const changeSearchQuery = useCallback((newQuery: string): void => {
-    setCurrentState({ ...currentState, searchQuery: newQuery });
-  }, []);
-  const changePageNumber = useCallback((page: number): void => {
-    setPage(page);
-  }, []);
-  const changeItems = useCallback((items: ApiItem[]): void => {
-    setCurrentState({ ...currentState, items: items });
-  }, []);
-
-  const [isLoading, totalPage, isError, handleItems] = useFetchData(
-    limit,
-    page,
-    changeSearchQuery,
-    changePageNumber,
-    changeItems
-  );
-  const [searchParams] = useSearchParams();
+  const params = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { searchQuery, limit, totalPages, page, isDetailsOpen } = useAppSelector((state) => state.itemsReducer);
+  const { data, isItemsLoading, isItemsFetching, isItemsError, isItemsSuccess } = useGetItemsQuery(
+    {
+      searchStr: searchQuery,
+      page: page,
+      limit: limit,
+    },
+    {
+      selectFromResult: ({ data, isLoading, isFetching, isError, isSuccess }) => ({
+        data: data,
+        isItemsLoading: isLoading,
+        isItemsFetching: isFetching,
+        isItemsError: isError,
+        isItemsSuccess: isSuccess,
+      }),
+    }
+  );
+
+  useEffect(() => {
+    if (params.id && +params.id !== page) {
+      dispatch(itemsSlice.actions.pageChanging(Number(params.id)));
+    }
+    if (isItemsSuccess) {
+      dispatch(itemsSlice.actions.itemsChanging(data.docs));
+      dispatch(itemsSlice.actions.totalPagesChanging(getPageCount(data.total, limit)));
+    }
+  }, [data]);
 
   const changePage = (page: number): void => {
-    setPage(page);
+    dispatch(itemsSlice.actions.pageChanging(page));
     navigate(`/page/${page}`);
-  };
-
-  const changeLimit = (limitValue: number): void => {
-    navigate(`/page/1`);
-    setLimit(limitValue);
   };
 
   const getSearch = (searchValue: string): void => {
     localStorage.setItem('query', searchValue);
     changePage(1);
-    handleItems(searchValue, 1);
   };
 
-  if (isError) {
+  if (isItemsError) {
     throw new Error('Fetch error catched! Try later!');
   }
   if (isNaN(page)) {
@@ -62,21 +64,19 @@ const CharactersPage = (): JSX.Element => {
     <>
       <div className={styles['wrapper']}>
         <div className={styles['items-filters']}>
-          <LimitHandler changeLimit={changeLimit} />
+          <LimitHandler />
           <Search getSearch={getSearch} />
         </div>
-        {isLoading ? (
+        {isItemsLoading || isItemsFetching ? (
           <Loader />
         ) : (
           <>
             <ItemList />
-            {totalPage > 1 && page <= totalPage && (
-              <Pagination page={page} totalPage={totalPage} changePage={changePage} />
-            )}
+            {totalPages > 1 && page <= totalPages && <Pagination changePage={changePage} />}
           </>
         )}
       </div>
-      {searchParams.has('character') && <Outlet />}
+      {isDetailsOpen && <Outlet />}
     </>
   );
 };
