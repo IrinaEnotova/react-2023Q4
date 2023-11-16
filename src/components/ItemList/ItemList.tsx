@@ -1,16 +1,16 @@
-import { JSX, useContext } from 'react';
+import { JSX } from 'react';
 import Item from '../Item/Item';
 import NotFound from '../NotFound/NotFound';
+import { useAppSelector } from '../../hooks/redux';
 import styles from './ItemList.module.css';
-import { AppContext } from '../../context/AppContext';
 
 const ItemList = (): JSX.Element => {
-  const { currentState } = useContext(AppContext);
+  const { items } = useAppSelector((state) => state.itemsReducer);
 
   return (
     <div className={styles['wrapper']}>
-      {currentState.items.length > 0 ? (
-        currentState.items.map((item) => <Item key={item._id} item={item} />)
+      {items.length > 0 ? (
+        items.map((item) => <Item key={item._id} item={item} />)
       ) : (
         <NotFound>Characters were not found</NotFound>
       )}

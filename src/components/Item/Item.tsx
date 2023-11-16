@@ -1,13 +1,21 @@
-import { JSX, useContext } from 'react';
+import { JSX, useEffect } from 'react';
 import ItemProps from './Item.props';
 import Button from '../Button/Button';
-import styles from './Item.module.css';
 import { useSearchParams } from 'react-router-dom';
-import { AppContext } from '../../context/AppContext';
+import { itemsSlice } from '../../store/reducers/ItemsSlice';
+import { useAppDispatch } from '../../hooks/redux';
+import styles from './Item.module.css';
 
 const Item = ({ item }: ItemProps): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { currentState, setCurrentState } = useContext(AppContext);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (searchParams.has('character')) {
+      dispatch(itemsSlice.actions.isDetailsOpenChanging(true));
+    } else {
+      dispatch(itemsSlice.actions.isDetailsOpenChanging(false));
+    }
+  }, [searchParams]);
 
   return (
     <div className={styles['item']}>
@@ -27,8 +35,6 @@ const Item = ({ item }: ItemProps): JSX.Element => {
       <Button
         onClick={(): void => {
           setSearchParams({ character: item._id });
-          console.log(searchParams);
-          setCurrentState({ ...currentState, selectedItemId: item._id });
         }}
       >
         Show details

@@ -1,17 +1,18 @@
-import { FormEvent, useState, JSX, useContext } from 'react';
+import { FormEvent, useState, JSX } from 'react';
 import SearchProps from './Search.props';
 import Button from '../Button/Button';
-import { AppContext } from '../../context/AppContext';
+import { useAppDispatch } from '../../hooks/redux';
+import { itemsSlice } from '../../store/reducers/ItemsSlice';
 import styles from './Search.module.css';
 
 const Search = ({ getSearch }: SearchProps): JSX.Element => {
   const [searchValue, setSearchValue] = useState(localStorage.getItem('query') || '');
-  const { currentState, setCurrentState } = useContext(AppContext);
   const [isErrorBoundary, setIsErrorBoundary] = useState(false);
+  const dispatch = useAppDispatch();
 
   const submit = (event: FormEvent): void => {
     event.preventDefault();
-    setCurrentState({ ...currentState, searchQuery: searchValue });
+    dispatch(itemsSlice.actions.searchQueryChanging(searchValue));
     getSearch(searchValue);
   };
 

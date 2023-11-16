@@ -1,9 +1,12 @@
 import { JSX } from 'react';
 import Button from '../Button/Button';
 import { PaginationProps } from './Pagination.props';
+import { useAppSelector } from '../../hooks/redux';
 import styles from './Pagination.module.css';
 
-const Pagination = ({ page, totalPage, changePage }: PaginationProps): JSX.Element => {
+const Pagination = ({ changePage }: PaginationProps): JSX.Element => {
+  const { totalPages, page } = useAppSelector((state) => state.itemsReducer);
+
   const handlePrevPage = (): void => {
     if (page > 1) {
       changePage(page - 1);
@@ -11,7 +14,7 @@ const Pagination = ({ page, totalPage, changePage }: PaginationProps): JSX.Eleme
   };
 
   const handleNextPage = (): void => {
-    if (page < totalPage) {
+    if (page < totalPages) {
       changePage(page + 1);
     }
   };
@@ -22,7 +25,7 @@ const Pagination = ({ page, totalPage, changePage }: PaginationProps): JSX.Eleme
         Prev
       </Button>
       <span className={styles['page']}>{page}</span>
-      <Button className={styles.action} onClick={handleNextPage} disabled={page >= totalPage}>
+      <Button className={styles.action} onClick={handleNextPage} disabled={page >= totalPages}>
         Next
       </Button>
     </div>
