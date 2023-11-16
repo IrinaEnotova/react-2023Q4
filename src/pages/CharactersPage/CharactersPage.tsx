@@ -38,11 +38,19 @@ const CharactersPage = (): JSX.Element => {
     if (params.id && +params.id !== page) {
       dispatch(itemsSlice.actions.pageChanging(Number(params.id)));
     }
-    if (isItemsSuccess) {
-      dispatch(itemsSlice.actions.itemsChanging(data.docs));
-      dispatch(itemsSlice.actions.totalPagesChanging(getPageCount(data.total, limit)));
+    if (isItemsLoading || isItemsFetching) {
+      dispatch(itemsSlice.actions.isAllItemsLoadingChanging(true));
     }
-  }, [data]);
+    if (isItemsSuccess) {
+      dispatch(
+        itemsSlice.actions.allItemsFetching({
+          payloadItems: data.docs,
+          payloadTotalPages: getPageCount(data.total, limit),
+          payloadIsAllItemsLoading: false,
+        })
+      );
+    }
+  }, [data, isItemsLoading, isItemsFetching, isItemsSuccess]);
 
   const changePage = (page: number): void => {
     dispatch(itemsSlice.actions.pageChanging(page));

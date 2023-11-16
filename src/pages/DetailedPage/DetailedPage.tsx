@@ -28,7 +28,11 @@ const DetailedPage = (): JSX.Element => {
   );
 
   useEffect(() => {
+    if (isItemLoading || isItemFetching) {
+      dispatch(itemsSlice.actions.isSingleItemLoadingChanging(true));
+    }
     if (isItemSuccess) {
+      dispatch(itemsSlice.actions.isSingleItemLoadingChanging(false));
       dispatch(itemsSlice.actions.detailedItemChanging(data.docs[0]));
     }
   }, [data]);
