@@ -1,22 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import App from './App.tsx';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.tsx';
+import { setupStore } from './store/store.ts';
 import './index.css';
-import { AppContextProvider } from './context/AppContext.tsx';
+
+const store = setupStore();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <AppContextProvider
-        value={{
-          items: [],
-          searchQuery: localStorage.getItem('query') || '',
-          selectedItemId: '',
-        }}
-      >
+      <Provider store={store}>
         <App />
-      </AppContextProvider>
+      </Provider>
     </ErrorBoundary>
   </React.StrictMode>
 );
