@@ -1,26 +1,26 @@
 import { screen } from '@testing-library/react';
-import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { AppContextProvider } from '../../context/AppContext';
 import App from '../../App';
-import { server } from '../mocks/server';
+import { renderWithProviders } from '../utils/test-utils';
+import { mockItems } from '../mocks/mockItems';
 
 describe('App component', () => {
-  beforeAll(() => server.listen());
-  afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
   beforeEach(() => {
-    render(
-      <AppContextProvider
-        value={{
-          items: [],
+    renderWithProviders(<App />, {
+      preloadedState: {
+        itemsReducer: {
           searchQuery: '',
-          selectedItemId: '',
-        }}
-      >
-        <App />
-      </AppContextProvider>
-    );
+          items: mockItems,
+          page: 1,
+          totalPages: 1,
+          limit: 12,
+          isDetailsOpen: false,
+          detailedItem: null,
+          isAllItemsLoading: false,
+          isSingleItemLoading: false,
+        },
+      },
+    });
   });
 
   test('contains items', async () => {

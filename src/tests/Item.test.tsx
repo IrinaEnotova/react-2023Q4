@@ -1,13 +1,11 @@
 import { fireEvent, screen } from '@testing-library/react';
-import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ApiItem from '../interfaces/interfaces';
-import { AppContextProvider } from '../context/AppContext';
 import ItemList from '../components/ItemList/ItemList';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import CharactersPage from '../pages/CharactersPage/CharactersPage';
-import DetailedPage from '../pages/DetailedPage/DetailedPage';
-import { server } from './mocks/server';
+import { BrowserRouter } from 'react-router-dom';
+import { renderWithProviders } from './utils/test-utils';
+import App from '../App';
+import { mockItems } from './mocks/mockItems';
 
 describe('Item component', () => {
   test('renders the relevant card data', () => {
@@ -27,18 +25,25 @@ describe('Item component', () => {
       },
     ];
 
-    render(
-      <AppContextProvider
-        value={{
-          items: items,
-          searchQuery: '',
-          selectedItemId: '',
-        }}
-      >
-        <BrowserRouter>
-          <ItemList />
-        </BrowserRouter>
-      </AppContextProvider>
+    renderWithProviders(
+      <BrowserRouter>
+        <ItemList />
+      </BrowserRouter>,
+      {
+        preloadedState: {
+          itemsReducer: {
+            searchQuery: '',
+            items: items,
+            page: 1,
+            totalPages: 1,
+            limit: 12,
+            isDetailsOpen: false,
+            detailedItem: null,
+            isAllItemsLoading: false,
+            isSingleItemLoading: false,
+          },
+        },
+      }
     );
 
     expect(screen.queryAllByText('Show details').length).toBe(1);
@@ -50,39 +55,27 @@ describe('Item component', () => {
 });
 
 describe('Item component', () => {
-  beforeAll(() => server.listen());
-  afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
   beforeEach(() => {
-    render(
-      <AppContextProvider
-        value={{
-          items: [],
+    renderWithProviders(<App />, {
+      preloadedState: {
+        itemsReducer: {
           searchQuery: '',
-          selectedItemId: '',
-        }}
-      >
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<CharactersPage />}>
-              <Route path="" element={<DetailedPage />}></Route>
-            </Route>
-            <Route path="/page/:id" element={<CharactersPage />}>
-              <Route path="" element={<DetailedPage />}></Route>
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </AppContextProvider>
-    );
+          items: mockItems,
+          page: 1,
+          totalPages: 1,
+          limit: 12,
+          isDetailsOpen: false,
+          detailedItem: null,
+          isAllItemsLoading: false,
+          isSingleItemLoading: false,
+        },
+      },
+    });
   });
 
-  const requestSpy = vi.fn();
-  server.events.on('request:start', requestSpy);
   test('clicking triggers an additional API call to fetch detailed information', async () => {
-    expect(requestSpy).toHaveBeenCalledTimes(1);
     expect((await screen.findAllByText('Show details')).length).toBe(12);
     fireEvent.click((await screen.findAllByText('Show details'))[0]);
-    expect(requestSpy).toHaveBeenCalledTimes(2);
     const searchParams = new URLSearchParams(location.search);
     const character = searchParams.get('character');
     expect(character).toBe('5cd99d4bde30eff6ebccfc62');

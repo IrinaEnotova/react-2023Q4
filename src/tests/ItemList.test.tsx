@@ -1,11 +1,10 @@
 import { screen } from '@testing-library/react';
-import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ItemList from '../components/ItemList/ItemList';
 import ApiItem from '../interfaces/interfaces';
-import { AppContextProvider } from '../context/AppContext';
 import { BrowserRouter } from 'react-router-dom';
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
+import { renderWithProviders } from './utils/test-utils';
 
 describe('ItemList component', () => {
   test('renders the specified number of cards', () => {
@@ -38,20 +37,27 @@ describe('ItemList component', () => {
       },
     ];
 
-    const { getByText } = render(
-      <AppContextProvider
-        value={{
-          items: items,
-          searchQuery: '',
-          selectedItemId: '',
-        }}
-      >
-        <BrowserRouter>
-          <ErrorBoundary>
-            <ItemList />
-          </ErrorBoundary>
-        </BrowserRouter>
-      </AppContextProvider>
+    const { getByText } = renderWithProviders(
+      <BrowserRouter>
+        <ErrorBoundary>
+          <ItemList />
+        </ErrorBoundary>
+      </BrowserRouter>,
+      {
+        preloadedState: {
+          itemsReducer: {
+            searchQuery: '',
+            items: items,
+            page: 1,
+            totalPages: 1,
+            limit: 12,
+            isDetailsOpen: false,
+            detailedItem: null,
+            isAllItemsLoading: false,
+            isSingleItemLoading: false,
+          },
+        },
+      }
     );
 
     for (const item of items) {
@@ -79,18 +85,25 @@ describe('ItemList component', () => {
       },
     ];
 
-    render(
-      <AppContextProvider
-        value={{
-          items: items,
-          searchQuery: '',
-          selectedItemId: '',
-        }}
-      >
-        <BrowserRouter>
-          <ItemList />
-        </BrowserRouter>
-      </AppContextProvider>
+    renderWithProviders(
+      <BrowserRouter>
+        <ItemList />
+      </BrowserRouter>,
+      {
+        preloadedState: {
+          itemsReducer: {
+            searchQuery: '',
+            items: items,
+            page: 1,
+            totalPages: 1,
+            limit: 12,
+            isDetailsOpen: false,
+            detailedItem: null,
+            isAllItemsLoading: false,
+            isSingleItemLoading: false,
+          },
+        },
+      }
     );
 
     expect(screen.queryAllByText('Show details').length).toBe(1);
@@ -99,18 +112,25 @@ describe('ItemList component', () => {
   });
 
   test('renders correctly with empty data', () => {
-    render(
-      <AppContextProvider
-        value={{
-          items: [],
-          searchQuery: '',
-          selectedItemId: '',
-        }}
-      >
-        <BrowserRouter>
-          <ItemList />
-        </BrowserRouter>
-      </AppContextProvider>
+    renderWithProviders(
+      <BrowserRouter>
+        <ItemList />
+      </BrowserRouter>,
+      {
+        preloadedState: {
+          itemsReducer: {
+            searchQuery: '',
+            items: [],
+            page: 1,
+            totalPages: 1,
+            limit: 12,
+            isDetailsOpen: false,
+            detailedItem: null,
+            isAllItemsLoading: false,
+            isSingleItemLoading: false,
+          },
+        },
+      }
     );
     expect(screen.queryAllByText('Show details').length).toBe(0);
     expect(screen.getByRole('heading')).toHaveTextContent('Characters were not found');

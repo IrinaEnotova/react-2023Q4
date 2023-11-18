@@ -1,38 +1,26 @@
 import { fireEvent, screen } from '@testing-library/react';
-import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { AppContextProvider } from '../context/AppContext';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import CharactersPage from '../pages/CharactersPage/CharactersPage';
-import DetailedPage from '../pages/DetailedPage/DetailedPage';
-import { server } from './mocks/server';
+import App from '../App';
+import { renderWithProviders } from './utils/test-utils';
+import { mockItems } from './mocks/mockItems';
 
 describe('DetailedPage component', () => {
-  beforeAll(() => server.listen());
-  afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
-
   beforeEach(async () => {
-    render(
-      <AppContextProvider
-        value={{
-          items: [],
+    renderWithProviders(<App />, {
+      preloadedState: {
+        itemsReducer: {
           searchQuery: '',
-          selectedItemId: '',
-        }}
-      >
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<CharactersPage />}>
-              <Route path="" element={<DetailedPage />}></Route>
-            </Route>
-            <Route path="/page/:id" element={<CharactersPage />}>
-              <Route path="" element={<DetailedPage />}></Route>
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </AppContextProvider>
-    );
+          items: mockItems,
+          page: 1,
+          totalPages: 1,
+          limit: 12,
+          isDetailsOpen: false,
+          detailedItem: null,
+          isAllItemsLoading: false,
+          isSingleItemLoading: false,
+        },
+      },
+    });
 
     expect((await screen.findAllByText('Show details')).length).toBe(12);
     fireEvent.click((await screen.findAllByText('Show details'))[0]);

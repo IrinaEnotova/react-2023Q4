@@ -1,25 +1,28 @@
 import { fireEvent, screen } from '@testing-library/react';
-import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { AppContextProvider } from '../context/AppContext';
 import Search from '../components/Search/Search';
+import { renderWithProviders } from './utils/test-utils';
 
 describe('Search component', () => {
   test('clicking the Search button saves the entered value to the local storage', () => {
     const getSearch = vi.fn((searchValue: string): void => {
       localStorage.setItem('query', searchValue);
     });
-    render(
-      <AppContextProvider
-        value={{
+    renderWithProviders(<Search getSearch={getSearch} />, {
+      preloadedState: {
+        itemsReducer: {
+          searchQuery: localStorage.getItem('query') || '',
           items: [],
-          searchQuery: '',
-          selectedItemId: '',
-        }}
-      >
-        <Search getSearch={getSearch} />
-      </AppContextProvider>
-    );
+          page: 1,
+          totalPages: 1,
+          limit: 12,
+          isDetailsOpen: false,
+          detailedItem: null,
+          isAllItemsLoading: false,
+          isSingleItemLoading: false,
+        },
+      },
+    });
 
     expect(screen.getByRole('textbox')).toBeInTheDocument();
     expect(screen.getByText(/Search/i)).toBeInTheDocument();
@@ -33,20 +36,27 @@ describe('Search component', () => {
 
   test('retrieves the value from the local storage upon mounting', () => {
     localStorage.setItem('query', 'Aragorn');
-    render(
-      <AppContextProvider
-        value={{
-          items: [],
-          searchQuery: '',
-          selectedItemId: '',
+    renderWithProviders(
+      <Search
+        getSearch={(searchValue: string): void => {
+          localStorage.setItem('query', searchValue);
         }}
-      >
-        <Search
-          getSearch={(searchValue: string): void => {
-            localStorage.setItem('query', searchValue);
-          }}
-        />
-      </AppContextProvider>
+      />,
+      {
+        preloadedState: {
+          itemsReducer: {
+            searchQuery: localStorage.getItem('query') || '',
+            items: [],
+            page: 1,
+            totalPages: 1,
+            limit: 12,
+            isDetailsOpen: false,
+            detailedItem: null,
+            isAllItemsLoading: false,
+            isSingleItemLoading: false,
+          },
+        },
+      }
     );
 
     expect(screen.getByDisplayValue('Aragorn')).toBeInTheDocument();

@@ -1,32 +1,26 @@
 import { fireEvent, screen } from '@testing-library/react';
-import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { AppContextProvider } from '../context/AppContext';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import CharactersPage from '../pages/CharactersPage/CharactersPage';
-import { server } from './mocks/server';
+import { renderWithProviders } from './utils/test-utils';
+import { mockItems } from './mocks/mockItems';
+import App from '../App';
 
 describe('Pagination component', () => {
-  beforeAll(() => server.listen());
-  afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
   test('updates URL query parameter when page changes', async () => {
-    render(
-      <AppContextProvider
-        value={{
-          items: [],
+    renderWithProviders(<App />, {
+      preloadedState: {
+        itemsReducer: {
           searchQuery: '',
-          selectedItemId: '',
-        }}
-      >
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<CharactersPage />}></Route>
-            <Route path="/page/:id" element={<CharactersPage />}></Route>
-          </Routes>
-        </BrowserRouter>
-      </AppContextProvider>
-    );
+          items: mockItems,
+          page: 1,
+          totalPages: 1,
+          limit: 12,
+          isDetailsOpen: false,
+          detailedItem: null,
+          isAllItemsLoading: false,
+          isSingleItemLoading: false,
+        },
+      },
+    });
 
     expect((await screen.findAllByText('Show details')).length).toBe(12);
     expect(screen.getByText('1')).toBeInTheDocument();
