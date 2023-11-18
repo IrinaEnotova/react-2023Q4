@@ -12,7 +12,7 @@
     "format:fix": "prettier ./src --write",
     "prepare": "husky install",
     "test": "vitest run",
-    "coverage": "npx vitest run --coverage.enabled --coverage.provider=v8 --coverage.all --coverage.exclude=src/interfaces/interfaces.ts --coverage.exclude=.eslintrc.cjs --coverage.exclude=src/main.tsx --coverage.exclude=src/**/*.props.ts"
+    "coverage": "npx vitest run --coverage.enabled --coverage.provider=v8 --coverage.all --coverage.exclude=src/interfaces/interfaces.ts --coverage.exclude=.eslintrc.cjs --coverage.exclude=src/main.tsx"
   },
   "lint-staged": {
     "**/*.(js|ts|jsx|tsx)": [

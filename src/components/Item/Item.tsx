@@ -1,7 +1,7 @@
 import { JSX, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import ItemProps from './Item.props';
 import Button from '../Button/Button';
-import { useSearchParams } from 'react-router-dom';
 import { itemsSlice } from '../../store/reducers/ItemsSlice';
 import { useAppDispatch } from '../../hooks/redux';
 import styles from './Item.module.css';
