@@ -1,6 +1,7 @@
 .main {
   background: url('../public/images/bg.jpg');
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
   background-size: cover;
   width: 100%;
   margin: 0 auto;
@@ -9,4 +10,20 @@
   display: flex;
   justify-content: center;
   gap: 10px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 20px;
+}
+
+.items-filters {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 20px;
 }
