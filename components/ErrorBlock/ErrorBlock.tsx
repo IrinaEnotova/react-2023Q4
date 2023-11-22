@@ -10,7 +10,7 @@ const ErrorBlock = (): JSX.Element => {
 
   return (
     <div className={styles['error-block']}>
-      <Image className={styles['img']} src={ringIcon} alt="Error" width={200} height={200} />
+      <Image className={styles['img']} src={ringIcon} alt="Error" width={200} height={200} priority={false} />
       <h1>
         Something went wrong <br />
         ErrorBoundary worked!

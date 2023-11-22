@@ -9,20 +9,16 @@ interface ItemsState {
   limit: number;
   isDetailsOpen: boolean;
   detailedItem: ApiItem | null;
-  isAllItemsLoading: boolean;
-  isSingleItemLoading: boolean;
 }
 
 const initialState: ItemsState = {
-  searchQuery: localStorage.getItem('query') || '',
+  searchQuery: '',
   items: [],
   page: 1,
   totalPages: 1,
   limit: 12,
   isDetailsOpen: false,
   detailedItem: null,
-  isAllItemsLoading: false,
-  isSingleItemLoading: false,
 };
 
 export const itemsSlice = createSlice({
@@ -35,7 +31,6 @@ export const itemsSlice = createSlice({
     ) {
       state.items = action.payload.payloadItems;
       state.totalPages = action.payload.payloadTotalPages;
-      state.isAllItemsLoading = action.payload.payloadIsAllItemsLoading;
     },
     pageChanging(state, action: PayloadAction<number>) {
       state.page = action.payload;
@@ -51,12 +46,6 @@ export const itemsSlice = createSlice({
     },
     detailedItemChanging(state, action: PayloadAction<ApiItem | null>) {
       state.detailedItem = action.payload;
-    },
-    isAllItemsLoadingChanging(state, action: PayloadAction<boolean>) {
-      state.isAllItemsLoading = action.payload;
-    },
-    isSingleItemLoadingChanging(state, action: PayloadAction<boolean>) {
-      state.isSingleItemLoading = action.payload;
     },
   },
 });

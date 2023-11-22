@@ -1,13 +1,49 @@
 import Head from 'next/head';
 import { Montserrat } from 'next/font/google';
 import styles from '@/styles/Home.module.css';
-import ErrorBlock from '@/components/ErrorBlock/ErrorBlock';
 import classNames from 'classnames';
-import Item from '@/components/Item/Item';
+import ItemList from '@/components/ItemList/ItemList';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { useGetItemsQuery } from '@/API/itemsService';
+import { useEffect } from 'react';
+import { itemsSlice } from '@/store/reducers/ItemsSlice';
+import { getPageCount } from '@/utils/pages';
+import Search from '@/components/Search/Search';
+import LimitHandler from '@/components/SelectLimit/LimitHandler';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
 export default function Home(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const { searchQuery, limit, page } = useAppSelector((state) => state.itemsReducer);
+  const { data, isItemsLoading, isItemsFetching, isItemsSuccess } = useGetItemsQuery(
+    {
+      searchStr: searchQuery,
+      page: page,
+      limit: limit,
+    },
+    {
+      selectFromResult: ({ data, isLoading, isFetching, isError, isSuccess }) => ({
+        data: data,
+        isItemsLoading: isLoading,
+        isItemsFetching: isFetching,
+        isItemsError: isError,
+        isItemsSuccess: isSuccess,
+      }),
+    }
+  );
+
+  useEffect(() => {
+    if (isItemsSuccess) {
+      dispatch(
+        itemsSlice.actions.allItemsFetching({
+          payloadItems: data.docs,
+          payloadTotalPages: getPageCount(data.total, limit),
+          payloadIsAllItemsLoading: false,
+        })
+      );
+    }
+  }, [data, isItemsLoading, isItemsFetching, isItemsSuccess]);
   return (
     <>
       <Head>
@@ -17,22 +53,13 @@ export default function Home(): JSX.Element {
         <link rel="icon" href="/favicon.png" />
       </Head>
       <main className={classNames(styles.main, montserrat.className)}>
-        <ErrorBlock />
-        <Item
-          item={{
-            _id: '5cd99d4bde30eff6ebccfc62',
-            height: '',
-            race: 'Hobbit',
-            gender: 'Female',
-            birth: 'TA 2818',
-            spouse: 'Marmadoc Brandybuck',
-            death: '',
-            realm: '',
-            hair: '',
-            name: 'Adaldrida (Bolger) Brandybuck',
-            wikiUrl: 'http://lotr.wikia.com//wiki/Adaldrida_(Bolger)_Brandybuck',
+        <LimitHandler />
+        <Search
+          getSearch={(value) => {
+            localStorage.setItem('query', value);
           }}
         />
+        <ItemList />
       </main>
     </>
   );

@@ -7,7 +7,7 @@ import ringIcon from '../../public/images/item-icon.svg';
 const NotFound = ({ children }: NotFoundProps): JSX.Element => {
   return (
     <div className={styles['wrapper']}>
-      <Image className={styles['img']} src={ringIcon} alt="Items was not found" width={200} height={200} />
+      <Image className={styles['img']} src={ringIcon} alt="Items was not found" width={150} height={150} priority />
       <h2 className={styles['not-found']}>{children}</h2>
     </div>
   );

@@ -1,14 +1,14 @@
 import { FormEvent, useRef, useState, JSX } from 'react';
 import Button from '../Button/Button';
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/redux';
 import { itemsSlice } from '../../store/reducers/ItemsSlice';
 import styles from './LimitHandler.module.css';
+import { useRouter } from 'next/navigation';
 
 const LimitHandler = (): JSX.Element => {
   const [value, setValue] = useState('12');
   const inputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const submit = (event: FormEvent): void => {
@@ -22,7 +22,7 @@ const LimitHandler = (): JSX.Element => {
 
   const changeLimit = (limitValue: number): void => {
     dispatch(itemsSlice.actions.limitChanging(limitValue));
-    navigate(`/page/1`);
+    router.replace(`/page/1`);
   };
 
   return (

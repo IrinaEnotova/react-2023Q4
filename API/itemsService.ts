@@ -1,9 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ACCESS_KEY, BASE_PATH } from './constants';
+import { HYDRATE } from 'next-redux-wrapper';
 
 export const itemsAPI = createApi({
   reducerPath: 'itemsAPI',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_PATH }),
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
   endpoints: (build) => ({
     getItems: build.query({
       query: ({ searchStr, page, limit }) => ({
@@ -33,5 +39,6 @@ export const itemsAPI = createApi({
   }),
 });
 
-export const { useGetItemsQuery } = itemsAPI;
-export const { useGetDetailedItemQuery } = itemsAPI;
+export const { useGetItemsQuery, useGetDetailedItemQuery } = itemsAPI;
+
+export const { getItems, getDetailedItem } = itemsAPI.endpoints;

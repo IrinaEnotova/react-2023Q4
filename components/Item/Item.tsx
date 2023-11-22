@@ -22,7 +22,7 @@ const Item = ({ item }: ItemProps): JSX.Element => {
   return (
     <div className={styles['item']}>
       <div className={styles['heading-wrapper']}>
-        <Image src={ringIcon} alt="Ring" width={30} />
+        <Image src={ringIcon} alt="Ring" width={30} priority={false} />
         <h2 className={styles['heading']}>{item.name}</h2>
       </div>
       <Button
