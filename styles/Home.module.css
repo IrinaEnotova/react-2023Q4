@@ -1,0 +1,12 @@
+.main {
+  background: url('../public/images/bg.jpg');
+  height: 100vh;
+  background-size: cover;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}

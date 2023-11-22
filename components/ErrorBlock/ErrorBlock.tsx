@@ -1,21 +1,23 @@
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { JSX } from 'react';
 import Button from '../Button/Button';
 import styles from './ErrorBlock.module.css';
+import Image from 'next/image';
+import ringIcon from '../../public/images/item-icon.svg';
 
 const ErrorBlock = (): JSX.Element => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <div className={styles['error-block']}>
-      <img className={styles['img']} src="/item-icon.svg" alt="Error" />
+      <Image className={styles['img']} src={ringIcon} alt="Error" width={200} height={200} />
       <h1>
         Something went wrong <br />
         ErrorBoundary worked!
       </h1>
       <Button
         onClick={(): void => {
-          navigate('/page/1');
+          router.replace('/page/1');
         }}
       >
         To first page
