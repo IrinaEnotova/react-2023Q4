@@ -15,7 +15,7 @@ const Search = ({ getSearch }: SearchProps): JSX.Element => {
       setSearchValue(localStorage.getItem('query')!);
       dispatch(itemsSlice.actions.searchQueryChanging(localStorage.getItem('query')!));
     }
-  });
+  }, []);
 
   const submit = (event: FormEvent): void => {
     event.preventDefault();

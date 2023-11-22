@@ -1,23 +1,15 @@
 import { JSX } from 'react';
-// import { useSearchParams } from 'react-router-dom';
 import ItemProps from './Item.props';
 import Button from '../Button/Button';
-// import { itemsSlice } from '../../store/reducers/ItemsSlice';
-// import { useAppDispatch } from '../../hooks/redux';
 import styles from './Item.module.css';
 import Image from 'next/image';
 import ringIcon from '../../public/images/item-icon-gold.svg';
+import { useRouter } from 'next/router';
 
 const Item = ({ item }: ItemProps): JSX.Element => {
-  // const [searchParams, setSearchParams] = useSearchParams();
-  // const dispatch = useAppDispatch();
-  // useEffect(() => {
-  //   if (searchParams.has('character')) {
-  //     dispatch(itemsSlice.actions.isDetailsOpenChanging(true));
-  //   } else {
-  //     dispatch(itemsSlice.actions.isDetailsOpenChanging(false));
-  //   }
-  // }, [searchParams]);
+  const router = useRouter();
+  const pathname = router.asPath.split('?')[0];
+  const searchParams = router.query;
 
   return (
     <div className={styles['item']}>
@@ -27,7 +19,9 @@ const Item = ({ item }: ItemProps): JSX.Element => {
       </div>
       <Button
         onClick={(): void => {
-          // setSearchParams({ character: item._id });
+          console.log(pathname);
+          searchParams['character'] = item._id;
+          router.push(`${pathname}?character=${item._id}`);
         }}
       >
         Show details

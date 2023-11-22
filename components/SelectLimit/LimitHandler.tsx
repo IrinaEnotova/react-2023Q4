@@ -3,7 +3,7 @@ import Button from '../Button/Button';
 import { useAppDispatch } from '../../hooks/redux';
 import { itemsSlice } from '../../store/reducers/ItemsSlice';
 import styles from './LimitHandler.module.css';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 const LimitHandler = (): JSX.Element => {
   const [value, setValue] = useState('12');
@@ -22,6 +22,7 @@ const LimitHandler = (): JSX.Element => {
 
   const changeLimit = (limitValue: number): void => {
     dispatch(itemsSlice.actions.limitChanging(limitValue));
+    dispatch(itemsSlice.actions.pageChanging(1));
     router.replace(`/page/1`);
   };
 
