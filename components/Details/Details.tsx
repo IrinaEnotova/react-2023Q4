@@ -40,12 +40,20 @@ const Details = (): JSX.Element => {
     );
   }
 
-  if (isItemError) {
-    return <NotFound>Character was not found!</NotFound>;
-  }
+  const closeDetails = (): void => {
+    router.push(pathname);
+    dispatch(itemsSlice.actions.detailedItemChanging(null));
+  };
 
-  if (!detailedItem) {
-    return <h2>Character was not found!</h2>;
+  if (isItemError || !detailedItem) {
+    return (
+      <div className={styles['detail-wrapper']}>
+        <NotFound>
+          Character was not found! <br />
+          <br /> <Button onClick={closeDetails}>Close details</Button>
+        </NotFound>
+      </div>
+    );
   }
 
   return (
@@ -61,14 +69,7 @@ const Details = (): JSX.Element => {
             ) : null
           )}
         </ul>
-        <Button
-          onClick={(): void => {
-            router.push(pathname);
-            dispatch(itemsSlice.actions.detailedItemChanging(null));
-          }}
-        >
-          Close details
-        </Button>
+        <Button onClick={closeDetails}>Close details</Button>
       </div>
     </>
   );

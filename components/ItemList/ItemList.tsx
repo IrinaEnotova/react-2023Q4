@@ -7,14 +7,20 @@ import styles from './ItemList.module.css';
 const ItemList = (): JSX.Element => {
   const { items } = useAppSelector((state) => state.itemsReducer);
 
+  if (!Array.isArray(items)) {
+    return <NotFound>Invalid data</NotFound>;
+  }
+  if (items.length === 0) {
+    return <NotFound>Characters were not found</NotFound>;
+  }
   return (
-    <div className={styles['wrapper']}>
-      {items.length > 0 ? (
-        items.map((item) => <Item key={item._id} item={item} />)
-      ) : (
-        <NotFound>Characters were not found</NotFound>
-      )}
-    </div>
+    <ul className={styles['wrapper']}>
+      {items.map((item) => (
+        <li className={styles['list-item']} key={item._id}>
+          <Item item={item} />
+        </li>
+      ))}
+    </ul>
   );
 };
 

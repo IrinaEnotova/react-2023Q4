@@ -17,7 +17,7 @@ const Search = ({ getSearch }: SearchProps): JSX.Element => {
     }
   }, []);
 
-  const submit = (event: FormEvent): void => {
+  const handleSearchSubmit = (event: FormEvent): void => {
     event.preventDefault();
     dispatch(itemsSlice.actions.searchQueryChanging(inputRef.current!.value));
     getSearch(inputRef.current!.value);
@@ -33,7 +33,7 @@ const Search = ({ getSearch }: SearchProps): JSX.Element => {
 
   return (
     <div className={styles['wrapper']}>
-      <form className={styles['form']} onSubmit={submit}>
+      <form className={styles['form']} onSubmit={handleSearchSubmit}>
         <input ref={inputRef} className={styles['input']} type="text" placeholder="Search by name" />
         <Button className={styles['search-btn']}>Search</Button>
       </form>
