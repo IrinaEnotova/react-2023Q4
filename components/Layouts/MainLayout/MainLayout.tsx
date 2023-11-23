@@ -3,7 +3,10 @@ import Head from 'next/head';
 import { Montserrat } from 'next/font/google';
 import classNames from 'classnames';
 import styles from '@/styles/Home.module.css';
-const montserrat = Montserrat({ subsets: ['latin'] });
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700'],
+});
 
 const MainLayout = ({ children }: MainLayoutProps): JSX.Element => {
   return (

@@ -19,7 +19,6 @@ const Item = ({ item }: ItemProps): JSX.Element => {
       </div>
       <Button
         onClick={(): void => {
-          console.log(pathname);
           searchParams['character'] = item._id;
           router.push(`${pathname}?character=${item._id}`);
         }}

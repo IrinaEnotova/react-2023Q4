@@ -9,6 +9,7 @@ interface ItemsState {
   limit: number;
   isDetailsOpen: boolean;
   detailedItem: ApiItem | null;
+  isErrorBoundary: boolean;
 }
 
 const initialState: ItemsState = {
@@ -19,6 +20,7 @@ const initialState: ItemsState = {
   limit: 12,
   isDetailsOpen: false,
   detailedItem: null,
+  isErrorBoundary: false,
 };
 
 export const itemsSlice = createSlice({
@@ -46,6 +48,9 @@ export const itemsSlice = createSlice({
     },
     detailedItemChanging(state, action: PayloadAction<ApiItem | null>) {
       state.detailedItem = action.payload;
+    },
+    isErrorBoundaryChanging(state, action: PayloadAction<boolean>) {
+      state.isErrorBoundary = action.payload;
     },
   },
 });

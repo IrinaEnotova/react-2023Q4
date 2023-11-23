@@ -1,30 +1,30 @@
-import { FormEvent, useState, JSX, useEffect } from 'react';
+import { FormEvent, JSX, useEffect, useRef } from 'react';
 import SearchProps from './Search.props';
 import Button from '../Button/Button';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { itemsSlice } from '../../store/reducers/ItemsSlice';
 import styles from './Search.module.css';
 
 const Search = ({ getSearch }: SearchProps): JSX.Element => {
-  const [searchValue, setSearchValue] = useState('');
-  const [isErrorBoundary, setIsErrorBoundary] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { isErrorBoundary } = useAppSelector((state) => state.itemsReducer);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (localStorage.getItem('query')) {
-      setSearchValue(localStorage.getItem('query')!);
+      inputRef.current!.value = localStorage.getItem('query')!;
       dispatch(itemsSlice.actions.searchQueryChanging(localStorage.getItem('query')!));
     }
   }, []);
 
   const submit = (event: FormEvent): void => {
     event.preventDefault();
-    dispatch(itemsSlice.actions.searchQueryChanging(searchValue));
-    getSearch(searchValue);
+    dispatch(itemsSlice.actions.searchQueryChanging(inputRef.current!.value));
+    getSearch(inputRef.current!.value);
   };
 
   const throwErrorBoundary = (): void => {
-    setIsErrorBoundary(true);
+    dispatch(itemsSlice.actions.isErrorBoundaryChanging(true));
   };
 
   if (isErrorBoundary) {
@@ -34,15 +34,7 @@ const Search = ({ getSearch }: SearchProps): JSX.Element => {
   return (
     <div className={styles['wrapper']}>
       <form className={styles['form']} onSubmit={submit}>
-        <input
-          className={styles['input']}
-          type="text"
-          value={searchValue}
-          placeholder="Search by name"
-          onChange={(event): void => {
-            setSearchValue(event.target.value);
-          }}
-        />
+        <input ref={inputRef} className={styles['input']} type="text" placeholder="Search by name" />
         <Button className={styles['search-btn']}>Search</Button>
       </form>
       <Button className={styles['error-btn']} onClick={throwErrorBoundary}>

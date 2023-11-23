@@ -36,6 +36,10 @@ const ItemsLayout = ({ children }: ItemsLayoutProps): JSX.Element => {
   );
 
   useEffect(() => {
+    console.log(router);
+    // if (router.query.pageId) {
+    //   dispatch(itemsSlice.actions.pageChanging(Number(router.query.pageId)));
+    // }
     if (isItemsSuccess) {
       dispatch(
         itemsSlice.actions.allItemsFetching({
