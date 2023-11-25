@@ -1,10 +1,10 @@
 import { JSX } from 'react';
 import ItemProps from './Item.props';
 import Button from '../Button/Button';
-import styles from './Item.module.css';
 import Image from 'next/image';
 import ringIcon from '../../public/images/item-icon-gold.svg';
 import { useRouter } from 'next/router';
+import styles from './Item.module.css';
 
 const Item = ({ item: { name, _id } }: ItemProps): JSX.Element => {
   const router = useRouter();

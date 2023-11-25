@@ -1,10 +1,10 @@
 import { FormEvent, useRef, JSX, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Button from '../Button/Button';
 import { useAppDispatch } from '../../hooks/redux';
 import { itemsSlice } from '../../store/reducers/ItemsSlice';
-import styles from './LimitHandler.module.css';
-import { useRouter } from 'next/router';
 import { DEFAULT_LIMIT, FIRST_PAGE } from '../../API/constants';
+import styles from './LimitHandler.module.css';
 
 const LimitHandler = (): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -31,9 +31,10 @@ const LimitHandler = (): JSX.Element => {
     dispatch(itemsSlice.actions.limitChanging(limitValue));
     dispatch(itemsSlice.actions.pageChanging(FIRST_PAGE));
     const pathnameArray = router.asPath.split(/\?|&/).map((item) => item.replaceAll('&', ''));
-    const currentPathname = router.asPath.split('?')[0];
-    const currentQuery = pathnameArray.filter((item: string, idx) => !item.includes('limit') && idx !== 0).join('&');
-    router.push(`${currentPathname}?${currentQuery}&limit=${limitValue}`);
+    const currentQuery = pathnameArray
+      .filter((item: string, idx) => !item.includes('limit') && idx !== 0 && !item.includes('character'))
+      .join('&');
+    router.push(`/page/1?${currentQuery}&limit=${limitValue}`);
   };
 
   return (

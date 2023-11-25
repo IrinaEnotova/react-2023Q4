@@ -41,7 +41,6 @@ const Details = (): JSX.Element => {
 
   const closeDetails = (): void => {
     const pathnameArray = router.asPath.split(/\?|&/).map((item) => item.replaceAll('&', ''));
-    console.log(pathnameArray);
     const currentPathname = router.asPath.split('?')[0];
     const currentQuery = pathnameArray
       .filter((item: string, idx) => !item.includes('character') && idx !== 0 && item)

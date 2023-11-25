@@ -28,8 +28,7 @@ const CurrentPage = ({ data }: { data: ItemsResponse }): JSX.Element => {
 
   return (
     <>
-      <p>{JSON.stringify(data)}</p>
-      <ItemsLayout>{searchParams ? <Details /> : <></>}</ItemsLayout>
+      <ItemsLayout data={data}>{searchParams ? <Details /> : <></>}</ItemsLayout>
     </>
   );
 };

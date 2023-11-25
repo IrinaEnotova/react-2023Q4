@@ -1,12 +1,10 @@
 import { JSX } from 'react';
 import Item from '../Item/Item';
 import NotFound from '../NotFound/NotFound';
-import { useAppSelector } from '../../hooks/redux';
+import { ItemsListProps } from './ItemList.props';
 import styles from './ItemList.module.css';
 
-const ItemList = (): JSX.Element => {
-  const { items } = useAppSelector((state) => state.itemsReducer);
-
+const ItemList = ({ items }: ItemsListProps): JSX.Element => {
   if (!Array.isArray(items)) {
     return <NotFound>Invalid data</NotFound>;
   }

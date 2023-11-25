@@ -1,8 +1,8 @@
 import { JSX } from 'react';
 import { NotFoundProps } from './NotFound.props';
-import styles from './NotFound.module.css';
 import Image from 'next/image';
 import ringIcon from '../../public/images/item-icon.svg';
+import styles from './NotFound.module.css';
 
 const NotFound = ({ children }: NotFoundProps): JSX.Element => {
   return (

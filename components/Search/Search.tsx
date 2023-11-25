@@ -1,10 +1,10 @@
 import { FormEvent, JSX, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
 import SearchProps from './Search.props';
 import Button from '../Button/Button';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { itemsSlice } from '../../store/reducers/ItemsSlice';
 import styles from './Search.module.css';
-import { useRouter } from 'next/router';
 
 const Search = ({ getSearch }: SearchProps): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null);

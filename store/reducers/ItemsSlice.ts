@@ -27,10 +27,7 @@ export const itemsSlice = createSlice({
   name: 'items',
   initialState,
   reducers: {
-    allItemsFetching(
-      state,
-      action: PayloadAction<{ payloadItems: ApiItem[]; payloadTotalPages: number; payloadIsAllItemsLoading: boolean }>
-    ) {
+    allItemsFetching(state, action: PayloadAction<{ payloadItems: ApiItem[]; payloadTotalPages: number }>) {
       state.items = action.payload.payloadItems;
       state.totalPages = action.payload.payloadTotalPages;
     },
