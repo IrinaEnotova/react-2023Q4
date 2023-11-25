@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { JSX } from 'react';
 import Button from '../Button/Button';
 import styles from './ErrorBlock.module.css';
-import commonStyles from '@/styles/Home.module.css';
+import commonStyles from '../../styles/Home.module.css';
 import Image from 'next/image';
 import ringIcon from '../../public/images/item-icon.svg';
 import { Montserrat } from 'next/font/google';

@@ -20,7 +20,10 @@ const Item = ({ item: { name, _id } }: ItemProps): JSX.Element => {
       <Button
         onClick={(): void => {
           searchParams['character'] = _id;
-          router.push(`${pathname}?character=${_id}`);
+          delete searchParams.pageId;
+          let resultQuery = '';
+          Object.entries(searchParams).forEach((query) => (resultQuery += `${query[0]}=${query[1]}&`));
+          router.push(`${pathname}?${resultQuery}`);
         }}
       >
         Show details

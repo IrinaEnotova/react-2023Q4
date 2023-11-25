@@ -2,8 +2,8 @@ import { JSX } from 'react';
 import Button from '../Button/Button';
 import { PaginationProps } from './Pagination.props';
 import { useAppSelector } from '../../hooks/redux';
+import { FIRST_PAGE } from '../../API/constants';
 import styles from './Pagination.module.css';
-import { FIRST_PAGE } from '@/API/constants';
 
 const Pagination = ({ changePage }: PaginationProps): JSX.Element => {
   const { totalPages, page } = useAppSelector((state) => state.itemsReducer);

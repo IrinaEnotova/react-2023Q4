@@ -4,16 +4,18 @@ import Button from '../Button/Button';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { itemsSlice } from '../../store/reducers/ItemsSlice';
 import styles from './Search.module.css';
+import { useRouter } from 'next/router';
 
 const Search = ({ getSearch }: SearchProps): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { isErrorBoundary } = useAppSelector((state) => state.itemsReducer);
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   useEffect(() => {
-    if (localStorage.getItem('query')) {
-      inputRef.current!.value = localStorage.getItem('query')!;
-      dispatch(itemsSlice.actions.searchQueryChanging(localStorage.getItem('query')!));
+    if (router.query.search && typeof router.query.search === 'string') {
+      inputRef.current!.value = router.query.search;
+      dispatch(itemsSlice.actions.searchQueryChanging(router.query.search));
     }
   }, []);
 

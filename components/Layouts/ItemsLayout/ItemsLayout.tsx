@@ -1,18 +1,19 @@
-import styles from '@/styles/Home.module.css';
-import ItemList from '@/components/ItemList/ItemList';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { useGetItemsQuery } from '@/API/itemsService';
+import styles from '../../../styles/Home.module.css';
+import ItemList from '../../ItemList/ItemList';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { useGetItemsQuery } from '../../../API/itemsService';
 import { useEffect } from 'react';
-import { itemsSlice } from '@/store/reducers/ItemsSlice';
-import { getPageCount } from '@/utils/pages';
-import Search from '@/components/Search/Search';
-import LimitHandler from '@/components/SelectLimit/LimitHandler';
+import { itemsSlice } from '../../../store/reducers/ItemsSlice';
+import { getPageCount } from '../../../utils/pages';
+import Search from '../../Search/Search';
+import LimitHandler from '../../SelectLimit/LimitHandler';
 import { ItemsLayoutProps } from './ItemsLayout.props';
 import NotFound from '../../NotFound/NotFound';
 import { useRouter } from 'next/router';
 import Loader from '../../Loader/Loader';
 import Pagination from '../../Pagination/Pagination';
 import MainLayout from '../MainLayout/MainLayout';
+import { FIRST_PAGE } from '@/API/constants';
 
 const ItemsLayout = ({ children }: ItemsLayoutProps): JSX.Element => {
   const router = useRouter();
@@ -49,12 +50,17 @@ const ItemsLayout = ({ children }: ItemsLayoutProps): JSX.Element => {
 
   const changePage = (page: number): void => {
     dispatch(itemsSlice.actions.pageChanging(page));
-    router.push(`/page/${page}`);
+    const currentQuery = router.asPath.split('?')[1];
+    router.push(`/page/${page}?${currentQuery}`);
   };
 
   const getSearch = (searchValue: string): void => {
     localStorage.setItem('query', searchValue);
-    changePage(1);
+    dispatch(itemsSlice.actions.pageChanging(FIRST_PAGE));
+    const pathnameArray = router.asPath.split(/\?|&/).map((item) => item.replaceAll('&', ''));
+    const currentPathname = router.asPath.split('?')[0];
+    const currentQuery = pathnameArray.filter((item: string, idx) => !item.includes('search') && idx !== 0).join('&');
+    router.push(`${currentPathname}?${currentQuery}&search=${searchValue}`);
   };
 
   if (isItemsError) {

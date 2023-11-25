@@ -12,7 +12,6 @@ import styles from './Details.module.css';
 const Details = (): JSX.Element => {
   const router = useRouter();
   const searchParams = router.query['character'];
-  const pathname = router.asPath.split('?')[0];
   const dispatch = useAppDispatch();
   const { detailedItem } = useAppSelector((state) => state.itemsReducer);
   const { data, isItemLoading, isItemFetching, isItemError, isItemSuccess } = useGetDetailedItemQuery(searchParams, {
@@ -41,8 +40,13 @@ const Details = (): JSX.Element => {
   }
 
   const closeDetails = (): void => {
-    router.push(pathname);
-    dispatch(itemsSlice.actions.detailedItemChanging(null));
+    const pathnameArray = router.asPath.split(/\?|&/).map((item) => item.replaceAll('&', ''));
+    console.log(pathnameArray);
+    const currentPathname = router.asPath.split('?')[0];
+    const currentQuery = pathnameArray
+      .filter((item: string, idx) => !item.includes('character') && idx !== 0 && item)
+      .join('&');
+    router.push(`${currentPathname}?${currentQuery}`);
   };
 
   if (isItemError || !detailedItem) {

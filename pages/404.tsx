@@ -10,7 +10,7 @@ export default function PageNotFound(): JSX.Element {
         Page was not found <br /> Enter correct URL <br />
         <br />
         <Button>
-          <Link href="/">or to main page</Link>
+          <Link href="/page/1?search=&limit=12">or to main page</Link>
         </Button>
       </NotFound>
     </MainLayout>

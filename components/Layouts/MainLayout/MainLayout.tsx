@@ -1,12 +1,7 @@
 import { MainLayoutProps } from './MainLayout.props';
 import Head from 'next/head';
-import { Montserrat } from 'next/font/google';
 import classNames from 'classnames';
-import styles from '@/styles/Home.module.css';
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  weight: ['100', '200', '300', '400', '500', '600', '700'],
-});
+import styles from '../../../styles/Home.module.css';
 
 const MainLayout = ({ children }: MainLayoutProps): JSX.Element => {
   return (
@@ -17,7 +12,7 @@ const MainLayout = ({ children }: MainLayoutProps): JSX.Element => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <main className={classNames(styles.main, montserrat.className)}>{children}</main>
+      <main className={classNames(styles.main)}>{children}</main>
     </>
   );
 };
