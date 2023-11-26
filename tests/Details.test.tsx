@@ -30,6 +30,15 @@ describe('DetailedPage component', () => {
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
+  test('correctly displays the detailed card data', async () => {
+    expect(await screen.findByText(/Race - Hobbit/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Race - Hobbit/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Gender - Female/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Birth - TA 2818/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Spouse - Marmadoc Brandybuck/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Some random text/i)).not.toBeInTheDocument();
+  });
+
   test('clicking the close button hides the component', async () => {
     fireEvent.click(await screen.findByText('Close details'));
     const searchParams = new URLSearchParams(location.search);

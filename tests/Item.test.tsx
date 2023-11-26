@@ -81,6 +81,10 @@ describe('Item component', () => {
   test('clicking on a card opens a detailed card component', async () => {
     expect((await screen.findAllByText('Show details')).length).toBe(12);
     fireEvent.click((await screen.findAllByText('Show details'))[0]);
+    expect(await screen.findByText(/Race - Hobbit/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Gender - Female/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Birth - TA 2818/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Spouse - Marmadoc Brandybuck/i)).toBeInTheDocument();
     expect(await screen.findByText('Close details')).toBeInTheDocument();
     expect(screen.queryByText(/Some random text/i)).not.toBeInTheDocument();
   });
