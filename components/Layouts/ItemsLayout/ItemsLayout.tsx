@@ -39,9 +39,6 @@ const ItemsLayout = ({ data, children }: ItemsLayoutProps): JSX.Element => {
           <Search getSearch={getSearch} />
         </div>
         <ItemList items={data.docs} />
-        <p>
-          total pages - {totalPages}, page = {page}
-        </p>
         {totalPages > FIRST_PAGE && page <= totalPages && (
           <Pagination totalPages={totalPages} page={page} changePage={changePage} />
         )}
