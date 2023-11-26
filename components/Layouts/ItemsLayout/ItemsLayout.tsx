@@ -1,7 +1,5 @@
 import styles from '../../../styles/Home.module.css';
 import ItemList from '../../ItemList/ItemList';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { itemsSlice } from '../../../store/reducers/ItemsSlice';
 import { getPageCount } from '../../../utils/pages';
 import Search from '../../Search/Search';
 import LimitHandler from '../../SelectLimit/LimitHandler';
@@ -10,32 +8,22 @@ import { useRouter } from 'next/router';
 import Pagination from '../../Pagination/Pagination';
 import MainLayout from '../MainLayout/MainLayout';
 import { FIRST_PAGE } from '../../../API/constants';
-import { useEffect } from 'react';
 
 const ItemsLayout = ({ data, children }: ItemsLayoutProps): JSX.Element => {
   const router = useRouter();
-  const dispatch = useAppDispatch();
   const limit = router.query.limit ? +router.query.limit : 12;
   const totalPages = getPageCount(data.total, limit);
-  const { page } = useAppSelector((state) => state.itemsReducer);
-  useEffect(() => {
-    dispatch(
-      itemsSlice.actions.allItemsFetching({
-        payloadItems: data.docs,
-        payloadTotalPages: totalPages,
-      })
-    );
-  }, []);
+  const page = data.page;
 
   const changePage = (page: number): void => {
-    dispatch(itemsSlice.actions.pageChanging(page));
-    const currentQuery = router.asPath.split('?')[1];
+    const pathnameArray = router.asPath.split(/\?|&/).map((item) => item.replaceAll('&', ''));
+    const currentQuery = pathnameArray
+      .filter((item: string, idx) => !item.includes('character') && idx !== 0 && item)
+      .join('&');
     router.push(`/page/${page}?${currentQuery}`);
   };
 
   const getSearch = (searchValue: string): void => {
-    dispatch(itemsSlice.actions.pageChanging(FIRST_PAGE));
-    dispatch(itemsSlice.actions.searchQueryChanging(searchValue));
     const pathnameArray = router.asPath.split(/\?|&/).map((item) => item.replaceAll('&', ''));
     const currentQuery = pathnameArray
       .filter((item: string, idx) => !item.includes('search') && idx !== 0 && !item.includes('character'))
@@ -51,7 +39,12 @@ const ItemsLayout = ({ data, children }: ItemsLayoutProps): JSX.Element => {
           <Search getSearch={getSearch} />
         </div>
         <ItemList items={data.docs} />
-        {totalPages > 1 && page <= totalPages && <Pagination changePage={changePage} />}
+        <p>
+          total pages - {totalPages}, page = {page}
+        </p>
+        {totalPages > FIRST_PAGE && page <= totalPages && (
+          <Pagination totalPages={totalPages} page={page} changePage={changePage} />
+        )}
       </div>
       {children}
     </MainLayout>

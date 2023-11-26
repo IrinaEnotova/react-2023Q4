@@ -15,13 +15,11 @@ const Search = ({ getSearch }: SearchProps): JSX.Element => {
   useEffect(() => {
     if (router.query.search && typeof router.query.search === 'string') {
       inputRef.current!.value = router.query.search;
-      dispatch(itemsSlice.actions.searchQueryChanging(router.query.search));
     }
   }, []);
 
   const handleSearchSubmit = (event: FormEvent): void => {
     event.preventDefault();
-    dispatch(itemsSlice.actions.searchQueryChanging(inputRef.current!.value));
     getSearch(inputRef.current!.value);
   };
 

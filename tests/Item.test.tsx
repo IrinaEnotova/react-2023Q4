@@ -5,7 +5,7 @@ import { renderWithProviders } from './utils/test-utils';
 import { mockItems } from './mocks/mockItems';
 import Item from '../components/Item/Item';
 import CurrentPage from '../pages/page/[pageId]';
-import { mockData } from './mocks/mockData';
+import { mockData, mockDataDetails } from './mocks/mockData';
 import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
 import mockRouter from 'next-router-mock';
 
@@ -52,7 +52,7 @@ describe('Item component', () => {
   beforeEach(() => {
     renderWithProviders(
       <MemoryRouterProvider>
-        <CurrentPage data={mockData} />
+        <CurrentPage data={mockData} dataDetails={mockDataDetails} />
       </MemoryRouterProvider>,
       {
         preloadedState: {

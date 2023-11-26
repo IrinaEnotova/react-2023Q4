@@ -4,14 +4,14 @@ import { renderWithProviders } from './utils/test-utils';
 import { mockItems } from './mocks/mockItems';
 import { MemoryRouterProvider } from 'next-router-mock/dist/MemoryRouterProvider';
 import CurrentPage from '../pages/page/[pageId]';
-import { mockData } from './mocks/mockData';
+import { mockData, mockDataDetails } from './mocks/mockData';
 import mockRouter from 'next-router-mock';
 
 describe('Pagination component', () => {
   test('updates URL query parameter when page changes', async () => {
     renderWithProviders(
       <MemoryRouterProvider>
-        <CurrentPage data={mockData} />
+        <CurrentPage data={mockData} dataDetails={mockDataDetails} />
       </MemoryRouterProvider>,
       {
         preloadedState: {
@@ -19,7 +19,7 @@ describe('Pagination component', () => {
             searchQuery: '',
             items: mockItems,
             page: 1,
-            totalPages: 1,
+            totalPages: 10,
             limit: 12,
             isDetailsOpen: false,
             detailedItem: null,
@@ -36,9 +36,6 @@ describe('Pagination component', () => {
 
     fireEvent.click(await screen.findByText('Next'));
     expect((await screen.findAllByText('Show details')).length).toBe(12);
-
-    expect(screen.getByText('2')).toBeInTheDocument();
-    expect(screen.queryByText('1')).not.toBeInTheDocument();
     expect(mockRouter.pathname).toBe('/page/2');
   });
 });

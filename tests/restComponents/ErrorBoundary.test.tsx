@@ -17,7 +17,7 @@ const ThrowError = (): JSX.Element => {
 };
 
 describe('Error Boundary', () => {
-  test('Error Boundary', () => {
+  test('contains specific content', () => {
     render(
       <ErrorBoundary>
         <ThrowError />

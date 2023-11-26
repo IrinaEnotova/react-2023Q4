@@ -9,6 +9,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const page = context.params?.pageId;
   const searchQuery = context.query.search ? context.query.search : '';
   const limit = context.query.limit ? context.query.limit : '12';
+  const detailsItemId = context.query.character ? context.query.character : '';
   const res = await fetch(
     `https://the-one-api.dev/v2/character/?name=%2F${searchQuery}%2Fi&page=${page}&limit=${limit}`,
     {
@@ -16,19 +17,28 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   );
   const data = await res.json();
+  if (detailsItemId) {
+    const resDetails = await fetch(`https://the-one-api.dev/v2/character/${detailsItemId}`, {
+      headers: { Authorization: `Bearer ${ACCESS_KEY}` },
+    });
+    const dataDetails = await resDetails.json();
+    return {
+      props: { data, dataDetails },
+    };
+  }
 
   return {
-    props: { data },
+    props: { data, dataDetails: '' },
   };
 };
 
-const CurrentPage = ({ data }: { data: ItemsResponse }): JSX.Element => {
+const CurrentPage = ({ data, dataDetails }: { data: ItemsResponse; dataDetails: ItemsResponse }): JSX.Element => {
   const router = useRouter();
   const searchParams = router.query['character'];
 
   return (
     <>
-      <ItemsLayout data={data}>{searchParams ? <Details /> : <></>}</ItemsLayout>
+      <ItemsLayout data={data}>{searchParams ? <Details dataDetails={dataDetails} /> : <></>}</ItemsLayout>
     </>
   );
 };

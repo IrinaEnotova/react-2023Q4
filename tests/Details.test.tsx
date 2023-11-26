@@ -3,11 +3,11 @@ import '@testing-library/jest-dom';
 import { renderWithProviders } from './utils/test-utils';
 import { mockItems } from './mocks/mockItems';
 import CurrentPage from '../pages/page/[pageId]';
-import { mockData } from './mocks/mockData';
+import { mockData, mockDataDetails } from './mocks/mockData';
 
 describe('DetailedPage component', () => {
   beforeEach(async () => {
-    renderWithProviders(<CurrentPage data={mockData} />, {
+    renderWithProviders(<CurrentPage data={mockData} dataDetails={mockDataDetails} />, {
       preloadedState: {
         itemsReducer: {
           searchQuery: '',
@@ -24,10 +24,6 @@ describe('DetailedPage component', () => {
 
     expect((await screen.findAllByText('Show details')).length).toBe(12);
     fireEvent.click((await screen.findAllByText('Show details'))[0]);
-  });
-
-  test('loading indicator is displayed while fetching data', () => {
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
   test('correctly displays the detailed card data', async () => {

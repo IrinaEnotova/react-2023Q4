@@ -1,13 +1,10 @@
 import { JSX } from 'react';
 import Button from '../Button/Button';
 import { PaginationProps } from './Pagination.props';
-import { useAppSelector } from '../../hooks/redux';
 import { FIRST_PAGE } from '../../API/constants';
 import styles from './Pagination.module.css';
 
-const Pagination = ({ changePage }: PaginationProps): JSX.Element => {
-  const { totalPages, page } = useAppSelector((state) => state.itemsReducer);
-
+const Pagination = ({ totalPages, page, changePage }: PaginationProps): JSX.Element => {
   const handlePrevPage = (): void => {
     if (page > FIRST_PAGE) {
       changePage(page - 1);

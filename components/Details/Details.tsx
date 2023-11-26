@@ -1,43 +1,14 @@
 import { useRouter } from 'next/router';
-import { JSX, useEffect } from 'react';
+import { JSX } from 'react';
 import Button from '../../components/Button/Button';
-import Loader from '../../components/Loader/Loader';
 import NotFound from '../../components/NotFound/NotFound';
 import isItemFieldExist from '../../utils/isItemFieldExist';
-import { useGetDetailedItemQuery } from '../../API/itemsService';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { itemsSlice } from '../../store/reducers/ItemsSlice';
 import styles from './Details.module.css';
+import DetailsProps from './Details.props';
 
-const Details = (): JSX.Element => {
+const Details = ({ dataDetails }: DetailsProps): JSX.Element => {
   const router = useRouter();
-  const searchParams = router.query['character'];
-  const dispatch = useAppDispatch();
-  const { detailedItem } = useAppSelector((state) => state.itemsReducer);
-  const { data, isItemLoading, isItemFetching, isItemError, isItemSuccess } = useGetDetailedItemQuery(searchParams, {
-    skip: !searchParams,
-    selectFromResult: ({ data, isLoading, isFetching, isError, isSuccess }) => ({
-      data: data,
-      isItemLoading: isLoading,
-      isItemFetching: isFetching,
-      isItemError: isError,
-      isItemSuccess: isSuccess,
-    }),
-  });
-
-  useEffect(() => {
-    if (isItemSuccess) {
-      dispatch(itemsSlice.actions.detailedItemChanging(data.docs[0]));
-    }
-  }, [data]);
-
-  if (isItemLoading || isItemFetching) {
-    return (
-      <div className={styles['detail-wrapper']}>
-        <Loader />
-      </div>
-    );
-  }
+  const detailedItem = dataDetails.docs ? dataDetails.docs[0] : null;
 
   const closeDetails = (): void => {
     const pathnameArray = router.asPath.split(/\?|&/).map((item) => item.replaceAll('&', ''));
@@ -48,7 +19,7 @@ const Details = (): JSX.Element => {
     router.push(`${currentPathname}?${currentQuery}`);
   };
 
-  if (isItemError || !detailedItem) {
+  if (!detailedItem) {
     return (
       <div className={styles['detail-wrapper']}>
         <NotFound>
