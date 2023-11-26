@@ -14,7 +14,7 @@ const Item = ({ item: { name, _id } }: ItemProps): JSX.Element => {
   return (
     <div className={styles['item']}>
       <div className={styles['heading-wrapper']}>
-        <Image src={ringIcon} alt="Ring" width={30} priority={false} />
+        <Image src={ringIcon} alt="Ring" width={30} height={30} priority={false} />
         <h2 className={styles['heading']}>{name}</h2>
       </div>
       <Button

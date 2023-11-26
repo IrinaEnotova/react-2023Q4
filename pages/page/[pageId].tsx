@@ -1,9 +1,9 @@
-import { ACCESS_KEY } from '@/API/constants';
-import Details from '@/components/Details/Details';
-import ItemsLayout from '@/components/Layouts/ItemsLayout/ItemsLayout';
-import { ItemsResponse } from '@/interfaces/interfaces';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
+import { ACCESS_KEY } from '../../API/constants';
+import Details from '../../components/Details/Details';
+import ItemsLayout from '../../components/Layouts/ItemsLayout/ItemsLayout';
+import { ItemsResponse } from '../../interfaces/interfaces';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const page = context.params?.pageId;

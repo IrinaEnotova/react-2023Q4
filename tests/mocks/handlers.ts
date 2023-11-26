@@ -1,9 +1,6 @@
 import { HttpResponse, delay, http } from 'msw';
 import { BASE_PATH, LIMIT, PAGINATION, SEARCH_PATH } from '../../API/constants';
 import { mockItems } from './mockItems';
-import nodeFetch, { Request, Response } from 'node-fetch';
-
-Object.assign(window, { fetch: nodeFetch, Request, Response });
 
 export const handlers = [
   http.get(`${BASE_PATH}?${SEARCH_PATH}=//i&${PAGINATION}=1&${LIMIT}=12`, async () => {

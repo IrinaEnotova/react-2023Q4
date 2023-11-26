@@ -9,7 +9,7 @@ import { ItemsLayoutProps } from './ItemsLayout.props';
 import { useRouter } from 'next/router';
 import Pagination from '../../Pagination/Pagination';
 import MainLayout from '../MainLayout/MainLayout';
-import { FIRST_PAGE } from '@/API/constants';
+import { FIRST_PAGE } from '../../../API/constants';
 import { useEffect } from 'react';
 
 const ItemsLayout = ({ data, children }: ItemsLayoutProps): JSX.Element => {

@@ -2,8 +2,6 @@ import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ItemList from '../components/ItemList/ItemList';
 import ApiItem from '../interfaces/interfaces';
-import { BrowserRouter } from 'react-router-dom';
-import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 import { renderWithProviders } from './utils/test-utils';
 
 describe('ItemList component', () => {
@@ -37,28 +35,20 @@ describe('ItemList component', () => {
       },
     ];
 
-    const { getByText } = renderWithProviders(
-      <BrowserRouter>
-        <ErrorBoundary>
-          <ItemList />
-        </ErrorBoundary>
-      </BrowserRouter>,
-      {
-        preloadedState: {
-          itemsReducer: {
-            searchQuery: '',
-            items: items,
-            page: 1,
-            totalPages: 1,
-            limit: 12,
-            isDetailsOpen: false,
-            detailedItem: null,
-            isAllItemsLoading: false,
-            isSingleItemLoading: false,
-          },
+    const { getByText } = renderWithProviders(<ItemList items={items} />, {
+      preloadedState: {
+        itemsReducer: {
+          searchQuery: '',
+          items: items,
+          page: 1,
+          totalPages: 1,
+          limit: 12,
+          isDetailsOpen: false,
+          detailedItem: null,
+          isErrorBoundary: false,
         },
-      }
-    );
+      },
+    });
 
     for (const item of items) {
       const nameElement = getByText(item.name);
@@ -85,26 +75,20 @@ describe('ItemList component', () => {
       },
     ];
 
-    renderWithProviders(
-      <BrowserRouter>
-        <ItemList />
-      </BrowserRouter>,
-      {
-        preloadedState: {
-          itemsReducer: {
-            searchQuery: '',
-            items: items,
-            page: 1,
-            totalPages: 1,
-            limit: 12,
-            isDetailsOpen: false,
-            detailedItem: null,
-            isAllItemsLoading: false,
-            isSingleItemLoading: false,
-          },
+    renderWithProviders(<ItemList items={items} />, {
+      preloadedState: {
+        itemsReducer: {
+          searchQuery: '',
+          items: items,
+          page: 1,
+          totalPages: 1,
+          limit: 12,
+          isDetailsOpen: false,
+          detailedItem: null,
+          isErrorBoundary: false,
         },
-      }
-    );
+      },
+    });
 
     expect(screen.queryAllByText('Show details').length).toBe(1);
     expect(screen.getByRole('heading')).toHaveTextContent('Finduilas');
@@ -112,26 +96,20 @@ describe('ItemList component', () => {
   });
 
   test('renders correctly with empty data', () => {
-    renderWithProviders(
-      <BrowserRouter>
-        <ItemList />
-      </BrowserRouter>,
-      {
-        preloadedState: {
-          itemsReducer: {
-            searchQuery: '',
-            items: [],
-            page: 1,
-            totalPages: 1,
-            limit: 12,
-            isDetailsOpen: false,
-            detailedItem: null,
-            isAllItemsLoading: false,
-            isSingleItemLoading: false,
-          },
+    renderWithProviders(<ItemList items={[]} />, {
+      preloadedState: {
+        itemsReducer: {
+          searchQuery: '',
+          items: [],
+          page: 1,
+          totalPages: 1,
+          limit: 12,
+          isDetailsOpen: false,
+          detailedItem: null,
+          isErrorBoundary: false,
         },
-      }
-    );
+      },
+    });
     expect(screen.queryAllByText('Show details').length).toBe(0);
     expect(screen.getByRole('heading')).toHaveTextContent('Characters were not found');
   });

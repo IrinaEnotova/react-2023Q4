@@ -1,7 +1,7 @@
-import NotFound from '@/components/NotFound/NotFound';
-import MainLayout from '@/components/Layouts/MainLayout/MainLayout';
-import Button from '@/components/Button/Button';
 import Link from 'next/link';
+import NotFound from '../components/NotFound/NotFound';
+import MainLayout from '../components/Layouts/MainLayout/MainLayout';
+import Button from '../components/Button/Button';
 
 export default function PageNotFound(): JSX.Element {
   return (

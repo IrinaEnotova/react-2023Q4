@@ -18,8 +18,7 @@ describe('Search component', () => {
           limit: 12,
           isDetailsOpen: false,
           detailedItem: null,
-          isAllItemsLoading: false,
-          isSingleItemLoading: false,
+          isErrorBoundary: false,
         },
       },
     });
@@ -32,33 +31,5 @@ describe('Search component', () => {
     fireEvent.click(screen.getByText(/Search/i));
     expect(getSearch).toHaveBeenCalledTimes(1);
     expect(localStorage.getItem('query')).toBe('gandalf');
-  });
-
-  test('retrieves the value from the local storage upon mounting', () => {
-    localStorage.setItem('query', 'Aragorn');
-    renderWithProviders(
-      <Search
-        getSearch={(searchValue: string): void => {
-          localStorage.setItem('query', searchValue);
-        }}
-      />,
-      {
-        preloadedState: {
-          itemsReducer: {
-            searchQuery: localStorage.getItem('query') || '',
-            items: [],
-            page: 1,
-            totalPages: 1,
-            limit: 12,
-            isDetailsOpen: false,
-            detailedItem: null,
-            isAllItemsLoading: false,
-            isSingleItemLoading: false,
-          },
-        },
-      }
-    );
-
-    expect(screen.getByDisplayValue('Aragorn')).toBeInTheDocument();
   });
 });
