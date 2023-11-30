@@ -3,7 +3,8 @@
   background: url('/bg.jpg');
   height: 100vh;
   background-size: cover;
-  --block-color: #fcdbd6;
+  --block-color: #f6bbb3;
+  --block-color-hover: #fcdbd6;
   --light-text: #fefefc;
   --accent-color: #376569;
   --accent-color-hover: #72999c;
@@ -26,6 +27,8 @@ body {
   padding: 0;
   margin: 0;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   gap: 10px;
 }
