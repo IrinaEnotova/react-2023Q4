@@ -32,3 +32,10 @@ body {
   justify-content: center;
   gap: 10px;
 }
+
+.error-message {
+  margin-top: 5px;
+  text-align: end;
+  color: red;
+  font-size: 11px;
+}

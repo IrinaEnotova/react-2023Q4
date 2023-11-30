@@ -6,6 +6,6 @@ export interface FormState {
   gender: string;
   isAcceptTerms: boolean;
   image: string;
-  contry: string;
+  country: string;
   countries: string[];
 }

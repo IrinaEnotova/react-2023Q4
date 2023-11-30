@@ -1,3 +1,14 @@
+export const initialErrorData = {
+  name: '',
+  age: '',
+  email: '',
+  password: '',
+  gender: '',
+  isAcceptTerms: '',
+  image: '',
+  country: '',
+};
+
 export const countryData = [
   'Afghanistan',
   'Albania',
