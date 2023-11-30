@@ -3,8 +3,9 @@ export const initialErrorData = {
   age: '',
   email: '',
   password: '',
+  confirmPassword: '',
   gender: '',
-  isAcceptTerms: '',
+  terms: '',
   image: '',
   country: '',
 };
