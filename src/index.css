@@ -40,3 +40,7 @@ body {
   color: red;
   font-size: 11px;
 }
+
+.error-input {
+  border: 2px solid red;
+}

@@ -11,6 +11,7 @@ import { ValidationError } from 'yup';
 import { initialErrorData } from '../../constants/constants';
 import { InputBlock } from '../../components/InputBlock/InputBlock';
 import { SelectBlock } from '../../components/SelectBlock/SelectBlock';
+import useCountries from '../../hooks/useCountries';
 
 const UncontrolledPage: FC = () => {
   const nameRef = useRef<HTMLInputElement>(null);
@@ -23,12 +24,15 @@ const UncontrolledPage: FC = () => {
   const countryRef = useRef<HTMLInputElement>(null);
   const termsRef = useRef<HTMLInputElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const [isCountryList, setIsCountryList] = useState(false);
-  const [filterData, setFilterData] = useState<JSX.Element[]>([]);
   const dispatch = useAppDispatch();
   const { countries } = useAppSelector((state) => state.uncontrolledReducer);
   const navigate = useNavigate();
   const [errorsData, setErrorsData] = useState(initialErrorData);
+  const [filterData, isCountryList, handleClickOutside, getFilteredData, changeIsCountryList] = useCountries(
+    wrapperRef,
+    countryRef,
+    countries
+  );
 
   useEffect(() => {
     window.addEventListener('mousedown', (event) => {
@@ -41,28 +45,9 @@ const UncontrolledPage: FC = () => {
     };
   });
 
-  const handleClickOutside = (event: MouseEvent): void => {
-    const { current: wrap } = wrapperRef;
-    const target = event.target as Node;
-    if (wrap && !wrap.contains(target)) {
-      setIsCountryList(false);
-    }
-  };
-
-  const updateCountry = (country: string): void => {
-    if (countryRef.current) countryRef.current.value = country;
-  };
-
-  const getFilteredData = (): void => {
-    setFilterData(
-      countries
-        .filter((country) => country.toLowerCase().startsWith(countryRef.current!.value))
-        .map((country) => (
-          <li onClick={() => updateCountry(country)} key={country} value={country}>
-            {country}
-          </li>
-        ))
-    );
+  const handleCountryClick = (isCountryList: boolean): void => {
+    changeIsCountryList(!isCountryList);
+    getFilteredData();
   };
 
   const handleSubmit = async (event: FormEvent): Promise<void> => {
@@ -142,16 +127,13 @@ const UncontrolledPage: FC = () => {
           <span>Country</span>
           <input
             ref={countryRef}
-            className={styles.input}
+            className={classNames(styles.input, { ['error-input']: errorsData.country })}
             type="text"
             placeholder="your country"
             onClick={() => {
-              setIsCountryList(!isCountryList);
-              getFilteredData();
+              handleCountryClick(isCountryList);
             }}
-            onChange={() => {
-              getFilteredData();
-            }}
+            onChange={getFilteredData}
           />
           {isCountryList && filterData.length > 0 && <ul className={styles['country-list']}>{filterData}</ul>}
         </label>
@@ -163,9 +145,9 @@ const UncontrolledPage: FC = () => {
           </label>
           <div className="error-message">{errorsData.image}</div>
         </div>
-        <div>
+        <div className={styles['checkbox-block']}>
           <label className={styles['checkbox-label']}>
-            <input ref={termsRef} type="checkbox" />
+            <input ref={termsRef} className={classNames({ ['error-input']: errorsData.terms })} type="checkbox" />
             <span>I agree to terms and conditions</span>
           </label>
           <div className="error-message">{errorsData.terms}</div>
