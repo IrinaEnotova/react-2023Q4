@@ -10,7 +10,7 @@ const initialState: FormState = {
   gender: '',
   isAcceptTerms: false,
   image: '',
-  contry: '',
+  country: '',
   countries: countryData,
 };
 
@@ -28,7 +28,7 @@ export const hookFormSlice = createSlice({
         gender: string;
         isAcceptTerms: boolean;
         image: string;
-        contry: string;
+        country: string;
       }>
     ) {
       state.name = action.payload.name;
@@ -38,7 +38,7 @@ export const hookFormSlice = createSlice({
       state.gender = action.payload.gender;
       state.isAcceptTerms = action.payload.isAcceptTerms;
       state.image = action.payload.image;
-      state.contry = action.payload.contry;
+      state.country = action.payload.country;
     },
   },
 });
