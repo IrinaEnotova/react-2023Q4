@@ -4,6 +4,7 @@
   justify-content: space-between;
   gap: 15px;
   text-transform: uppercase;
+  font-weight: 600;
 }
 
 .input {

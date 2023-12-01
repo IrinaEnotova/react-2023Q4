@@ -144,6 +144,7 @@ const UncontrolledPage: FC = () => {
             ref={countryRef}
             className={styles.input}
             type="text"
+            placeholder="your country"
             onClick={() => {
               setIsCountryList(!isCountryList);
               getFilteredData();
@@ -154,20 +155,20 @@ const UncontrolledPage: FC = () => {
           />
           {isCountryList && filterData.length > 0 && <ul className={styles['country-list']}>{filterData}</ul>}
         </label>
-        {!!errorsData.country && <div className="error-message">{errorsData.country}</div>}
+        <div className="error-message">{errorsData.country}</div>
         <div>
           <label className={styles['label']}>
             <span className={styles['image-input-btn']}>Upload image</span>
             <input ref={imageRef} className={styles['image-input']} type="file" />
           </label>
-          {!!errorsData.image && <div className="error-message">{errorsData.image}</div>}
+          <div className="error-message">{errorsData.image}</div>
         </div>
         <div>
           <label className={styles['checkbox-label']}>
             <input ref={termsRef} type="checkbox" />
             <span>I agree to terms and conditions</span>
           </label>
-          {!!errorsData.terms && <div className="error-message">{errorsData.terms}</div>}
+          <div className="error-message">{errorsData.terms}</div>
         </div>
         <Button className={styles.submit}>Submit</Button>
       </form>

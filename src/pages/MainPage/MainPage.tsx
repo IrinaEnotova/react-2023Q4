@@ -1,12 +1,13 @@
 import { FC } from 'react';
-import FirstResult from '../../components/FirstResult/FirstResult';
+import UncontrolledResult from '../../components/UncontrolledResult/UncontrolledResult';
 import styles from './MainPage.module.css';
+import HookFormResult from '../../components/HookFormResult/HookFormResult';
 
 const MainPage: FC = () => {
   return (
     <div className={styles.wrapper}>
-      <FirstResult />
-      <FirstResult />
+      <UncontrolledResult />
+      <HookFormResult />
     </div>
   );
 };

@@ -9,7 +9,7 @@ export const InputBlock = forwardRef<HTMLInputElement, InputProps>(function MyIn
         <span>{props.inputName}</span>
         <input ref={ref} className={styles.input} type={props.type} placeholder={props.placeholder} />
       </label>
-      {!!props.errorValue && <div className="error-message">{props.errorValue}</div>}
+      <div className="error-message">{props.errorValue}</div>
     </div>
   );
 });

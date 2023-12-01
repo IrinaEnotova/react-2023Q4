@@ -13,7 +13,7 @@ export const SelectBlock = forwardRef<HTMLSelectElement, SelectProps>(function M
           <option value="female">Female</option>
         </select>
       </label>
-      {!!props.errorValue && <div className="error-message">{props.errorValue}</div>}
+      <div className="error-message">{props.errorValue}</div>
     </div>
   );
 });
