@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import styles from './HookFormPage.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import userSchema from '../../validations/hookFormValidation';
 import { SubmitData } from '../../interfaces/interfaces';
 import { ObjectSchema } from 'yup';
-import { useAppDispatch } from '../../store/hooks/reduxHook';
+import { useAppDispatch, useAppSelector } from '../../store/hooks/reduxHook';
 import { setHookFormState } from '../../store/reducers/hookFormSlice';
 import { getBase64String } from '../../utils/base64';
 
@@ -16,6 +16,48 @@ const HookFormPage: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const mySchema = userSchema as unknown;
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const { countries } = useAppSelector((state) => state.uncontrolledReducer);
+  const [filterData, setFilterData] = useState<JSX.Element[]>([]);
+  const [isCountryList, setIsCountryList] = useState(false);
+  const [countryValue, setCountryValue] = useState('');
+  useEffect(() => {
+    window.addEventListener('mousedown', (event) => {
+      handleClickOutside(event);
+    });
+    return () => {
+      window.removeEventListener('mousedown', (event) => {
+        handleClickOutside(event);
+      });
+    };
+  });
+  // const changeIsCountryList = (value: boolean): void => {
+  //   setIsCountryList(value);
+  // };
+
+  const handleClickOutside = (event: MouseEvent): void => {
+    const { current: wrap } = wrapperRef;
+    const target = event.target as Node;
+    if (wrap && !wrap.contains(target)) {
+      setIsCountryList(false);
+    }
+  };
+
+  const updateCountry = (country: string): void => {
+    setCountryValue(country);
+  };
+
+  const getFilteredData = (): void => {
+    setFilterData(
+      countries
+        .filter((country) => country.toLowerCase().startsWith(countryValue))
+        .map((country) => (
+          <li onClick={() => updateCountry(country)} key={country} value={country}>
+            {country}
+          </li>
+        ))
+    );
+  };
 
   const {
     register,
@@ -43,7 +85,7 @@ const HookFormPage: FC = () => {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div ref={wrapperRef} className={styles.wrapper}>
       <h1 className={styles['heading']}>React Hook Form approach</h1>
       <Link className={styles['to-main']} to="/">
         <Button>To main</Button>
@@ -118,19 +160,21 @@ const HookFormPage: FC = () => {
             <span>Country</span>
             <input
               {...register('country')}
+              value={countryValue}
               name="country"
               placeholder="your country"
               className={styles.input}
               type="text"
-              // onClick={() => {
-              //   setIsCountryList(!isCountryList);
-              //   getFilteredData();
-              // }}
-              // onChange={() => {
-              //   getFilteredData();
-              // }}
+              onClick={() => {
+                setIsCountryList(!isCountryList);
+                getFilteredData();
+              }}
+              onChange={(event) => {
+                setCountryValue(event.target.value);
+                getFilteredData();
+              }}
             />
-            {/* {isCountryList && filterData.length > 0 && <ul className={styles['country-list']}>{filterData}</ul>} */}
+            {isCountryList && filterData.length > 0 && <ul className={styles['country-list']}>{filterData}</ul>}
           </label>
           <div className="error-message">{errors.country?.message}</div>
         </div>
