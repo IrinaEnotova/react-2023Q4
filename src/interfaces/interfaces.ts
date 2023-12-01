@@ -7,7 +7,6 @@ export interface FormState {
   isAcceptTerms: boolean;
   image: string;
   country: string;
-  countries: string[];
 }
 
 export interface SubmitData {

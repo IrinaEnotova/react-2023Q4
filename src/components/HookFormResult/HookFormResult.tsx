@@ -3,25 +3,16 @@ import Button from '../Button/Button';
 import styles from './HookFormResult.module.css';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/reduxHook';
-import { setHookFormState } from '../../store/reducers/hookFormSlice';
+import { setClearHookFormData } from '../../store/reducers/hookFormSlice';
+import Card from '../Card/Card';
 
 const HookFormResult: FC = () => {
   const dispatch = useAppDispatch();
-  const { ...currentState } = useAppSelector((state) => state.hookFormReducer);
+  const { cards } = useAppSelector((state) => state.hookFormReducer);
   const resetData = (): void => {
-    dispatch(
-      setHookFormState({
-        name: '',
-        age: 0,
-        email: '',
-        password: '',
-        gender: '',
-        isAcceptTerms: false,
-        image: '',
-        country: '',
-      })
-    );
+    dispatch(setClearHookFormData());
   };
+
   return (
     <div className={styles.wrapper}>
       <h2>React Hook Form</h2>
@@ -31,39 +22,11 @@ const HookFormResult: FC = () => {
         </Link>
         <Button onClick={resetData}>Clear data below</Button>
       </div>
-      {currentState.name ? (
-        <div className={styles['card']}>
-          <img className={styles['img']} width={50} height={50} src={currentState.image} alt={currentState.name} />
-          <ul className={styles['list']}>
-            <li>
-              <span className={styles['list-item']}>Name: </span>
-              {currentState.name}
-            </li>
-            <li>
-              <span className={styles['list-item']}>Age: </span>
-              {currentState.age}
-            </li>
-            <li>
-              <span className={styles['list-item']}>Email: </span>
-              {currentState.email}
-            </li>
-            <li>
-              <span className={styles['list-item']}>Password: </span>
-              {currentState.password}
-            </li>
-            <li>
-              <span className={styles['list-item']}>Gender: </span>
-              {currentState.gender}
-            </li>
-            <li>
-              <span className={styles['list-item']}>Accept T&C: </span>
-              {currentState.isAcceptTerms ? 'Yes' : 'No'}
-            </li>
-            <li>
-              <span className={styles['list-item']}>Country: </span>
-              {currentState.country}
-            </li>
-          </ul>
+      {cards.length > 0 ? (
+        <div className="card-wrapper">
+          {cards.map((card) => (
+            <Card key={card.email} cardData={card} />
+          ))}
         </div>
       ) : (
         <h3>The state is empty</h3>

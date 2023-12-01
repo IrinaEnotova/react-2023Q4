@@ -31,9 +31,6 @@ const HookFormPage: FC = () => {
       });
     };
   });
-  // const changeIsCountryList = (value: boolean): void => {
-  //   setIsCountryList(value);
-  // };
 
   const handleClickOutside = (event: MouseEvent): void => {
     const { current: wrap } = wrapperRef;
@@ -42,11 +39,9 @@ const HookFormPage: FC = () => {
       setIsCountryList(false);
     }
   };
-
   const updateCountry = (country: string): void => {
     setCountryValue(country);
   };
-
   const getFilteredData = (): void => {
     setFilterData(
       countries
@@ -94,14 +89,24 @@ const HookFormPage: FC = () => {
         <div>
           <label className={styles['label']}>
             <span>Name</span>
-            <input {...register('name')} className={styles.input} name="name" type="text" placeholder="your name" />
+            <input
+              {...register('name')}
+              className={classNames(styles.input, { ['error-input']: errors.name })}
+              type="text"
+              placeholder="your name"
+            />
           </label>
           <div className="error-message">{errors.name?.message}</div>
         </div>
         <div>
           <label className={styles['label']}>
             <span>Age</span>
-            <input {...register('age')} className={styles.input} name="age" type="number" placeholder="your age" />
+            <input
+              {...register('age')}
+              className={classNames(styles.input, { ['error-input']: errors.age })}
+              type="number"
+              placeholder="your age"
+            />
           </label>
           <div className="error-message">{errors.age?.message}</div>
         </div>
@@ -110,8 +115,7 @@ const HookFormPage: FC = () => {
             <span>Email</span>
             <input
               {...register('email')}
-              className={styles.input}
-              name="email"
+              className={classNames(styles.input, { ['error-input']: errors.email })}
               type="text"
               placeholder="email@email.com"
             />
@@ -123,8 +127,7 @@ const HookFormPage: FC = () => {
             <span>Password</span>
             <input
               {...register('password')}
-              className={styles.input}
-              name="password"
+              className={classNames(styles.input, { ['error-input']: errors.password })}
               type="text"
               placeholder="password"
             />
@@ -136,10 +139,9 @@ const HookFormPage: FC = () => {
             <span>Confirm password</span>
             <input
               {...register('confirmPassword')}
-              className={styles.input}
-              name="confirmPassword"
+              className={classNames(styles.input, { ['error-input']: errors.confirmPassword })}
               type="text"
-              placeholder="password confirmation"
+              placeholder="confirmation"
             />
           </label>
           <div className="error-message">{errors.confirmPassword?.message}</div>
@@ -147,7 +149,7 @@ const HookFormPage: FC = () => {
         <div>
           <label className={styles['label']}>
             <span>Gender</span>
-            <select {...register('gender')} name="gender" className={styles.input}>
+            <select {...register('gender')} className={classNames(styles.input, { ['error-input']: errors.gender })}>
               <option value="">-- Choose gender --</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -161,9 +163,8 @@ const HookFormPage: FC = () => {
             <input
               {...register('country')}
               value={countryValue}
-              name="country"
               placeholder="your country"
-              className={styles.input}
+              className={classNames(styles.input, { ['error-input']: errors.country })}
               type="text"
               onClick={() => {
                 setIsCountryList(!isCountryList);
@@ -181,13 +182,21 @@ const HookFormPage: FC = () => {
         <div>
           <label className={styles['label']}>
             <span className={styles['image-input-btn']}>Upload image</span>
-            <input {...register('image')} name="image" className={styles['image-input']} type="file" />
+            <input
+              {...register('image')}
+              className={classNames(styles.input, { ['error-input']: errors.image })}
+              type="file"
+            />
           </label>
           <div className="error-message">{errors.image?.message}</div>
         </div>
-        <div>
+        <div className={styles['checkbox-block']}>
           <label className={styles['checkbox-label']}>
-            <input {...register('terms')} name="terms" type="checkbox" />
+            <input
+              {...register('terms')}
+              className={classNames(styles.input, { ['error-input']: errors.terms })}
+              type="checkbox"
+            />
             <span>I agree to terms and conditions</span>
           </label>
           <div className="error-message">{errors.terms?.message}</div>

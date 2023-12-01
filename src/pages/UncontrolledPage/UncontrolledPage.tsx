@@ -117,7 +117,7 @@ const UncontrolledPage: FC = () => {
         />
         <InputBlock
           inputName="Confirm password"
-          placeholder="password confirmation"
+          placeholder="confirmation"
           type="text"
           errorValue={errorsData.confirmPassword}
           ref={confirmPasswordRef}
@@ -141,7 +141,11 @@ const UncontrolledPage: FC = () => {
         <div>
           <label className={styles['label']}>
             <span className={styles['image-input-btn']}>Upload image</span>
-            <input ref={imageRef} className={styles['image-input']} type="file" />
+            <input
+              ref={imageRef}
+              className={classNames(styles.input, { ['error-input']: errorsData.image })}
+              type="file"
+            />
           </label>
           <div className="error-message">{errorsData.image}</div>
         </div>

@@ -2,46 +2,32 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { countryData } from '../../constants/constants';
 import { FormState } from '../../interfaces/interfaces';
 
-const initialState: FormState = {
-  name: '',
-  age: 0,
-  email: '',
-  password: '',
-  gender: '',
-  isAcceptTerms: false,
-  image: '',
-  country: '',
-  countries: countryData,
-};
+const initialState: { cards: FormState[]; countries: string[] } = { cards: [], countries: countryData };
 
 export const uncontrolledSlice = createSlice({
   name: 'uncontrolledUser',
   initialState,
   reducers: {
-    setUncontrolledState(
-      state,
-      action: PayloadAction<{
-        name: string;
-        age: number;
-        email: string;
-        password: string;
-        gender: string;
-        isAcceptTerms: boolean;
-        image: string;
-        country: string;
-      }>
-    ) {
-      state.name = action.payload.name;
-      state.age = action.payload.age;
-      state.email = action.payload.email;
-      state.password = action.payload.password;
-      state.gender = action.payload.gender;
-      state.isAcceptTerms = action.payload.isAcceptTerms;
-      state.image = action.payload.image;
-      state.country = action.payload.country;
+    setUncontrolledState(state, action: PayloadAction<FormState>) {
+      state.cards = [
+        {
+          name: action.payload.name,
+          age: action.payload.age,
+          email: action.payload.email,
+          password: action.payload.password,
+          gender: action.payload.gender,
+          isAcceptTerms: action.payload.isAcceptTerms,
+          image: action.payload.image,
+          country: action.payload.country,
+        },
+        ...state.cards,
+      ];
+    },
+    setClearUncontrolledData(state) {
+      state.cards = [];
     },
   },
 });
 
 export default uncontrolledSlice.reducer;
-export const { setUncontrolledState } = uncontrolledSlice.actions;
+export const { setUncontrolledState, setClearUncontrolledData } = uncontrolledSlice.actions;
