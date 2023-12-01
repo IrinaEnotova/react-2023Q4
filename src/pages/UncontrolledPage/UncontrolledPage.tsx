@@ -2,7 +2,7 @@ import { FC, FormEvent, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import Button from '../../components/Button/Button';
-import userSchema from '../../validations/UserValidation';
+import userSchema from '../../validations/uncontrolledValidation';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/reduxHook';
 import { setUncontrolledState } from '../../store/reducers/uncontrolledSlice';
 import { getBase64String } from '../../utils/base64';

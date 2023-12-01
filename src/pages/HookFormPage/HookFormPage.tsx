@@ -5,7 +5,7 @@ import Button from '../../components/Button/Button';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
-import userSchema from '../../validations/UserValidation';
+import userSchema from '../../validations/hookFormValidation';
 import { SubmitData } from '../../interfaces/interfaces';
 import { ObjectSchema } from 'yup';
 import { useAppDispatch } from '../../store/hooks/reduxHook';
