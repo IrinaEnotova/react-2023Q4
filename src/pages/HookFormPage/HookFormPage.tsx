@@ -2,20 +2,16 @@ import { FC, useEffect, useRef, useState } from 'react';
 import styles from './HookFormPage.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
-import userSchema from '../../validations/hookFormValidation';
 import { SubmitData } from '../../interfaces/interfaces';
-import { ObjectSchema } from 'yup';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/reduxHook';
 import { setUsersState } from '../../store/reducers/userSlice';
 import { getBase64String } from '../../utils/base64';
+import useRegister from '../../hooks/useRegister';
 
 const HookFormPage: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const mySchema = userSchema as unknown;
   const wrapperRef = useRef<HTMLDivElement>(null);
   const { countries } = useAppSelector((state) => state.userReducer);
   const [filterData, setFilterData] = useState<JSX.Element[]>([]);
@@ -31,6 +27,7 @@ const HookFormPage: FC = () => {
       });
     };
   });
+  const [register, errors, handleSubmit, isValid] = useRegister();
 
   const handleClickOutside = (event: MouseEvent): void => {
     const { current: wrap } = wrapperRef;
@@ -53,15 +50,6 @@ const HookFormPage: FC = () => {
         ))
     );
   };
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm({
-    resolver: yupResolver<SubmitData>(mySchema as ObjectSchema<SubmitData>),
-    mode: 'onChange',
-  });
 
   const submitForm = async (data: SubmitData): Promise<void> => {
     dispatch(

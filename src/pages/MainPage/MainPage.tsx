@@ -1,7 +1,6 @@
 import { FC, useEffect, useRef } from 'react';
-import UncontrolledResult from '../../components/UncontrolledResult/UncontrolledResult';
+import BlockHeading from '../../components/BlockHeading/BlockHeading';
 import styles from './MainPage.module.css';
-import HookFormResult from '../../components/HookFormResult/HookFormResult';
 import Button from '../../components/Button/Button';
 import Card from '../../components/Card/Card';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/reduxHook';
@@ -28,8 +27,8 @@ const MainPage: FC = () => {
   return (
     <>
       <div className={styles.wrapper}>
-        <UncontrolledResult />
-        <HookFormResult />
+        <BlockHeading name="Uncontrolled" link="uncontrolled" />
+        <BlockHeading name="React Hook Form" link="hook-form" />
       </div>
       <div className={styles['result-wrapper']}>
         <Button className={styles.clear} onClick={resetData}>

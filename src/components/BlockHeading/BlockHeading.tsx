@@ -1,14 +1,15 @@
 import { FC } from 'react';
 import Button from '../Button/Button';
-import styles from './UncontrolledResult.module.css';
+import styles from './BlockHeading.module.css';
 import { Link } from 'react-router-dom';
+import { BlockHeadingProps } from './BlockHeading.props';
 
-const UncontrolledResult: FC = () => {
+const BlockHeading: FC<BlockHeadingProps> = ({ name, link }) => {
   return (
     <div className={styles.wrapper}>
-      <h2>Uncontrolled</h2>
+      <h2>{name}</h2>
       <div className={styles.btns}>
-        <Link to="/uncontrolled">
+        <Link to={`/${link}`}>
           <Button>Go to form</Button>
         </Link>
       </div>
@@ -16,4 +17,4 @@ const UncontrolledResult: FC = () => {
   );
 };
 
-export default UncontrolledResult;
+export default BlockHeading;
