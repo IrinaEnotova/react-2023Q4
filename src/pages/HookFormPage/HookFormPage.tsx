@@ -57,13 +57,13 @@ const HookFormPage: FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver<SubmitData>(mySchema as ObjectSchema<SubmitData>),
     mode: 'onChange',
   });
+
   const submitForm = async (data: SubmitData): Promise<void> => {
-    console.log(data);
     dispatch(
       setUsersState({
         name: data.name,
@@ -201,7 +201,9 @@ const HookFormPage: FC = () => {
           </label>
           <div className="error-message">{errors.terms?.message}</div>
         </div>
-        <Button className={styles.submit}>Submit</Button>
+        <Button disabled={!isValid} className={styles.submit}>
+          Submit
+        </Button>
       </form>
     </div>
   );

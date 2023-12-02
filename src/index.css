@@ -46,6 +46,6 @@ body {
 }
 
 .last-card {
-  border: 2px solid var(--block-color);
+  outline: 2px solid var(--block-color);
   border-radius: 5px;
 }

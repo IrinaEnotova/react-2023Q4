@@ -46,6 +46,15 @@
   margin-top: 15px;
 }
 
+.submit:disabled {
+  cursor: auto;
+  background-color: grey;
+}
+
+.submit:disabled:hover {
+  background-color: grey;
+}
+
 .image-input::file-selector-button {
   padding: 10px 20px;
   font: var(--font-std);
