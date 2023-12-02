@@ -44,3 +44,8 @@ body {
 .error-input {
   border: 2px solid red;
 }
+
+.last-card {
+  border: 2px solid var(--block-color);
+  border-radius: 5px;
+}

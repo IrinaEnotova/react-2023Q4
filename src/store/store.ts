@@ -1,9 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
-import uncontrolledReducer from './reducers/uncontrolledSlice';
-import hookFormReducer from './reducers/hookFormSlice';
+import userReducer from './reducers/userSlice';
 
-const rootReducer = combineReducers({ uncontrolledReducer, hookFormReducer });
+const rootReducer = combineReducers({ userReducer });
 
 export const setupStore = (): ToolkitStore => {
   return configureStore({

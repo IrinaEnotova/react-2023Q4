@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import Button from '../../components/Button/Button';
 import userSchema from '../../validations/uncontrolledValidation';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/reduxHook';
-import { setUncontrolledState } from '../../store/reducers/uncontrolledSlice';
+import { setUsersState } from '../../store/reducers/userSlice';
 import { getBase64String } from '../../utils/base64';
 import styles from './UncontrolledPage.module.css';
 import { ValidationError } from 'yup';
@@ -25,7 +25,7 @@ const UncontrolledPage: FC = () => {
   const termsRef = useRef<HTMLInputElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
-  const { countries } = useAppSelector((state) => state.uncontrolledReducer);
+  const { countries } = useAppSelector((state) => state.userReducer);
   const navigate = useNavigate();
   const [errorsData, setErrorsData] = useState(initialErrorData);
   const [filterData, isCountryList, handleClickOutside, getFilteredData, changeIsCountryList] = useCountries(
@@ -69,7 +69,7 @@ const UncontrolledPage: FC = () => {
       .then(async () => {
         setErrorsData(initialErrorData);
         dispatch(
-          setUncontrolledState({
+          setUsersState({
             name: nameRef.current!.value,
             age: +ageRef.current!.value,
             email: emailRef.current!.value,

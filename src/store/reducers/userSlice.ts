@@ -4,11 +4,11 @@ import { FormState } from '../../interfaces/interfaces';
 
 const initialState: { cards: FormState[]; countries: string[] } = { cards: [], countries: countryData };
 
-export const uncontrolledSlice = createSlice({
-  name: 'uncontrolledUser',
+export const userSlice = createSlice({
+  name: 'user',
   initialState,
   reducers: {
-    setUncontrolledState(state, action: PayloadAction<FormState>) {
+    setUsersState(state, action: PayloadAction<FormState>) {
       state.cards = [
         {
           name: action.payload.name,
@@ -23,11 +23,11 @@ export const uncontrolledSlice = createSlice({
         ...state.cards,
       ];
     },
-    setClearUncontrolledData(state) {
+    setClearData(state) {
       state.cards = [];
     },
   },
 });
 
-export default uncontrolledSlice.reducer;
-export const { setUncontrolledState, setClearUncontrolledData } = uncontrolledSlice.actions;
+export default userSlice.reducer;
+export const { setUsersState, setClearData } = userSlice.actions;

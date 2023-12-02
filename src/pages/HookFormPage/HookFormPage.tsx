@@ -9,7 +9,7 @@ import userSchema from '../../validations/hookFormValidation';
 import { SubmitData } from '../../interfaces/interfaces';
 import { ObjectSchema } from 'yup';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/reduxHook';
-import { setHookFormState } from '../../store/reducers/hookFormSlice';
+import { setUsersState } from '../../store/reducers/userSlice';
 import { getBase64String } from '../../utils/base64';
 
 const HookFormPage: FC = () => {
@@ -17,7 +17,7 @@ const HookFormPage: FC = () => {
   const navigate = useNavigate();
   const mySchema = userSchema as unknown;
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const { countries } = useAppSelector((state) => state.uncontrolledReducer);
+  const { countries } = useAppSelector((state) => state.userReducer);
   const [filterData, setFilterData] = useState<JSX.Element[]>([]);
   const [isCountryList, setIsCountryList] = useState(false);
   const [countryValue, setCountryValue] = useState('');
@@ -65,7 +65,7 @@ const HookFormPage: FC = () => {
   const submitForm = async (data: SubmitData): Promise<void> => {
     console.log(data);
     dispatch(
-      setHookFormState({
+      setUsersState({
         name: data.name,
         age: data.age,
         email: data.email,
