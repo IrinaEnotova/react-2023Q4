@@ -1,12 +1,9 @@
 import classNames from 'classnames';
 import styles from './InputUpload.module.css';
-import useRegister from '../../../hooks/useRegister';
 import { FC } from 'react';
-import { InputUploadProps } from './InputUpload.props';
+import { InputHookProps } from '../InputHookProps.props';
 
-export const InputUpload: FC<InputUploadProps> = () => {
-  const [register, errors] = useRegister();
-
+export const InputUpload: FC<InputHookProps> = ({ register, errors }) => {
   return (
     <div>
       <label className={styles['label']}>

@@ -1,12 +1,9 @@
 import classNames from 'classnames';
 import styles from './InputCheckbox.module.css';
-import useRegister from '../../../hooks/useRegister';
 import { FC } from 'react';
-import { InputCheckboxProps } from './InputCheckbox.props';
+import { InputHookProps } from '../InputHookProps.props';
 
-export const InputCheckbox: FC<InputCheckboxProps> = () => {
-  const [register, errors] = useRegister();
-
+export const InputCheckbox: FC<InputHookProps> = ({ register, errors }) => {
   return (
     <div className={styles['checkbox-block']}>
       <label className={styles['checkbox-label']}>

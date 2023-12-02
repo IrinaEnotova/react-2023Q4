@@ -1,12 +1,9 @@
 import classNames from 'classnames';
 import styles from './InputName.module.css';
-import useRegister from '../../../hooks/useRegister';
 import { FC } from 'react';
-import { InputNameProps } from './InputName.props';
+import { InputHookProps } from '../InputHookProps.props';
 
-export const InputName: FC<InputNameProps> = () => {
-  const [register, errors] = useRegister();
-
+export const InputName: FC<InputHookProps> = ({ register, errors }) => {
   return (
     <div>
       <label className={styles['label']}>

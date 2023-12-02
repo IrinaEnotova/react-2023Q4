@@ -1,12 +1,9 @@
 import classNames from 'classnames';
 import styles from './InputAge.module.css';
-import useRegister from '../../../hooks/useRegister';
 import { FC } from 'react';
-import { InputAgeProps } from './InputAge.props';
+import { InputHookProps } from '../InputHookProps.props';
 
-export const InputAge: FC<InputAgeProps> = () => {
-  const [register, errors] = useRegister();
-
+export const InputAge: FC<InputHookProps> = ({ register, errors }) => {
   return (
     <div>
       <label className={styles['label']}>

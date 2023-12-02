@@ -1,12 +1,9 @@
 import classNames from 'classnames';
 import styles from './InputEmail.module.css';
-import useRegister from '../../../hooks/useRegister';
 import { FC } from 'react';
-import { InputEmailProps } from './InputEmail.props';
+import { InputHookProps } from '../InputHookProps.props';
 
-export const InputEmail: FC<InputEmailProps> = () => {
-  const [register, errors] = useRegister();
-
+export const InputEmail: FC<InputHookProps> = ({ register, errors }) => {
   return (
     <div>
       <label className={styles['label']}>

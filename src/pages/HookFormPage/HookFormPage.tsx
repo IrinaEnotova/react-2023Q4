@@ -8,6 +8,14 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks/reduxHook';
 import { setUsersState } from '../../store/reducers/userSlice';
 import { getBase64String } from '../../utils/base64';
 import useRegister from '../../hooks/useRegister';
+import { InputName } from '../../components/InputsHook/InputName/InputName';
+import { InputAge } from '../../components/InputsHook/InputAge/InputAge';
+import { InputEmail } from '../../components/InputsHook/InputEmail/InputEmail';
+import { InputPassword } from '../../components/InputsHook/InputPassword/InputPassword';
+import { InputConfirmation } from '../../components/InputsHook/InputConfirmation/InputConfirmation';
+import { SelectGender } from '../../components/InputsHook/SelectGender/SelectGender';
+import { InputUpload } from '../../components/InputsHook/InputUpload/InputUpload';
+import { InputCheckbox } from '../../components/InputsHook/InputCheckbox/InputCheckbox';
 
 const HookFormPage: FC = () => {
   const dispatch = useAppDispatch();
@@ -74,77 +82,12 @@ const HookFormPage: FC = () => {
         <Button>To main</Button>
       </Link>
       <form className={styles.form} onSubmit={handleSubmit(submitForm)}>
-        <div>
-          <label className={styles['label']}>
-            <span>Name</span>
-            <input
-              {...register('name')}
-              className={classNames(styles.input, { ['error-input']: errors.name })}
-              type="text"
-              placeholder="your name"
-            />
-          </label>
-          <div className="error-message">{errors.name?.message}</div>
-        </div>
-        <div>
-          <label className={styles['label']}>
-            <span>Age</span>
-            <input
-              {...register('age')}
-              className={classNames(styles.input, { ['error-input']: errors.age })}
-              type="number"
-              placeholder="your age"
-            />
-          </label>
-          <div className="error-message">{errors.age?.message}</div>
-        </div>
-        <div>
-          <label className={styles['label']}>
-            <span>Email</span>
-            <input
-              {...register('email')}
-              className={classNames(styles.input, { ['error-input']: errors.email })}
-              type="text"
-              placeholder="email@email.com"
-            />
-          </label>
-          <div className="error-message">{errors.email?.message}</div>
-        </div>
-        <div>
-          <label className={styles['label']}>
-            <span>Password</span>
-            <input
-              {...register('password')}
-              className={classNames(styles.input, { ['error-input']: errors.password })}
-              type="text"
-              placeholder="password"
-            />
-          </label>
-          <div className="error-message">{errors.password?.message}</div>
-        </div>
-        <div>
-          <label className={styles['label']}>
-            <span>Confirm password</span>
-            <input
-              {...register('confirmPassword')}
-              className={classNames(styles.input, { ['error-input']: errors.confirmPassword })}
-              type="text"
-              placeholder="confirmation"
-            />
-          </label>
-          <div className="error-message">{errors.confirmPassword?.message}</div>
-        </div>
-        <div>
-          <label className={styles['label']}>
-            <span>Gender</span>
-            <select {...register('gender')} className={classNames(styles.input, { ['error-input']: errors.gender })}>
-              <option value="">-- Choose gender --</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </label>
-          <div className="error-message">{errors.gender?.message}</div>
-        </div>
+        <InputName register={register} errors={errors} />
+        <InputAge register={register} errors={errors} />
+        <InputEmail register={register} errors={errors} />
+        <InputPassword register={register} errors={errors} />
+        <InputConfirmation register={register} errors={errors} />
+        <SelectGender register={register} errors={errors} />
         <div>
           <label className={classNames(styles['country-label'], styles['label'])}>
             <span>Country</span>
@@ -152,6 +95,7 @@ const HookFormPage: FC = () => {
               {...register('country')}
               value={countryValue}
               placeholder="your country"
+              autoComplete="off"
               className={classNames(styles.input, { ['error-input']: errors.country })}
               type="text"
               onClick={() => {
@@ -167,28 +111,8 @@ const HookFormPage: FC = () => {
           </label>
           <div className="error-message">{errors.country?.message}</div>
         </div>
-        <div>
-          <label className={styles['label']}>
-            <span className={styles['image-input-btn']}>Upload image</span>
-            <input
-              {...register('image')}
-              className={classNames(styles.input, { ['error-input']: errors.image })}
-              type="file"
-            />
-          </label>
-          <div className="error-message">{errors.image?.message}</div>
-        </div>
-        <div className={styles['checkbox-block']}>
-          <label className={styles['checkbox-label']}>
-            <input
-              {...register('terms')}
-              className={classNames(styles.input, { ['error-input']: errors.terms })}
-              type="checkbox"
-            />
-            <span>I agree to terms and conditions</span>
-          </label>
-          <div className="error-message">{errors.terms?.message}</div>
-        </div>
+        <InputUpload register={register} errors={errors} />
+        <InputCheckbox register={register} errors={errors} />
         <Button disabled={!isValid} className={styles.submit}>
           Submit
         </Button>

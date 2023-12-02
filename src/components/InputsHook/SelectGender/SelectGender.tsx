@@ -1,12 +1,9 @@
 import classNames from 'classnames';
-import styles from './SelectGender.module.css';
-import useRegister from '../../../hooks/useRegister';
 import { FC } from 'react';
-import { SelectGenderProps } from './SelectGender.props';
+import { SelectHookProps } from '../SelectHookProps.props';
+import styles from './SelectGender.module.css';
 
-export const SelectGender: FC<SelectGenderProps> = () => {
-  const [register, errors] = useRegister();
-
+export const SelectGender: FC<SelectHookProps> = ({ register, errors }) => {
   return (
     <div>
       <label className={styles['label']}>

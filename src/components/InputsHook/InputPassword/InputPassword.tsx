@@ -1,12 +1,9 @@
 import classNames from 'classnames';
 import styles from './InputPassword.module.css';
-import useRegister from '../../../hooks/useRegister';
 import { FC } from 'react';
-import { InputPasswordProps } from './InputPassword.props';
+import { InputHookProps } from '../InputHookProps.props';
 
-export const InputPassword: FC<InputPasswordProps> = () => {
-  const [register, errors] = useRegister();
-
+export const InputPassword: FC<InputHookProps> = ({ register, errors }) => {
   return (
     <div>
       <label className={styles['label']}>

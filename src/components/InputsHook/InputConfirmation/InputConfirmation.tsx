@@ -1,12 +1,9 @@
 import classNames from 'classnames';
 import styles from './InputConfirmation.module.css';
-import useRegister from '../../../hooks/useRegister';
 import { FC } from 'react';
-import { InputConfirmationProps } from './InputConfirmation.props';
+import { InputHookProps } from '../InputHookProps.props';
 
-export const InputConfirmation: FC<InputConfirmationProps> = () => {
-  const [register, errors] = useRegister();
-
+export const InputConfirmation: FC<InputHookProps> = ({ register, errors }) => {
   return (
     <div>
       <label className={styles['label']}>
