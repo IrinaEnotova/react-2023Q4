@@ -9,9 +9,15 @@ import { getBase64String } from '../../utils/base64';
 import styles from './UncontrolledPage.module.css';
 import { ValidationError } from 'yup';
 import { initialErrorData } from '../../constants/constants';
-import { InputBlock } from '../../components/InputBlock/InputBlock';
-import { SelectBlock } from '../../components/SelectBlock/SelectBlock';
+import { SelectBlock } from '../../components/InputsUncontrolled/SelectBlock/SelectBlock';
 import useCountries from '../../hooks/useCountries';
+import { InputUnName } from '../../components/InputsUncontrolled/InputName/InputName';
+import { InputUnAge } from '../../components/InputsUncontrolled/InputAge/InputAge';
+import { InputUnEmail } from '../../components/InputsUncontrolled/InputEmail/InputEmail';
+import { InputUnPassword } from '../../components/InputsUncontrolled/InputPassword/InputPassword';
+import { InputUnConfirmation } from '../../components/InputsUncontrolled/InputConfirmation/InputConfirmation';
+import { InputUnUpload } from '../../components/InputsUncontrolled/InputUpload/InputUpload';
+import { InputUnCheckbox } from '../../components/InputsUncontrolled/InputCheckbox/InputCheckbox';
 
 const UncontrolledPage: FC = () => {
   const nameRef = useRef<HTMLInputElement>(null);
@@ -99,29 +105,11 @@ const UncontrolledPage: FC = () => {
         <Button>To main</Button>
       </Link>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <InputBlock inputName="name" placeholder="your name" type="text" errorValue={errorsData.name} ref={nameRef} />
-        <InputBlock inputName="age" placeholder="your age" type="number" errorValue={errorsData.age} ref={ageRef} />
-        <InputBlock
-          inputName="email"
-          placeholder="email@email.com"
-          type="text"
-          errorValue={errorsData.email}
-          ref={emailRef}
-        />
-        <InputBlock
-          inputName="password"
-          placeholder="password"
-          type="text"
-          errorValue={errorsData.password}
-          ref={passwordRef}
-        />
-        <InputBlock
-          inputName="Confirm password"
-          placeholder="confirmation"
-          type="text"
-          errorValue={errorsData.confirmPassword}
-          ref={confirmPasswordRef}
-        />
+        <InputUnName errorValue={errorsData.name} ref={nameRef} />
+        <InputUnAge errorValue={errorsData.age} ref={ageRef} />
+        <InputUnEmail errorValue={errorsData.email} ref={emailRef} />
+        <InputUnPassword errorValue={errorsData.password} ref={passwordRef} />
+        <InputUnConfirmation errorValue={errorsData.confirmPassword} ref={confirmPasswordRef} />
         <SelectBlock ref={genderRef} errorValue={errorsData.gender} inputName="Gender" />
         <label className={classNames(styles['country-label'], styles['label'])}>
           <span>Country</span>
@@ -138,24 +126,8 @@ const UncontrolledPage: FC = () => {
           {isCountryList && filterData.length > 0 && <ul className={styles['country-list']}>{filterData}</ul>}
         </label>
         <div className="error-message">{errorsData.country}</div>
-        <div>
-          <label className={styles['label']}>
-            <span className={styles['image-input-btn']}>Upload image</span>
-            <input
-              ref={imageRef}
-              className={classNames(styles.input, { ['error-input']: errorsData.image })}
-              type="file"
-            />
-          </label>
-          <div className="error-message">{errorsData.image}</div>
-        </div>
-        <div className={styles['checkbox-block']}>
-          <label className={styles['checkbox-label']}>
-            <input ref={termsRef} className={classNames({ ['error-input']: errorsData.terms })} type="checkbox" />
-            <span>I agree to terms and conditions</span>
-          </label>
-          <div className="error-message">{errorsData.terms}</div>
-        </div>
+        <InputUnUpload ref={imageRef} errorValue={errorsData.image} />
+        <InputUnCheckbox ref={termsRef} errorValue={errorsData.terms} />
         <Button className={styles.submit}>Submit</Button>
       </form>
     </div>
