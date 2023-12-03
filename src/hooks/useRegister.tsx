@@ -51,7 +51,7 @@ export default function useRegister(): [
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver<SubmitData>(mySchema as ObjectSchema<SubmitData>),
-    mode: 'onChange',
+    mode: 'all',
   });
 
   return [register, errors, handleSubmit, isValid];

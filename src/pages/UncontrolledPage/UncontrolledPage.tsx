@@ -18,6 +18,7 @@ import { InputUnPassword } from '../../components/InputsUncontrolled/InputPasswo
 import { InputUnConfirmation } from '../../components/InputsUncontrolled/InputConfirmation/InputConfirmation';
 import { InputUnUpload } from '../../components/InputsUncontrolled/InputUpload/InputUpload';
 import { InputUnCheckbox } from '../../components/InputsUncontrolled/InputCheckbox/InputCheckbox';
+import { definePasswordStrength } from '../../utils/passStrength';
 
 const UncontrolledPage: FC = () => {
   const nameRef = useRef<HTMLInputElement>(null);
@@ -34,6 +35,7 @@ const UncontrolledPage: FC = () => {
   const { countries } = useAppSelector((state) => state.userReducer);
   const navigate = useNavigate();
   const [errorsData, setErrorsData] = useState(initialErrorData);
+  const [passStrength, setPassStrength] = useState('');
   const [filterData, isCountryList, handleClickOutside, getFilteredData, changeIsCountryList] = useCountries(
     wrapperRef,
     countryRef,
@@ -90,6 +92,7 @@ const UncontrolledPage: FC = () => {
       })
       .catch((err) => {
         setErrorsData(initialErrorData);
+        setPassStrength(definePasswordStrength(passwordRef.current!.value));
         if (err instanceof ValidationError) {
           err.inner.forEach((e) => {
             setErrorsData((prev) => ({ ...prev, [e.path!]: [e.message] }));
@@ -108,7 +111,7 @@ const UncontrolledPage: FC = () => {
         <InputUnName errorValue={errorsData.name} ref={nameRef} />
         <InputUnAge errorValue={errorsData.age} ref={ageRef} />
         <InputUnEmail errorValue={errorsData.email} ref={emailRef} />
-        <InputUnPassword errorValue={errorsData.password} ref={passwordRef} />
+        <InputUnPassword passStrength={passStrength} errorValue={errorsData.password} ref={passwordRef} />
         <InputUnConfirmation errorValue={errorsData.confirmPassword} ref={confirmPasswordRef} />
         <SelectBlock ref={genderRef} errorValue={errorsData.gender} inputName="Gender" />
         <label className={classNames(styles['country-label'], styles['label'])}>

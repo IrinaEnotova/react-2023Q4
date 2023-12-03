@@ -12,15 +12,16 @@ const hookFormSchema = yup.object().shape({
   password: yup
     .string()
     .required('password is required')
+    .min(8, 'length of password must be more than 8')
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{8,15}$/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{4,15}$/,
       'password must contain 1 number, 1 uppercased letter, 1 lowercased letter, 1 special character'
     ),
   confirmPassword: yup
     .string()
     .required('password confirmation is required')
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{8,15}$/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{4,15}$/,
       'must contain 1 number, 1 uppercased letter, 1 lowercased letter, 1 special character'
     )
     .oneOf([yup.ref('password')], 'passwords must match'),
