@@ -8,7 +8,11 @@ const hookFormSchema = yup.object().shape({
     .required('name is required')
     .matches(/^[А-ЯA-Z][а-яёa-z]*$/, 'first letter must be uppercased'),
   age: yup.number().required('age is required').typeError('must be a number').positive(),
-  email: yup.string().email('must be a valid email').required('email is required'),
+  email: yup
+    .string()
+    .email('must be in the format example@email.com')
+    .matches(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/, 'must be in the format example@email.com')
+    .required('email is required'),
   password: yup
     .string()
     .required('password is required')

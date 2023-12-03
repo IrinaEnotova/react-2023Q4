@@ -8,7 +8,11 @@ const userSchema = yup.object().shape({
     .matches(/^[А-ЯA-Z][а-яёa-z]*$/, 'first letter must be uppercased')
     .required('name is required'),
   age: yup.number().typeError('must be a number').positive().required('age is required'),
-  email: yup.string().email('must be a valid email').required('email is required'),
+  email: yup
+    .string()
+    .email('must be in the format example@email.com')
+    .matches(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/, 'must be in the format example@email.com')
+    .required('email is required'),
   password: yup
     .string()
     .matches(
