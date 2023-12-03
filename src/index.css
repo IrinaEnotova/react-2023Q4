@@ -1,0 +1,51 @@
+:root {
+  font-family: 'Montserrat', sans-serif;
+  background: url('/bg.jpg');
+  height: 100vh;
+  background-size: cover;
+  --block-color: #f6bbb3;
+  --block-color-hover: #fcdbd6;
+  --light-text: #fefefc;
+  --accent-color: #376569;
+  --accent-color-hover: #72999c;
+  --font-std: 400 12px 'Montserrat', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  color: var(--accent-color);
+}
+
+body {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.error-message {
+  height: 14px;
+  margin-top: 5px;
+  text-align: end;
+  color: red;
+  font-size: 11px;
+}
+
+.error-input {
+  border: 2px solid red;
+}
+
+.last-card {
+  outline: 2px solid var(--block-color);
+  border-radius: 5px;
+}

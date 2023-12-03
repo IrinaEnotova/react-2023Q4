@@ -1,0 +1,103 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.heading {
+  text-align: center;
+}
+
+.to-main {
+  align-self: center;
+  margin-bottom: 30px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 510px;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.label span {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 2px solid var(--block-color);
+}
+
+.input:focus {
+  outline: 2px solid var(--accent-color);
+}
+
+.submit {
+  align-self: center;
+  margin-top: 15px;
+}
+
+.submit:disabled {
+  cursor: auto;
+  background-color: grey;
+}
+
+.submit:disabled:hover {
+  background-color: grey;
+}
+
+.image-input::file-selector-button {
+  padding: 10px 20px;
+  font: var(--font-std);
+  font-size: 12px;
+  color: var(--accent-color);
+  font-weight: 600;
+  border-radius: 5px;
+  border: none;
+  background: var(--block-color);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.image-input::file-selector-button:hover {
+  color: var(--light-text);
+  background-color: var(--accent-color-hover);
+  box-shadow: 20px 11px 36px 0px rgba(211, 209, 216, 0.25);
+}
+
+.checkbox-label {
+  width: 100%;
+  text-align: end;
+}
+
+.checkbox-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.country-label {
+  position: relative;
+}
+
+.country-list {
+  margin: 0;
+  padding: 5px;
+  width: 182px;
+  max-height: 250px;
+  overflow-y: scroll;
+  position: absolute;
+  top: 36px;
+  right: 0;
+  list-style: none;
+  background-color: white;
+}
